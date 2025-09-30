@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de inicio personalizada con accesos directos a servicios educativos y herramientas digitales">
+    <meta name="keywords" content="favoritos, accesos directos, educación, UPC, herramientas digitales">
+    <meta name="author" content="MisFavoritos">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MisFavoritos - Página de Inicio">
+    <meta property="og:description" content="Página de inicio personalizada con accesos directos a servicios educativos">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    
     <title>MisFavoritos - Página de Inicio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
     <style>
         * {
             margin: 0;
@@ -48,6 +68,7 @@
             height: 100%;
             background: rgba(255, 255, 255, 0.3);
             z-index: 1;
+            pointer-events: none;
         }
         
         .container {
@@ -257,39 +278,39 @@
         
         /* Colores específicos para cada icono */
         .shortcut[data-shortcut-id="sc-1"] .shortcut-icon i {
-            color: #4285f4; /* Azul para Reserva de Computadoras */
+            color: #4285f4;
         }
         
         .shortcut[data-shortcut-id="sc-2"] .shortcut-icon i {
-            color: #f4b400; /* Amarillo/naranja para Aula Virtual */
+            color: #f4b400;
         }
         
         .shortcut[data-shortcut-id="sc-3"] .shortcut-icon i {
-            color: #4285f4; /* Azul Google */
+            color: #4285f4;
         }
         
         .shortcut[data-shortcut-id="sc-4"] .shortcut-icon i {
-            color: #0f9d58; /* Verde Drive */
+            color: #0f9d58;
         }
         
         .shortcut[data-shortcut-id="sc-5"] .shortcut-icon i {
-            color: #ea4335; /* Rojo Gmail */
+            color: #ea4335;
         }
         
         .shortcut[data-shortcut-id="sc-6"] .shortcut-icon i {
-            color: #ff0000; /* Rojo YouTube */
+            color: #ff0000;
         }
         
         .shortcut[data-shortcut-id="sc-7"] .shortcut-icon i {
-            color: #4285f4; /* Azul Maps */
+            color: #4285f4;
         }
         
         .shortcut[data-shortcut-id="sc-8"] .shortcut-icon i {
-            color: #4285f4; /* Azul Traductor */
+            color: #4285f4;
         }
         
         .shortcut[data-shortcut-id="sc-9"] .shortcut-icon i {
-            color: #10a37f; /* Verde ChatGPT */
+            color: #10a37f;
         }
         
         .shortcut-name {
@@ -305,6 +326,21 @@
             opacity: 0.7;
             font-size: 14px;
             color: #666;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,.1);
+            border-radius: 50%;
+            border-top-color: #4285f4;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 768px) {
@@ -338,13 +374,15 @@
                 </div>
             </header>
             
-            <div class="clock" id="clock">Cargando hora...</div>
+            <div class="clock" id="clock">
+                <span class="loading"></span> Cargando...
+            </div>
             
             <div class="search-box">
                 <form class="search-form" action="https://www.google.com/search" method="GET" target="_top" id="googleSearchForm">
                     <div class="search-container">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" name="q" class="search-input" placeholder="Buscar en Google..." id="searchInput">
+                        <input type="text" name="q" class="search-input" placeholder="Buscar en Google..." id="searchInput" autocomplete="off">
                         <div class="search-actions">
                             <div class="search-action" id="voiceSearch" title="Búsqueda por voz">
                                 <i class="fas fa-microphone"></i>
@@ -460,15 +498,20 @@
                 day: 'numeric'
             });
             
-            document.getElementById('clock').innerHTML = `
-                <i class="fas fa-clock"></i> ${timeString} - ${dateString}
-            `;
+            const clockElement = document.getElementById('clock');
+            if (clockElement) {
+                clockElement.innerHTML = `
+                    <i class="fas fa-clock"></i> ${timeString} - ${dateString}
+                `;
+            }
         }
 
         // FUNCIONES DE INTERFAZ
         function renderTabs() {
             const tabsList = document.getElementById('tabsList');
             const tabContents = document.getElementById('tabContents');
+            
+            if (!tabsList || !tabContents) return;
             
             tabsList.innerHTML = '';
             tabContents.innerHTML = '';
@@ -499,7 +542,7 @@
                         tabContent.innerHTML = `
                             <div class="shortcuts-grid">
                                 ${tab.content[0].shortcuts.map(shortcut => `
-                                    <a href="${shortcut.url}" target="_blank" class="shortcut" data-shortcut-id="${shortcut.id}">
+                                    <a href="${shortcut.url}" target="_blank" class="shortcut" data-shortcut-id="${shortcut.id}" rel="noopener noreferrer">
                                         <div class="shortcut-icon">
                                             <i class="${shortcut.icon}"></i>
                                         </div>
@@ -516,7 +559,6 @@
         }
 
         function switchTab(tabId) {
-            console.log('Cambiando a pestaña:', tabId);
             tabs.forEach(tab => {
                 tab.active = tab.id === tabId;
             });
@@ -525,8 +567,6 @@
 
         // INICIAR APLICACIÓN
         function initializeApp() {
-            console.log('Iniciando página estática de MisFavoritos...');
-            
             // Configurar reloj
             updateClock();
             setInterval(updateClock, 1000);
@@ -535,31 +575,38 @@
             renderTabs();
             
             // Enfocar el campo de búsqueda
-            document.querySelector('.search-input').focus();
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) {
+                searchInput.focus();
+            }
             
             // Configurar eventos de búsqueda
             const voiceSearch = document.getElementById('voiceSearch');
             const imageSearch = document.getElementById('imageSearch');
-            const searchForm = document.getElementById('googleSearchForm');
             
             // Búsqueda por voz (simulación)
-            voiceSearch.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Simulación de búsqueda por voz
-                alert('Función de búsqueda por voz. En un navegador compatible, se activaría el reconocimiento de voz.');
-            });
+            if (voiceSearch) {
+                voiceSearch.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Función de búsqueda por voz. En un navegador compatible, se activaría el reconocimiento de voz.');
+                });
+            }
             
             // Búsqueda por imagen
-            imageSearch.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Redirigir a la búsqueda por imagen de Google
-                window.open('https://images.google.com/', '_blank');
-            });
-            
-            console.log('Página cargada correctamente');
+            if (imageSearch) {
+                imageSearch.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.open('https://images.google.com/', '_blank', 'noopener,noreferrer');
+                });
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        // Iniciar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
     </script>
 </body>
 </html>
