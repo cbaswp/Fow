@@ -1,361 +1,408 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Horario de Jefes - MIR4 SA1</title>
-<!-- Metadatos para que la vista previa en Discord se vea genial -->
-<meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA1 🐉">
-<meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA1 (Brasil).">
-<meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
-<meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario de Jefes - MIR4 SA1</title>
+    <!-- Metadatos para que la vista previa en Discord se vea genial -->
+    <meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA1 🐉">
+    <meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA1 (Brasil).">
+    <meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
+    <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
 
-<style>
-body {
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-background-color: #36393f;
-color: #dcddde;
-display: flex;
-justify-content: center;
-align-items: flex-start;
-min-height: 100vh;
-margin: 0;
-padding: 20px 0;
-}
-.container {
-background-color: #2f3136;
-padding: 25px;
-border-radius: 8px;
-box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-width: 90%;
-max-width: 900px;
-}
-h1 {
-text-align: center;
-color: #ffffff;
-margin-bottom: 15px;
-}
-/* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
-#reloj-servidor {
-text-align: center;
-font-size: 2em;
-font-family: 'Courier New', Courier, monospace;
-color: #43b581;
-margin: 5px 0 5px 0;
-font-weight: bold;
-text-shadow: 0 0 5px rgba(67, 181, 129, 0.5);
-}
-/* --- ESTILOS PARA EL RELOJ LOCAL AÑADIDOS --- */
-#reloj-local {
-text-align: center;
-font-size: 1em;
-font-family: 'Courier New', Courier, monospace;
-color: #b9bbbe;
-margin: 0px 0 20px 0;
-font-weight: normal;
-}
-.info-zona-horaria {
-text-align: center;
-color: #7289da;
-font-size: 0.9em;
-margin-bottom: 20px;
-}
-table {
-width: 100%;
-border-collapse: collapse;
-}
-th, td {
-border: 1px solid #40444b;
-padding: 15px;
-text-align: left;
-}
-th {
-background-color: #202225;
-color: #7289da;
-font-weight: 600;
-}
-td:first-child {
-font-weight: bold;
-color: #b9bbbe;
-width: 35%;
-vertical-align: top;
-}
-td:last-child {
-line-height: 1.8;
-}
-.hora-spawn {
-display: inline-block;
-background-color: #40444b;
-padding: 4px 10px;
-border-radius: 12px;
-margin: 2px;
-font-size: 0.9em;
-transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-}
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+        .container {
+            background-color: #2f3136;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            width: 90%;
+            max-width: 900px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+        /* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
+        #reloj-servidor {
+            text-align: center;
+            font-size: 2em;
+            font-family: 'Courier New', Courier, monospace;
+            color: #43b581;
+            margin: 5px 0 5px 0;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(67, 181, 129, 0.5);
+        }
+        /* --- ESTILOS PARA EL RELOJ LOCAL --- */
+        #reloj-local {
+            text-align: center;
+            font-size: 1em;
+            font-family: 'Courier New', Courier, monospace;
+            color: #b9bbbe;
+            margin: 0px 0 20px 0;
+            font-weight: normal;
+        }
+        
+        /* --- ESTILOS PARA LA LEYENDA DE COLORES --- */
+        .leyenda-colores {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #b9bbbe;
+            font-size: 0.9em;
+        }
+        .leyenda-colores ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .leyenda-colores li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .leyenda-colores .hora-spawn {
+            font-size: 0.8em;
+            padding: 3px 8px;
+        }
 
-/* --- NUEVOS ESTILOS DE COLOR CON PRIORIDAD --- */
+        .info-zona-horaria {
+            text-align: center;
+            color: #7289da;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #40444b;
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #202225;
+            color: #7289da;
+            font-weight: 600;
+        }
+        td:first-child {
+            font-weight: bold;
+            color: #b9bbbe;
+            width: 35%;
+            vertical-align: top;
+        }
+        td:last-child {
+            line-height: 1.8;
+        }
+        .hora-spawn {
+            display: inline-block;
+            background-color: #40444b;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin: 2px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        
+        /* --- NUEVOS ESTILOS DE COLOR CON PRIORIDAD --- */
 
-/* Prioridad 1: Ventana de Spawn (Verde) */
-.ventana-spawn {
-background-color: #43b581 !important; /* Verde estilo Discord */
-color: #ffffff;
-font-weight: bold;
-transform: scale(1.1);
-box-shadow: 0 0 10px rgba(67, 181, 129, 0.7);
-animation: pulse 1.5s infinite;
-}
+        /* Prioridad 1: Ventana de Spawn (Verde) */
+        .ventana-spawn {
+            background-color: #43b581 !important; /* Verde estilo Discord */
+            color: #ffffff;
+            font-weight: bold;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(67, 181, 129, 0.7);
+            animation: pulse 1.5s infinite;
+        }
 
-/* Prioridad 2: Próxima Hora (Celeste) */
-.proximo-spawn {
-background-color: #5865F2 !important; /* Celeste/Blurple estilo Discord */
-color: #ffffff;
-font-weight: bold;
-box-shadow: 0 0 8px rgba(88, 101, 242, 0.6);
-}
-
-@keyframes pulse {
-0% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7); }
-70% { box-shadow: 0 0 0 8px rgba(67, 181, 129, 0); }
-100% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0); }
-}
-</style>
+        /* Prioridad 2: Próxima Hora (Celeste) */
+        .proximo-spawn {
+            background-color: #5865F2 !important; /* Celeste/Blurple estilo Discord */
+            color: #ffffff;
+            font-weight: bold;
+            box-shadow: 0 0 8px rgba(88, 101, 242, 0.6);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(67, 181, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0); }
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-<h1>⚔️ Horario de Jefes - Servidor SA1 ⚔️</h1>
-<!-- RELOJ DEL SERVIDOR -->
-<div id="reloj-servidor">Cargando hora...</div>
-<!-- RELOJ LOCAL AÑADIDO -->
-<div id="reloj-local">Cargando hora local... (hora local)</div>
+    <div class="container">
+        <h1>⚔️ Horario de Jefes - Servidor SA1 ⚔️</h1>
+        <!-- RELOJ DEL SERVIDOR -->
+        <div id="reloj-servidor">Cargando hora...</div>
+        <!-- RELOJ LOCAL AÑADIDO -->
+        <div id="reloj-local">Cargando hora local... (hora local)</div>
+        
+        <!-- LEYENDA DE COLORES (SIN TEXTO EN LOS CUADROS) -->
+        <div class="leyenda-colores">
+            <ul>
+                <li>
+                    <span class="hora-spawn ventana-spawn"></span>
+                    <span>En ventana de spawn (±15 min)</span>
+                </li>
+                <li>
+                    <span class="hora-spawn proximo-spawn"></span>
+                    <span>Siguiente spawn</span>
+                </li>
+                <li>
+                    <span class="hora-spawn"></span>
+                    <span>No disponible</span>
+                </li>
+            </ul>
+        </div>
+        
+        <p class="info-zona-horaria">Horario sincronizado con el servidor: <strong>Hora de Brasil (UTC-3)</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>JEFES SEMANALES</th>
+                    <th>Horarios de Aparición (Hora del Servidor)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>REY TORO DEMONIO (Mundo 1)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="00:00">00h</span>
+                        <span class="hora-spawn" data-hora="09:00">09h</span>
+                        <span class="hora-spawn" data-hora="18:00">18h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>GUARDIAN DE TEMPLO - MATA (Mundo 1)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="02:00">02h</span>
+                        <span class="hora-spawn" data-hora="18:00">18h</span>
+                        <span class="hora-spawn" data-hora="22:00">22h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>RELÁMPAGO TORO CHUPA SANGRE (Mundo 1)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="01:00">1h</span>
+                        <span class="hora-spawn" data-hora="03:00">3h</span>
+                        <span class="hora-spawn" data-hora="05:00">5h</span>
+                        <span class="hora-spawn" data-hora="07:00">7h</span>
+                        <span class="hora-spawn" data-hora="09:00">9h</span>
+                        <span class="hora-spawn" data-hora="11:00">11h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="15:00">15h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+                        <span class="hora-spawn" data-hora="19:00">19h</span>
+                        <span class="hora-spawn" data-hora="21:00">21h</span>
+                        <span class="hora-spawn" data-hora="23:00">23h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>KURILAIKA (Mundo 4)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="00:00">00h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="18:00">18h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>NEFARIO DIGNIDAD INQUEBRANTABLE (Mundo 4)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="00:00">00h</span>
+                        <span class="hora-spawn" data-hora="02:00">02h</span>
+                        <span class="hora-spawn" data-hora="04:00">04h</span>
+                        <span class="hora-spawn" data-hora="06:00">06h</span>
+                        <span class="hora-spawn" data-hora="08:00">08h</span>
+                        <span class="hora-spawn" data-hora="10:00">10h</span>
+                        <span class="hora-spawn" data-hora="12:00">12h</span>
+                        <span class="hora-spawn" data-hora="14:00">14h</span>
+                        <span class="hora-spawn" data-hora="16:00">16h</span>
+                        <span class="hora-spawn" data-hora="18:00">18h</span>
+                        <span class="hora-spawn" data-hora="20:00">20h</span>
+                        <span class="hora-spawn" data-hora="22:00">22h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>YIUN (Mundo 7)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="02:00">02h</span>
+                        <span class="hora-spawn" data-hora="05:00">05h</span>
+                        <span class="hora-spawn" data-hora="08:00">08h</span>
+                        <span class="hora-spawn" data-hora="11:00">11h</span>
+                        <span class="hora-spawn" data-hora="14:00">14h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+                        <span class="hora-spawn" data-hora="20:00">20h</span>
+                        <span class="hora-spawn" data-hora="23:00">23h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>TAEHYUL (Mundo 7)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="01:00">1h</span>
+                        <span class="hora-spawn" data-hora="03:00">3h</span>
+                        <span class="hora-spawn" data-hora="05:00">5h</span>
+                        <span class="hora-spawn" data-hora="07:00">7h</span>
+                        <span class="hora-spawn" data-hora="09:00">9h</span>
+                        <span class="hora-spawn" data-hora="11:00">11h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="15:00">15h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+                        <span class="hora-spawn" data-hora="19:00">19h</span>
+                        <span class="hora-spawn" data-hora="21:00">21h</span>
+                        <span class="hora-spawn" data-hora="23:00">23h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>YEO WIHUANG (Mundo 8)</td>
+                    <td>
+            <span class="hora-spawn" data-hora="01:00">01h</span>
+            <span class="hora-spawn" data-hora="05:00">05h</span>
+                        <span class="hora-spawn" data-hora="09:00">09h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+            <span class="hora-spawn" data-hora="21:00">21h</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<p class="info-zona-horaria">Horario sincronizado con el servidor: <strong>Hora de Brasil (UTC-3)</strong></p>
-<table>
-<thead>
-<tr>
-<th>JEFES SEMANALES</th>
-<th>Horarios de Aparición (Hora del Servidor)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>REY TORO DEMONIO (Mundo 1)</td>
-<td>
-<span class="hora-spawn" data-hora="00:00">00h</span>
-<span class="hora-spawn" data-hora="09:00">09h</span>
-<span class="hora-spawn" data-hora="18:00">18h</span>
-</td>
-</tr>
-<tr>
-<td>GUARDIAN DE TEMPLO - MATA (Mundo 1)</td>
-<td>
-<span class="hora-spawn" data-hora="02:00">02h</span>
-<span class="hora-spawn" data-hora="18:00">18h</span>
-<span class="hora-spawn" data-hora="22:00">22h</span>
-</td>
-</tr>
-<tr>
-<td>RELÁMPAGO TORO CHUPA SANGRE (Mundo 1)</td>
-<td>
-<span class="hora-spawn" data-hora="01:00">1h</span>
-<span class="hora-spawn" data-hora="03:00">3h</span>
-<span class="hora-spawn" data-hora="05:00">5h</span>
-<span class="hora-spawn" data-hora="07:00">7h</span>
-<span class="hora-spawn" data-hora="09:00">9h</span>
-<span class="hora-spawn" data-hora="11:00">11h</span>
-<span class="hora-spawn" data-hora="13:00">13h</span>
-<span class="hora-spawn" data-hora="15:00">15h</span>
-<span class="hora-spawn" data-hora="17:00">17h</span>
-<span class="hora-spawn" data-hora="19:00">19h</span>
-<span class="hora-spawn" data-hora="21:00">21h</span>
-<span class="hora-spawn" data-hora="23:00">23h</span>
-</td>
-</tr>
-<tr>
-<td>KURILAIKA (Mundo 4)</td>
-<td>
-<span class="hora-spawn" data-hora="00:00">00h</span>
-<span class="hora-spawn" data-hora="13:00">13h</span>
-<span class="hora-spawn" data-hora="18:00">18h</span>
-</td>
-</tr>
-<tr>
-<td>NEFARIO DIGNIDAD INQUEBRANTABLE (Mundo 4)</td>
-<td>
-<span class="hora-spawn" data-hora="00:00">00h</span>
-<span class="hora-spawn" data-hora="02:00">02h</span>
-<span class="hora-spawn" data-hora="04:00">04h</span>
-<span class="hora-spawn" data-hora="06:00">06h</span>
-<span class="hora-spawn" data-hora="08:00">08h</span>
-<span class="hora-spawn" data-hora="10:00">10h</span>
-<span class="hora-spawn" data-hora="12:00">12h</span>
-<span class="hora-spawn" data-hora="14:00">14h</span>
-<span class="hora-spawn" data-hora="16:00">16h</span>
-<span class="hora-spawn" data-hora="18:00">18h</span>
-<span class="hora-spawn" data-hora="20:00">20h</span>
-<span class="hora-spawn" data-hora="22:00">22h</span>
-</td>
-</tr>
-<tr>
-<td>YIUN (Mundo 7)</td>
-<td>
-<span class="hora-spawn" data-hora="02:00">02h</span>
-<span class="hora-spawn" data-hora="05:00">05h</span>
-<span class="hora-spawn" data-hora="08:00">08h</span>
-<span class="hora-spawn" data-hora="11:00">11h</span>
-<span class="hora-spawn" data-hora="14:00">14h</span>
-<span class="hora-spawn" data-hora="17:00">17h</span>
-<span class="hora-spawn" data-hora="20:00">20h</span>
-<span class="hora-spawn" data-hora="23:00">23h</span>
-</td>
-</tr>
-<tr>
-<td>TAEHYUL (Mundo 7)</td>
-<td>
-<span class="hora-spawn" data-hora="01:00">1h</span>
-<span class="hora-spawn" data-hora="03:00">3h</span>
-<span class="hora-spawn" data-hora="05:00">5h</span>
-<span class="hora-spawn" data-hora="07:00">7h</span>
-<span class="hora-spawn" data-hora="09:00">9h</span>
-<span class="hora-spawn" data-hora="11:00">11h</span>
-<span class="hora-spawn" data-hora="13:00">13h</span>
-<span class="hora-spawn" data-hora="15:00">15h</span>
-<span class="hora-spawn" data-hora="17:00">17h</span>
-<span class="hora-spawn" data-hora="19:00">19h</span>
-<span class="hora-spawn" data-hora="21:00">21h</span>
-<span class="hora-spawn" data-hora="23:00">23h</span>
-</td>
-</tr>
-<tr>
-<td>YEO WIHUANG (Mundo 8)</td>
-<td>
-<span class="hora-spawn" data-hora="01:00">01h</span>
-<span class="hora-spawn" data-hora="05:00">05h</span>
-<span class="hora-spawn" data-hora="09:00">09h</span>
-<span class="hora-spawn" data-hora="13:00">13h</span>
-<span class="hora-spawn" data-hora="17:00">17h</span>
-<span class="hora-spawn" data-hora="21:00">21h</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+    <script>
+        // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ DEL SERVIDOR ---
+        function actualizarReloj() {
+            const relojElemento = document.getElementById('reloj-servidor');
+            const zonaHorariaServidor = 'America/Sao_Paulo';
+            const ahora = new Date();
+            
+            const opciones = {
+                timeZone: zonaHorariaServidor,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            
+            const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+            relojElemento.textContent = horaServidor;
+        }
 
-<script>
-// --- FUNCIÓN PARA ACTUALIZAR EL RELOJ DEL SERVIDOR ---
-function actualizarReloj() {
-const relojElemento = document.getElementById('reloj-servidor');
-const zonaHorariaServidor = 'America/Sao_Paulo';
-const ahora = new Date();
+        // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ LOCAL ---
+        function actualizarRelojLocal() {
+            const relojLocalElemento = document.getElementById('reloj-local');
+            const ahora = new Date();
+            
+            const horaLocal = ahora.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: false 
+            });
+            
+            relojLocalElemento.textContent = `${horaLocal} (hora local)`;
+        }
 
-const opciones = {
-timeZone: zonaHorariaServidor,
-hour: '2-digit',
-minute: '2-digit',
-second: '2-digit',
-hour12: false
-};
+        // --- FUNCIÓN DE RESALTADO CORREGIDA ---
+        function resaltarProximaHora() {
+            // --- CAMBIO CLAVE: Seleccionar solo las horas dentro de la tabla para evitar conflictos con la leyenda ---
+            const horasSpawn = document.querySelectorAll('td .hora-spawn');
+            
+            const zonaHorariaServidor = 'America/Sao_Paulo'; 
+            
+            const ahora = new Date();
+            const opciones = { 
+                timeZone: zonaHorariaServidor, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: false 
+            };
+            const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+            const [horas, minutos] = horaServidor.split(':').map(Number);
+            const horaActualMinutos = horas * 60 + minutos;
 
-const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
-relojElemento.textContent = horaServidor;
-}
+            const margenAntesMinutos = 15;
+            const margenDespuesMinutos = 5;
 
-// --- FUNCIÓN PARA ACTUALIZAR EL RELOJ LOCAL ---
-function actualizarRelojLocal() {
-const relojLocalElemento = document.getElementById('reloj-local');
-const ahora = new Date();
+            // --- PASO 1: Encontrar la hora del siguiente spawn ---
+            let proximaHoraMinutos = null;
+            horasSpawn.forEach(span => {
+                const horaTexto = span.getAttribute('data-hora');
+                const [h, m] = horaTexto.split(':').map(Number);
+                const horaSpawnMinutos = h * 60 + m;
 
-const horaLocal = ahora.toLocaleTimeString('es-ES', {
-hour: '2-digit',
-minute: '2-digit',
-second: '2-digit',
-hour12: false
-});
+                if (horaSpawnMinutos > horaActualMinutos) {
+                    if (proximaHoraMinutos === null || horaSpawnMinutos < proximaHoraMinutos) {
+                        proximaHoraMinutos = horaSpawnMinutos;
+                    }
+                }
+            });
 
-relojLocalElemento.textContent = `${horaLocal} (hora local)`;
-}
+            // --- PASO 2: Aplicar estilos basados en la lógica de prioridad ---
+            horasSpawn.forEach(span => {
+                // Limpiar clases anteriores para evitar conflictos
+                span.classList.remove('ventana-spawn', 'proximo-spawn');
+                
+                const horaTexto = span.getAttribute('data-hora');
+                const [h, m] = horaTexto.split(':').map(Number);
+                const horaSpawnMinutos = h * 60 + m;
 
-// --- NUEVA FUNCIÓN DE RESALTADO CON LÓGICA DE PRIORIDAD ---
-function resaltarProximaHora() {
-const horasSpawn = document.querySelectorAll('.hora-spawn');
-const zonaHorariaServidor = 'America/Sao_Paulo';
+                // PRIORIDAD 1: Ventana de Spawn (Verde)
+                if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
+                    span.classList.add('ventana-spawn');
+                } 
+                // PRIORIDAD 2: Próxima Hora (Celeste)
+                else if (proximaHoraMinutos !== null && horaSpawnMinutos === proximaHoraMinutos) {
+                    span.classList.add('proximo-spawn');
+                }
+            });
+        }
 
-const ahora = new Date();
-const opciones = {
-timeZone: zonaHorariaServidor,
-hour: '2-digit',
-minute: '2-digit',
-hour12: false
-};
-const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
-const [horas, minutos] = horaServidor.split(':').map(Number);
-const horaActualMinutos = horas * 60 + minutos;
+        // --- INICIALIZACIÓN Y MEJORAS ---
+        
+        // Función principal que actualiza todo
+        function actualizarTodo() {
+            actualizarReloj();
+            actualizarRelojLocal();
+            resaltarProximaHora();
+        }
 
-const margenAntesMinutos = 15;
-const margenDespuesMinutos = 5;
+        // Inicia todo al cargar la página
+        actualizarTodo();
 
-// --- PASO 1: Encontrar la hora del siguiente spawn ---
-let proximaHoraMinutos = null;
-horasSpawn.forEach(span => {
-const horaTexto = span.getAttribute('data-hora');
-const [h, m] = horaTexto.split(':').map(Number);
-const horaSpawnMinutos = h * 60 + m;
+        // Actualizamos los relojes cada segundo
+        setInterval(actualizarReloj, 1000);
+        setInterval(actualizarRelojLocal, 1000);
 
-if (horaSpawnMinutos > horaActualMinutos) {
-if (proximaHoraMinutos === null || horaSpawnMinutos < proximaHoraMinutos) {
-proximaHoraMinutos = horaSpawnMinutos;
-}
-}
-});
+        // Actualizamos los resaltados cada 15 segundos
+        setInterval(resaltarProximaHora, 15000);
 
-// --- PASO 2: Aplicar estilos basados en la lógica de prioridad ---
-horasSpawn.forEach(span => {
-// Limpiar clases anteriores para evitar conflictos
-span.classList.remove('ventana-spawn', 'proximo-spawn');
+        // Evento para detectar cuando el usuario vuelve a la pestaña
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                actualizarTodo();
+            }
+        });
 
-const horaTexto = span.getAttribute('data-hora');
-const [h, m] = horaTexto.split(':').map(Number);
-const horaSpawnMinutos = h * 60 + m;
-
-// PRIORIDAD 1: Ventana de Spawn (Verde)
-if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
-span.classList.add('ventana-spawn');
-}
-// PRIORIDAD 2: Próxima Hora (Celeste)
-// El 'else if' asegura que solo se aplique si la condición anterior no se cumplió.
-else if (proximaHoraMinutos !== null && horaSpawnMinutos === proximaHoraMinutos) {
-span.classList.add('proximo-spawn');
-}
-});
-}
-
-// --- INICIALIZACIÓN Y MEJORAS ---
-
-// Función principal que actualiza todo
-function actualizarTodo() {
-actualizarReloj();
-actualizarRelojLocal();
-resaltarProximaHora();
-}
-
-// Inicia todo al cargar la página
-actualizarTodo();
-
-// Actualizamos los relojes cada segundo
-setInterval(actualizarReloj, 1000);
-setInterval(actualizarRelojLocal, 1000);
-
-// Actualizamos los resaltados cada 15 segundos
-setInterval(resaltarProximaHora, 15000);
-
-// Evento para detectar cuando el usuario vuelve a la pestaña
-document.addEventListener('visibilitychange', () => {
-if (!document.hidden) {
-actualizarTodo();
-}
-});
-
-</script>
+    </script>
 
 </body>
 </html>
