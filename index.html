@@ -3,610 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Página de inicio personalizada con accesos directos a servicios educativos y herramientas digitales">
-    <meta name="keywords" content="favoritos, accesos directos, educación, UPC, herramientas digitales">
-    <meta name="author" content="MisFavoritos">
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="MisFavoritos - Página de Inicio">
-    <meta property="og:description" content="Página de inicio personalizada con accesos directos a servicios educativos">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    
-    <title>MisFavoritos - Página de Inicio</title>
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    
+    <title>Horario de Jefes - MIR4 SA1</title>
+    <!-- Metadatos para que la vista previa en Discord se vea genial -->
+    <meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA1 🐉">
+    <meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA1 (Brasil).">
+    <meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
+    <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #f5f7fa, #e4eaf5);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            min-height: 100vh;
-            color: #333;
-            overflow-x: hidden;
-            position: relative;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
             display: flex;
             justify-content: center;
             align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
         }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .center-content {
-            max-width: 800px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            z-index: 1;
-            pointer-events: none;
-        }
-        
         .container {
-            position: relative;
-            z-index: 2;
-            width: 100%;
+            background-color: #2f3136;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            width: 90%;
+            max-width: 900px;
         }
-        
-        header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-            padding: 10px 0;
-        }
-        
-        .logo {
-            font-size: 2.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            color: #4285f4;
-        }
-        
-        .logo span {
-            color: #ea4335;
-        }
-        
-        .logo i {
-            margin-right: 15px;
-            font-size: 2.2rem;
-        }
-        
-        .clock {
-            font-size: 1.1rem;
-            opacity: 0.8;
+        h1 {
             text-align: center;
-            margin-bottom: 30px;
-            color: #555;
+            color: #ffffff;
+            margin-bottom: 15px;
         }
-        
-        .search-box {
-            width: 100%;
-            margin: 20px 0 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .search-form {
-            width: 100%;
-            max-width: 600px;
-            position: relative;
-        }
-        
-        .search-container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 0 16px;
-            height: 48px;
-            transition: box-shadow 0.2s;
-        }
-        
-        .search-container:hover {
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        }
-        
-        .search-container:focus-within {
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .search-icon {
-            color: #9aa0a6;
-            margin-right: 12px;
-            font-size: 18px;
-        }
-        
-        .search-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            background: transparent;
-            color: #333;
-            height: 100%;
-        }
-        
-        .search-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .search-action {
-            color: #9aa0a6;
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .search-action:hover {
-            background-color: rgba(60, 64, 67, 0.08);
-        }
-        
-        .tabs-container {
-            margin: 30px 0;
-            position: relative;
-        }
-        
-        .tabs-wrapper {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 10px 10px 0 0;
-            overflow-x: auto;
-            padding: 0 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .tabs {
-            display: flex;
-            flex: 1;
-        }
-        
-        .tab {
-            padding: 12px 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-            font-weight: 500;
-            position: relative;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #555;
-        }
-        
-        .tab.active {
-            background: rgba(255, 255, 255, 0.9);
-            border-bottom: 3px solid #4285f4;
-            color: #4285f4;
-        }
-        
-        .tab:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.8);
-        }
-        
-        .tab-content {
-            display: none;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 0 0 10px 10px;
-            padding: 20px;
-            min-height: 500px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .shortcuts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 20px;
-        }
-        
-        .shortcut {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 15px 10px;
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            text-decoration: none;
-            color: #333;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .shortcut:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 1);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-        }
-        
-        .shortcut-icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        /* Colores específicos para cada icono */
-        .shortcut[data-shortcut-id="sc-1"] .shortcut-icon i {
-            color: #4285f4;
-        }
-        
-        .shortcut[data-shortcut-id="sc-2"] .shortcut-icon i {
-            color: #f4b400;
-        }
-        
-        .shortcut[data-shortcut-id="sc-3"] .shortcut-icon i {
-            color: #4285f4;
-        }
-        
-        .shortcut[data-shortcut-id="sc-4"] .shortcut-icon i {
-            color: #0f9d58;
-        }
-        
-        .shortcut[data-shortcut-id="sc-5"] .shortcut-icon i {
-            color: #ea4335;
-        }
-        
-        .shortcut[data-shortcut-id="sc-6"] .shortcut-icon i {
-            color: #ff0000;
-        }
-        
-        .shortcut[data-shortcut-id="sc-7"] .shortcut-icon i {
-            color: #4285f4;
-        }
-        
-        .shortcut[data-shortcut-id="sc-8"] .shortcut-icon i {
-            color: #4285f4;
-        }
-        
-        .shortcut[data-shortcut-id="sc-9"] .shortcut-icon i {
-            color: #10a37f;
-        }
-        
-        .shortcut-name {
-            font-size: 12px;
+        /* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
+        #reloj-servidor {
             text-align: center;
-            word-break: break-word;
-            max-width: 100%;
+            font-size: 2em;
+            font-family: 'Courier New', Courier, monospace;
+            color: #43b581;
+            margin: 5px 0 5px 0;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(67, 181, 129, 0.5);
         }
-
-        .credit {
-            margin-top: 30px;
+        /* --- ESTILOS PARA EL RELOJ LOCAL AÑADIDOS --- */
+        #reloj-local {
             text-align: center;
-            opacity: 0.7;
-            font-size: 14px;
-            color: #666;
+            font-size: 1em; /* Más pequeño que el reloj del servidor */
+            font-family: 'Courier New', Courier, monospace;
+            color: #b9bbbe; /* Color gris para diferenciar */
+            margin: 0px 0 20px 0; /* Menor margen superior */
+            font-weight: normal; /* Peso de fuente normal */
         }
-
-        /* Loading animation */
-        .loading {
+        .info-zona-horaria {
+            text-align: center;
+            color: #7289da;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #40444b;
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #202225;
+            color: #7289da;
+            font-weight: 600;
+        }
+        td:first-child {
+            font-weight: bold;
+            color: #b9bbbe;
+            width: 35%;
+            vertical-align: top;
+        }
+        td:last-child {
+            line-height: 1.8;
+        }
+        .hora-spawn {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(0,0,0,.1);
-            border-radius: 50%;
-            border-top-color: #4285f4;
-            animation: spin 1s ease-in-out infinite;
+            background-color: #40444b;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin: 2px;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .resaltado {
+            background-color: #faa61a !important;
+            color: #ffffff;
+            font-weight: bold;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(250, 166, 26, 0.7);
+            animation: pulse 1.5s infinite;
         }
-
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 1.8rem;
-            }
-            
-            .shortcuts-grid {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-                gap: 15px;
-            }
-            
-            header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(250, 166, 26, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(250, 166, 26, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(250, 166, 26, 0); }
         }
     </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    
-    <!-- Contenido central completamente centrado -->
-    <div class="center-content">
-        <div class="container">
-            <header>
-                <div class="logo">
-                    <i class="fas fa-star"></i>
-                    Mis<span>Favoritos</span>
-                </div>
-            </header>
-            
-            <div class="clock" id="clock">
-                <span class="loading"></span> Cargando...
-            </div>
-            
-            <div class="search-box">
-                <form class="search-form" action="https://www.google.com/search" method="GET" target="_top" id="googleSearchForm">
-                    <div class="search-container">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" name="q" class="search-input" placeholder="Buscar en Google..." id="searchInput" autocomplete="off">
-                        <div class="search-actions">
-                            <div class="search-action" id="voiceSearch" title="Búsqueda por voz">
-                                <i class="fas fa-microphone"></i>
-                            </div>
-                            <div class="search-action" id="imageSearch" title="Búsqueda por imagen">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="tabs-container">
-                <div class="tabs-wrapper">
-                    <div class="tabs" id="tabsList">
-                        <!-- Las pestañas se generarán aquí -->
-                    </div>
-                </div>
-                
-                <div id="tabContents">
-                    <!-- El contenido de las pestañas se generará aquí -->
-                </div>
-            </div>
-            
-            <div class="credit">
-                Página de inicio personalizada - MisFavoritos v3.0
-            </div>
-        </div>
+
+    <div class="container">
+        <h1>⚔️ Horario de Jefes - Servidor SA1 ⚔️</h1>
+        <!-- RELOJ DEL SERVIDOR -->
+        <div id="reloj-servidor">Cargando hora...</div>
+        <!-- RELOJ LOCAL AÑADIDO -->
+        <div id="reloj-local">Cargando hora local... (hora local)</div>
+        
+        <p class="info-zona-horaria">Horario sincronizado con el servidor: <strong>Hora de Brasil (UTC-3)</strong></p>
+        <table>
+            <thead>
+                <tr>
+                    <th>JEFES SEMANALES</th>
+                    <th>Horarios de Aparición (Hora del Servidor)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>REY TORO DEMONIO (Mundo 1)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="00:00">00h</span>
+                        <span class="hora-spawn" data-hora="09:00">09h</span>
+                        <span class="hora-spawn" data-hora="18:00">18h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>GUARDIAN DE TEMPLO - MATA (Mundo 1)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="02:00">02h</span>
+                        <span class="hora-spawn" data-hora="18:00">18h</span>
+                        <span class="hora-spawn" data-hora="22:00">22h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>RELÁMPAGO TORO CHUPA SANGRE (Mundo 1)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="01:00">1h</span>
+                        <span class="hora-spawn" data-hora="03:00">3h</span>
+                        <span class="hora-spawn" data-hora="05:00">5h</span>
+                        <span class="hora-spawn" data-hora="07:00">7h</span>
+                        <span class="hora-spawn" data-hora="09:00">9h</span>
+                        <span class="hora-spawn" data-hora="11:00">11h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="15:00">15h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+                        <span class="hora-spawn" data-hora="19:00">19h</span>
+                        <span class="hora-spawn" data-hora="21:00">21h</span>
+                        <span class="hora-spawn" data-hora="23:00">23h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>KURILAIKA (Mundo 4)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="00:00">00h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="18:00">18h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>NEFARIO DIGNIDAD INQUEBRANTABLE (Mundo 4)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="00:00">00h</span>
+                        <span class="hora-spawn" data-hora="20:00">20h</span>
+                        <span class="hora-spawn" data-hora="22:00">22h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>YIUN (Mundo 7)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="02:00">02h</span>
+                        <span class="hora-spawn" data-hora="05:00">05h</span>
+                        <span class="hora-spawn" data-hora="08:00">08h</span>
+                        <span class="hora-spawn" data-hora="11:00">11h</span>
+                        <span class="hora-spawn" data-hora="14:00">14h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+                        <span class="hora-spawn" data-hora="20:00">20h</span>
+                        <span class="hora-spawn" data-hora="23:00">23h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>TAEHYUL (Mundo 7)</td>
+                    <td>
+                        <span class="hora-spawn" data-hora="01:00">1h</span>
+                        <span class="hora-spawn" data-hora="03:00">3h</span>
+                        <span class="hora-spawn" data-hora="05:00">5h</span>
+                        <span class="hora-spawn" data-hora="07:00">7h</span>
+                        <span class="hora-spawn" data-hora="09:00">9h</span>
+                        <span class="hora-spawn" data-hora="11:00">11h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="15:00">15h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+                        <span class="hora-spawn" data-hora="19:00">19h</span>
+                        <span class="hora-spawn" data-hora="21:00">21h</span>
+                        <span class="hora-spawn" data-hora="23:00">23h</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>YEO WIHUANG (Mundo 8)</td>
+                    <td>
+            <span class="hora-spawn" data-hora="01:00">01h</span>
+            <span class="hora-spawn" data-hora="05:00">05h</span>
+                        <span class="hora-spawn" data-hora="09:00">09h</span>
+                        <span class="hora-spawn" data-hora="13:00">13h</span>
+                        <span class="hora-spawn" data-hora="17:00">17h</span>
+            <span class="hora-spawn" data-hora="21:00">21h</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script>
-        // DATOS DE LA PÁGINA
-        const tabs = [
-            {
-                id: 'tab-1',
-                name: 'Inicio',
-                icon: 'fas fa-home',
-                active: true,
-                content: [{
-                    type: "shortcuts",
-                    shortcuts: [
-                        {
-                            id: 'sc-1',
-                            name: 'Reserva de Computadoras',
-                            url: 'https://bibliotecareserva.upc.edu.pe/space/130510',
-                            icon: 'fas fa-laptop'
-                        },
-                        {
-                            id: 'sc-2',
-                            name: 'Aula Virtual UPC',
-                            url: 'https://aulavirtual.upc.edu.pe/',
-                            icon: 'fas fa-graduation-cap'
-                        },
-                        {
-                            id: 'sc-3',
-                            name: 'Google',
-                            url: 'https://google.com',
-                            icon: 'fab fa-google'
-                        },
-                        {
-                            id: 'sc-4',
-                            name: 'Drive',
-                            url: 'https://drive.google.com',
-                            icon: 'fab fa-google-drive'
-                        },
-                        {
-                            id: 'sc-5',
-                            name: 'Gmail',
-                            url: 'https://gmail.com',
-                            icon: 'fas fa-envelope'
-                        },
-                        {
-                            id: 'sc-6',
-                            name: 'YouTube',
-                            url: 'https://youtube.com',
-                            icon: 'fab fa-youtube'
-                        },
-                        {
-                            id: 'sc-7',
-                            name: 'Maps',
-                            url: 'https://maps.google.com',
-                            icon: 'fas fa-map'
-                        },
-                        {
-                            id: 'sc-8',
-                            name: 'Traductor',
-                            url: 'https://translate.google.com',
-                            icon: 'fas fa-language'
-                        },
-                        {
-                            id: 'sc-9',
-                            name: 'ChatGPT',
-                            url: 'https://chat.openai.com',
-                            icon: 'fas fa-robot'
-                        }
-                    ]
-                }]
-            }
-        ];
-
-        // FUNCIONES DE UTILIDAD
-        function updateClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('es-ES', {
+        // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ DEL SERVIDOR ---
+        function actualizarReloj() {
+            const relojElemento = document.getElementById('reloj-servidor');
+            const zonaHorariaServidor = 'America/Sao_Paulo';
+            const ahora = new Date();
+            
+            const opciones = {
+                timeZone: zonaHorariaServidor,
                 hour: '2-digit',
                 minute: '2-digit',
-                second: '2-digit'
-            });
-            const dateString = now.toLocaleDateString('es-ES', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+                second: '2-digit',
+                hour12: false
+            };
             
-            const clockElement = document.getElementById('clock');
-            if (clockElement) {
-                clockElement.innerHTML = `
-                    <i class="fas fa-clock"></i> ${timeString} - ${dateString}
-                `;
-            }
+            const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+            relojElemento.textContent = horaServidor;
         }
 
-        // FUNCIONES DE INTERFAZ
-        function renderTabs() {
-            const tabsList = document.getElementById('tabsList');
-            const tabContents = document.getElementById('tabContents');
+        // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ LOCAL ---
+        function actualizarRelojLocal() {
+            const relojLocalElemento = document.getElementById('reloj-local');
+            const ahora = new Date();
             
-            if (!tabsList || !tabContents) return;
+            // Obtiene la hora local del equipo sin especificar zona horaria
+            const horaLocal = ahora.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit', 
+                hour12: false 
+            });
             
-            tabsList.innerHTML = '';
-            tabContents.innerHTML = '';
+            relojLocalElemento.textContent = `${horaLocal} (hora local)`;
+        }
 
-            tabs.forEach((tab, index) => {
-                // Crear elemento de pestaña
-                const tabElement = document.createElement('div');
-                tabElement.className = `tab ${tab.active ? 'active' : ''}`;
-                tabElement.innerHTML = `
-                    <i class="${tab.icon}"></i>
-                    <span>${tab.name}</span>
-                `;
-                
-                tabElement.addEventListener('click', () => {
-                    switchTab(tab.id);
-                });
-                
-                tabsList.appendChild(tabElement);
+        function resaltarProximaHora() {
+            const horasSpawn = document.querySelectorAll('.hora-spawn');
+            const zonaHorariaServidor = 'America/Sao_Paulo'; 
+            
+            const ahora = new Date();
+            const opciones = { 
+                timeZone: zonaHorariaServidor, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: false 
+            };
+            const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+            const [horas, minutos] = horaServidor.split(':').map(Number);
+            const horaActualMinutos = horas * 60 + minutos;
 
-                // Crear contenido de pestaña
-                const tabContent = document.createElement('div');
-                tabContent.className = `tab-content ${tab.active ? 'active' : ''}`;
-                tabContent.id = `content-${tab.id}`;
-                
-                if (tab.content && tab.content[0]) {
-                    if (tab.content[0].type === "shortcuts" && tab.content[0].shortcuts) {
-                        // Contenido normal con accesos directos
-                        tabContent.innerHTML = `
-                            <div class="shortcuts-grid">
-                                ${tab.content[0].shortcuts.map(shortcut => `
-                                    <a href="${shortcut.url}" target="_blank" class="shortcut" data-shortcut-id="${shortcut.id}" rel="noopener noreferrer">
-                                        <div class="shortcut-icon">
-                                            <i class="${shortcut.icon}"></i>
-                                        </div>
-                                        <div class="shortcut-name">${shortcut.name}</div>
-                                    </a>
-                                `).join('')}
-                            </div>
-                        `;
-                    }
+            const margenAntesMinutos = 15;
+            const margenDespuesMinutos = 5;
+
+            horasSpawn.forEach(span => {
+                span.classList.remove('resaltado');
+                const horaTexto = span.getAttribute('data-hora');
+                const [h, m] = horaTexto.split(':').map(Number);
+                const horaSpawnMinutos = h * 60 + m;
+
+                if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
+                    span.classList.add('resaltado');
                 }
-                
-                tabContents.appendChild(tabContent);
             });
         }
 
-        function switchTab(tabId) {
-            tabs.forEach(tab => {
-                tab.active = tab.id === tabId;
-            });
-            renderTabs();
-        }
+        // --- INICIALIZACIÓN ---
+        // Inicia el reloj del servidor y lo actualiza cada segundo
+        actualizarReloj();
+        setInterval(actualizarReloj, 1000);
 
-        // INICIAR APLICACIÓN
-        function initializeApp() {
-            // Configurar reloj
-            updateClock();
-            setInterval(updateClock, 1000);
-            
-            // Renderizar interfaz
-            renderTabs();
-            
-            // Enfocar el campo de búsqueda
-            const searchInput = document.querySelector('.search-input');
-            if (searchInput) {
-                searchInput.focus();
-            }
-            
-            // Configurar eventos de búsqueda
-            const voiceSearch = document.getElementById('voiceSearch');
-            const imageSearch = document.getElementById('imageSearch');
-            
-            // Búsqueda por voz (simulación)
-            if (voiceSearch) {
-                voiceSearch.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('Función de búsqueda por voz. En un navegador compatible, se activaría el reconocimiento de voz.');
-                });
-            }
-            
-            // Búsqueda por imagen
-            if (imageSearch) {
-                imageSearch.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.open('https://images.google.com/', '_blank', 'noopener,noreferrer');
-                });
-            }
-        }
+        // Inicia el reloj local y lo actualiza cada segundo
+        actualizarRelojLocal();
+        setInterval(actualizarRelojLocal, 1000);
 
-        // Iniciar cuando el DOM esté listo
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeApp);
-        } else {
-            initializeApp();
-        }
+        // Inicia el resaltado y lo actualiza cada minuto
+        resaltarProximaHora();
+        setInterval(resaltarProximaHora, 60000);
     </script>
+
 </body>
 </html>
