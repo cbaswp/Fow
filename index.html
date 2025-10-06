@@ -243,7 +243,6 @@
             const relojLocalElemento = document.getElementById('reloj-local');
             const ahora = new Date();
             
-            // Obtiene la hora local del equipo sin especificar zona horaria
             const horaLocal = ahora.toLocaleTimeString('es-ES', { 
                 hour: '2-digit', 
                 minute: '2-digit', 
@@ -284,18 +283,34 @@
             });
         }
 
-        // --- INICIALIZACIÓN ---
-        // Inicia el reloj del servidor y lo actualiza cada segundo
-        actualizarReloj();
-        setInterval(actualizarReloj, 1000);
+        // --- INICIALIZACIÓN Y MEJORAS ---
+        
+        // Función principal que actualiza todo
+        function actualizarTodo() {
+            actualizarReloj();
+            actualizarRelojLocal();
+            resaltarProximaHora();
+        }
 
-        // Inicia el reloj local y lo actualiza cada segundo
-        actualizarRelojLocal();
+        // Inicia todo al cargar la página
+        actualizarTodo();
+
+        // --- NUEVO: Actualización más frecuente para mayor fluidez ---
+        // Actualizamos los relojes cada segundo
+        setInterval(actualizarReloj, 1000);
         setInterval(actualizarRelojLocal, 1000);
 
-        // Inicia el resaltado y lo actualiza cada minuto
-        resaltarProximaHora();
-        setInterval(resaltarProximaHora, 60000);
+        // Actualizamos los resaltados cada 15 segundos (en lugar de 60)
+        setInterval(resaltarProximaHora, 15000); // 15000 ms = 15 segundos
+
+        // --- NUEVO: Evento para detectar cuando el usuario vuelve a la pestaña ---
+        document.addEventListener('visibilitychange', () => {
+            // Si la pestaña se vuelve visible, actualizamos todo inmediatamente
+            if (!document.hidden) {
+                actualizarTodo();
+            }
+        });
+
     </script>
 
 </body>
