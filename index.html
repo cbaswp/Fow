@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horario de Jefes - MIR4 SA31</title>
+    <title>Horario de Jefes - MIR4 SA1</title>
     <!-- Metadatos para que la vista previa en Discord se vea genial -->
-    <meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA31 🐉">
-    <meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA31.">
+    <meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA1 🐉">
+    <meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA1 (Brasil).">
     <meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
     <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
 
@@ -151,13 +151,13 @@
 <body>
 
     <div class="container">
-        <h1>⚔️ Horario de Jefes - Servidor SA31 ⚔️</h1>
+        <h1>⚔️ Horario de Jefes - Servidor SA1 ⚔️</h1>
         <!-- RELOJ DEL SERVIDOR -->
         <div id="reloj-servidor">Cargando hora...</div>
         <!-- RELOJ LOCAL AÑADIDO -->
         <div id="reloj-local">Cargando hora local... (hora local)</div>
         
-        <!-- LEYENDA DE COLORES (SIN TEXTO EN LOS CUADROS) -->
+        <!-- LEYENDA DE COLORES -->
         <div class="leyenda-colores">
             <ul>
                 <li>
@@ -321,11 +321,9 @@
             relojLocalElemento.textContent = `${horaLocal} (hora local)`;
         }
 
-        // --- FUNCIÓN DE RESALTADO CORREGIDA ---
+        // --- FUNCIÓN DE RESALTADO DEFINITIVA (CORRIGE EL PROBLEMA DE 00:00) ---
         function resaltarProximaHora() {
-            // --- CAMBIO CLAVE: Seleccionar solo las horas dentro de la tabla para evitar conflictos con la leyenda ---
             const horasSpawn = document.querySelectorAll('td .hora-spawn');
-            
             const zonaHorariaServidor = 'America/Sao_Paulo'; 
             
             const ahora = new Date();
@@ -342,31 +340,56 @@
             const margenAntesMinutos = 15;
             const margenDespuesMinutos = 5;
 
-            // --- PASO 1: Encontrar la hora del siguiente spawn ---
+            // --- LÓGICA PARA ENCONTRAR LA PRÓXIMA HORA (MANEJA EL CAMBIO DE DÍA) ---
             let proximaHoraMinutos = null;
+            let spawnsDelDia = [];
+
             horasSpawn.forEach(span => {
                 const horaTexto = span.getAttribute('data-hora');
                 const [h, m] = horaTexto.split(':').map(Number);
-                const horaSpawnMinutos = h * 60 + m;
-
-                if (horaSpawnMinutos > horaActualMinutos) {
-                    if (proximaHoraMinutos === null || horaSpawnMinutos < proximaHoraMinutos) {
-                        proximaHoraMinutos = horaSpawnMinutos;
-                    }
-                }
+                spawnsDelDia.push(h * 60 + m);
             });
 
-            // --- PASO 2: Aplicar estilos basados en la lógica de prioridad ---
+            const spawnsUnicosOrdenados = [...new Set(spawnsDelDia)].sort((a, b) => a - b);
+
+            for (const spawnMinutos of spawnsUnicosOrdenados) {
+                if (spawnMinutos > horaActualMinutos) {
+                    proximaHoraMinutos = spawnMinutos;
+                    break;
+                }
+            }
+
+            if (proximaHoraMinutos === null && spawnsUnicosOrdenados.length > 0) {
+                proximaHoraMinutos = spawnsUnicosOrdenados[0];
+            }
+            // --- FIN DE LA LÓGICA DE LA PRÓXIMA HORA ---
+
+            // --- LÓGICA PARA APLICAR COLORES ---
             horasSpawn.forEach(span => {
-                // Limpiar clases anteriores para evitar conflictos
                 span.classList.remove('ventana-spawn', 'proximo-spawn');
                 
                 const horaTexto = span.getAttribute('data-hora');
                 const [h, m] = horaTexto.split(':').map(Number);
                 const horaSpawnMinutos = h * 60 + m;
 
+                let enVentanaDeSpawn = false;
+
+                // --- CORRECCIÓN CLAVE PARA LA VENTANA DE MEDIANOCHE ---
+                // Si el spawn es a las 00:00, su ventana especial es desde 23:45 hasta 00:05.
+                if (horaSpawnMinutos === 0) {
+                    const minutosEnDia = 24 * 60;
+                    if (horaActualMinutos >= (minutosEnDia - margenAntesMinutos) || horaActualMinutos <= margenDespuesMinutos) {
+                        enVentanaDeSpawn = true;
+                    }
+                } 
+                // Para cualquier otra hora, la lógica es normal.
+                else if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
+                    enVentanaDeSpawn = true;
+                }
+                // --- FIN DE LA CORRECCIÓN ---
+
                 // PRIORIDAD 1: Ventana de Spawn (Verde)
-                if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
+                if (enVentanaDeSpawn) {
                     span.classList.add('ventana-spawn');
                 } 
                 // PRIORIDAD 2: Próxima Hora (Celeste)
@@ -376,26 +399,18 @@
             });
         }
 
-        // --- INICIALIZACIÓN Y MEJORAS ---
-        
-        // Función principal que actualiza todo
+        // --- INICIALIZACIÓN ---
         function actualizarTodo() {
             actualizarReloj();
             actualizarRelojLocal();
             resaltarProximaHora();
         }
 
-        // Inicia todo al cargar la página
         actualizarTodo();
-
-        // Actualizamos los relojes cada segundo
         setInterval(actualizarReloj, 1000);
         setInterval(actualizarRelojLocal, 1000);
-
-        // Actualizamos los resaltados cada 15 segundos
         setInterval(resaltarProximaHora, 15000);
 
-        // Evento para detectar cuando el usuario vuelve a la pestaña
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
                 actualizarTodo();
