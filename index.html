@@ -10,7 +10,7 @@
     <meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
     <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
 
-    <!-- SCRIPT DE GOATCOUNTER PARA CONTAR VISITAS (AÑADIDO AQUÍ) -->
+    <!-- SCRIPT DE GOATCOUNTER PARA CONTAR VISITAS -->
     <script data-goatcounter="https://cbas.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 
@@ -33,7 +33,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             width: 90%;
             max-width: 900px;
-            position: relative; /* Necesario para posicionar el contador */
+            position: relative;
         }
         h1 {
             text-align: center;
@@ -41,7 +41,7 @@
             margin-bottom: 15px;
         }
         
-        /* --- ESTILOS PARA EL CONTADOR DE VISITAS --- */
+        /* --- ESTILOS PARA EL CONTADOR DE VISITAS (ACTUALIZADO) --- */
         #visit-counter {
             position: absolute;
             top: 10px;
@@ -58,10 +58,11 @@
         #visit-counter-icon {
             font-size: 1em;
         }
-        #visit-counter iframe {
-            border: none;
-            width: 60px;
-            height: 20px;
+        /* Cambiado de iframe a span */
+        #visit-counter-number {
+            font-weight: bold;
+            min-width: 40px; /* Para que no se mueva el layout cuando el número cambia */
+            text-align: center;
         }
 
         /* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
@@ -180,11 +181,11 @@
 <body>
 
     <div class="container">
-        <!-- IFRAME PARA MOSTRAR EL NÚMERO DE VISITAS -->
+        <!-- CONTADOR DE VISITAS (AHORA CON UN <span> EN LUGAR DE IFRAME) -->
         <div id="visit-counter">
             <span id="visit-counter-icon">👁️</span>
             <span>Visitantes:</span>
-            <iframe src="https://cbas.goatcounter.com/count/" scrolling="no"></iframe>
+            <span id="visit-counter-number">...</span>
         </div>
 
         <h1>⚔️ Horario de Jefes - Servidor SA1 ⚔️</h1>
@@ -324,6 +325,28 @@
     </div>
 
     <script>
+        // --- FUNCIÓN NUEVA PARA ACTUALIZAR EL CONTADOR DE VISITAS ---
+        function actualizarContador() {
+            const counterElement = document.getElementById('visit-counter-number');
+            const counterUrl = 'https://cbas.goatcounter.com/count/';
+
+            fetch(counterUrl)
+                .then(response => response.text())
+                .then(html => {
+                    // La respuesta es un HTML simple, extraemos el número con una expresión regular
+                    const match = html.match(/<body[^>]*>\s*<a[^>]*>(\d+)<\/a>/);
+                    if (match && match[1]) {
+                        counterElement.textContent = match[1];
+                    } else {
+                        counterElement.textContent = '...'; // Fallback si no encuentra el número
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al actualizar el contador:', error);
+                    counterElement.textContent = '...'; // Fallback si hay error de red
+                });
+        }
+
         // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ DEL SERVIDOR ---
         function actualizarReloj() {
             const relojElemento = document.getElementById('reloj-servidor');
@@ -426,16 +449,26 @@
             });
         }
 
+        // --- INICIALIZACIÓN ---
         function actualizarTodo() {
             actualizarReloj();
             actualizarRelojLocal();
             resaltarProximaHora();
+            actualizarContador(); // Añadido aquí
         }
 
+        // Inicia todo al cargar la página
         actualizarTodo();
+
+        // Actualizamos los relojes cada segundo
         setInterval(actualizarReloj, 1000);
         setInterval(actualizarRelojLocal, 1000);
+
+        // Actualizamos los resaltados cada 15 segundos
         setInterval(resaltarProximaHora, 15000);
+
+        // Actualizamos el contador cada 5 minutos (300000 ms)
+        setInterval(actualizarContador, 300000);
 
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
