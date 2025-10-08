@@ -10,6 +10,7 @@
     <meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
     <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
 
+    <!-- SCRIPT DE GOATCOUNTER PARA CONTAR VISITAS (SE MANTIENE) -->
     <script data-goatcounter="https://cbas.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 
@@ -32,7 +33,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             width: 90%;
             max-width: 900px;
-            position: relative;
+            /* position: relative; Ya no es necesaria */
         }
         h1 {
             text-align: center;
@@ -40,30 +41,6 @@
             margin-bottom: 15px;
         }
         
-        /* --- ESTILOS PARA EL CONTADOR DE VISITAS (AHORA CON <IMG>) --- */
-        #visit-counter {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background-color: rgba(32, 34, 37, 0.7);
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            color: #b9bbbe;
-        }
-        #visit-counter-icon {
-            font-size: 1em;
-        }
-        #visit-counter img {
-            border: none;
-            width: 60px;
-            height: 20px;
-            vertical-align: middle;
-        }
-
         /* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
         #reloj-servidor {
             text-align: center;
@@ -180,13 +157,6 @@
 <body>
 
     <div class="container">
-        <!-- CONTADOR DE VISITAS (AHORA CON <IMG> EN LUGAR DE IFRAME) -->
-        <div id="visit-counter">
-            <span id="visit-counter-icon">👁️</span>
-            <span>Visitantes:</span>
-            <img src="https://cbas.goatcounter.com/counter/" alt="Contador de visitas">
-        </div>
-
         <h1>⚔️ Horario de Jefes - Servidor SA31 ⚔️</h1>
         <!-- RELOJ DEL SERVIDOR -->
         <div id="reloj-servidor">Cargando hora...</div>
