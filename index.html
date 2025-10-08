@@ -29,12 +29,37 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             width: 90%;
             max-width: 900px;
+            position: relative; /* Necesario para posicionar el contador */
         }
         h1 {
             text-align: center;
             color: #ffffff;
             margin-bottom: 15px;
         }
+        
+        /* --- ESTILOS PARA EL CONTADOR DE VISITAS (AÑADIDOS) --- */
+        #visit-counter {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: rgba(32, 34, 37, 0.7);
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            color: #b9bbbe;
+        }
+        #visit-counter-icon {
+            font-size: 1em;
+        }
+        #visit-counter iframe {
+            border: none;
+            width: 60px;
+            height: 20px;
+        }
+
         /* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
         #reloj-servidor {
             text-align: center;
@@ -151,7 +176,15 @@
 <body>
 
     <div class="container">
-        <h1>⚔️ Horario de Jefes - Servidor SA31 ⚔️</h1>
+        <!-- CONTADOR DE VISITAS AÑADIDO AQUÍ -->
+        <div id="visit-counter">
+            <span id="visit-counter-icon">👁️</span>
+            <span>Visitantes:</span>
+            <!-- URL ACTUALIZADA CON LA TUYA -->
+            <iframe src="https://cbas.goatcounter.com/count/" scrolling="no"></iframe>
+        </div>
+
+        <h1>⚔️ Horario de Jefes - Servidor SA1 ⚔️</h1>
         <!-- RELOJ DEL SERVIDOR -->
         <div id="reloj-servidor">Cargando hora...</div>
         <!-- RELOJ LOCAL AÑADIDO -->
@@ -190,7 +223,6 @@
                         <span class="hora-spawn" data-hora="00:00">00h</span>
                         <span class="hora-spawn" data-hora="09:00">09h</span>
                         <span class="hora-spawn" data-hora="18:00">18h</span>
-                        <span class="hora-spawn" data-hora="21:00">21h</span>
                     </td>
                 </tr>
                 <tr>
@@ -322,7 +354,7 @@
             relojLocalElemento.textContent = `${horaLocal} (hora local)`;
         }
 
-        // --- FUNCIÓN DE RESALTADO DEFINITIVA (CORRIGE EL PROBLEMA DE 00:00) ---
+        // --- FUNCIÓN DE RESALTADO DEFINITIVA ---
         function resaltarProximaHora() {
             const horasSpawn = document.querySelectorAll('td .hora-spawn');
             const zonaHorariaServidor = 'America/Sao_Paulo'; 
@@ -341,7 +373,6 @@
             const margenAntesMinutos = 15;
             const margenDespuesMinutos = 5;
 
-            // --- LÓGICA PARA ENCONTRAR LA PRÓXIMA HORA (MANEJA EL CAMBIO DE DÍA) ---
             let proximaHoraMinutos = null;
             let spawnsDelDia = [];
 
@@ -363,9 +394,7 @@
             if (proximaHoraMinutos === null && spawnsUnicosOrdenados.length > 0) {
                 proximaHoraMinutos = spawnsUnicosOrdenados[0];
             }
-            // --- FIN DE LA LÓGICA DE LA PRÓXIMA HORA ---
 
-            // --- LÓGICA PARA APLICAR COLORES ---
             horasSpawn.forEach(span => {
                 span.classList.remove('ventana-spawn', 'proximo-spawn');
                 
@@ -375,32 +404,25 @@
 
                 let enVentanaDeSpawn = false;
 
-                // --- CORRECCIÓN CLAVE PARA LA VENTANA DE MEDIANOCHE ---
-                // Si el spawn es a las 00:00, su ventana especial es desde 23:45 hasta 00:05.
                 if (horaSpawnMinutos === 0) {
                     const minutosEnDia = 24 * 60;
                     if (horaActualMinutos >= (minutosEnDia - margenAntesMinutos) || horaActualMinutos <= margenDespuesMinutos) {
                         enVentanaDeSpawn = true;
                     }
                 } 
-                // Para cualquier otra hora, la lógica es normal.
                 else if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
                     enVentanaDeSpawn = true;
                 }
-                // --- FIN DE LA CORRECCIÓN ---
 
-                // PRIORIDAD 1: Ventana de Spawn (Verde)
                 if (enVentanaDeSpawn) {
                     span.classList.add('ventana-spawn');
                 } 
-                // PRIORIDAD 2: Próxima Hora (Celeste)
                 else if (proximaHoraMinutos !== null && horaSpawnMinutos === proximaHoraMinutos) {
                     span.classList.add('proximo-spawn');
                 }
             });
         }
 
-        // --- INICIALIZACIÓN ---
         function actualizarTodo() {
             actualizarReloj();
             actualizarRelojLocal();
