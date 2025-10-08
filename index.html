@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horario de Jefes - MIR4 SA1</title>
+    <title>Horario de Jefes - MIR4 SA31</title>
     <!-- Metadatos para que la vista previa en Discord se vea genial -->
-    <meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA1 🐉">
-    <meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA1 (Brasil).">
+    <meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA31 🐉">
+    <meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA31 (Brasil).">
     <meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
     <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
 
-    <!-- SCRIPT DE GOATCOUNTER PARA CONTAR VISITAS -->
     <script data-goatcounter="https://cbas.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 
@@ -41,7 +40,7 @@
             margin-bottom: 15px;
         }
         
-        /* --- ESTILOS PARA EL CONTADOR DE VISITAS (ACTUALIZADO) --- */
+        /* --- ESTILOS PARA EL CONTADOR DE VISITAS (AHORA CON <IMG>) --- */
         #visit-counter {
             position: absolute;
             top: 10px;
@@ -58,11 +57,11 @@
         #visit-counter-icon {
             font-size: 1em;
         }
-        /* Cambiado de iframe a span */
-        #visit-counter-number {
-            font-weight: bold;
-            min-width: 40px; /* Para que no se mueva el layout cuando el número cambia */
-            text-align: center;
+        #visit-counter img {
+            border: none;
+            width: 60px;
+            height: 20px;
+            vertical-align: middle;
         }
 
         /* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
@@ -181,14 +180,14 @@
 <body>
 
     <div class="container">
-        <!-- CONTADOR DE VISITAS (AHORA CON UN <span> EN LUGAR DE IFRAME) -->
+        <!-- CONTADOR DE VISITAS (AHORA CON <IMG> EN LUGAR DE IFRAME) -->
         <div id="visit-counter">
             <span id="visit-counter-icon">👁️</span>
             <span>Visitantes:</span>
-            <span id="visit-counter-number">...</span>
+            <img src="https://cbas.goatcounter.com/counter/" alt="Contador de visitas">
         </div>
 
-        <h1>⚔️ Horario de Jefes - Servidor SA1 ⚔️</h1>
+        <h1>⚔️ Horario de Jefes - Servidor SA31 ⚔️</h1>
         <!-- RELOJ DEL SERVIDOR -->
         <div id="reloj-servidor">Cargando hora...</div>
         <!-- RELOJ LOCAL AÑADIDO -->
@@ -325,28 +324,6 @@
     </div>
 
     <script>
-        // --- FUNCIÓN NUEVA PARA ACTUALIZAR EL CONTADOR DE VISITAS ---
-        function actualizarContador() {
-            const counterElement = document.getElementById('visit-counter-number');
-            const counterUrl = 'https://cbas.goatcounter.com/count/';
-
-            fetch(counterUrl)
-                .then(response => response.text())
-                .then(html => {
-                    // La respuesta es un HTML simple, extraemos el número con una expresión regular
-                    const match = html.match(/<body[^>]*>\s*<a[^>]*>(\d+)<\/a>/);
-                    if (match && match[1]) {
-                        counterElement.textContent = match[1];
-                    } else {
-                        counterElement.textContent = '...'; // Fallback si no encuentra el número
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al actualizar el contador:', error);
-                    counterElement.textContent = '...'; // Fallback si hay error de red
-                });
-        }
-
         // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ DEL SERVIDOR ---
         function actualizarReloj() {
             const relojElemento = document.getElementById('reloj-servidor');
@@ -449,26 +426,16 @@
             });
         }
 
-        // --- INICIALIZACIÓN ---
         function actualizarTodo() {
             actualizarReloj();
             actualizarRelojLocal();
             resaltarProximaHora();
-            actualizarContador(); // Añadido aquí
         }
 
-        // Inicia todo al cargar la página
         actualizarTodo();
-
-        // Actualizamos los relojes cada segundo
         setInterval(actualizarReloj, 1000);
         setInterval(actualizarRelojLocal, 1000);
-
-        // Actualizamos los resaltados cada 15 segundos
         setInterval(resaltarProximaHora, 15000);
-
-        // Actualizamos el contador cada 5 minutos (300000 ms)
-        setInterval(actualizarContador, 300000);
 
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
