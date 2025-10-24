@@ -3,71 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horario de Jefes - MIR4 SA31</title>
-    <!-- Metadatos para que la vista previa en Discord se vea genial -->
-    <meta property="og:title" content="🐉 Horario de Jefes - MIR4 SA31 🐉">
-    <meta property="og:description" content="Consulta el horario de aparición de los jefes. Sincronizado con la hora del servidor SA31 (Brasil).">
+    <title>Guía MIR4 - Servidor SA31</title>
+    <meta property="og:title" content="🐉 Guía MIR4 - Servidor SA31 🐉">
+    <meta property="og:description" content="Horarios de jefes y recursos de expedición. Sincronizado con SA31 (Brasil).">
     <meta property="og:image" content="https://i.imgur.com/G55wPbB.png">
     <meta property="og:url" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/">
 
-    <!-- SCRIPT DE GOATCOUNTER PARA CONTAR VISITAS (SE MANTIENE) -->
     <script data-goatcounter="https://cbas.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
 
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #36393f;
-            color: #dcddde;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px 0;
-        }
-        .container {
-            background-color: #2f3136;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            width: 90%;
-            max-width: 900px;
-            /* position: relative; Ya no es necesaria */
-        }
-        h1 {
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 15px;
+            padding: 0;
         }
         
-        /* --- ESTILOS PARA EL RELOJ DEL SERVIDOR --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #2c2f33 0%, #23272a 100%);
+            color: #dcddde;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Layout principal */
+        .app-layout {
+            display: flex;
+            height: 100vh;
+        }
+        
+        /* Sidebar de navegación */
+        .sidebar {
+            width: 260px;
+            background-color: #2f3136;
+            border-right: 1px solid #202225;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #202225;
+        }
+        
+        .sidebar-header h1 {
+            color: #ffffff;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header .servidor {
+            color: #7289da;
+            font-size: 0.9em;
+            font-weight: normal;
+        }
+        
+        .nav-section {
+            padding: 10px 0;
+        }
+        
+        .nav-section-title {
+            padding: 10px 20px;
+            color: #8e9297;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-item {
+            padding: 10px 20px;
+            color: #b9bbbe;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95em;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background-color: #36393f;
+            color: #dcddde;
+        }
+        
+        .nav-item.active {
+            background-color: #40444b;
+            color: #ffffff;
+            border-left-color: #5865F2;
+            font-weight: 600;
+        }
+        
+        .nav-item-icon {
+            font-size: 1.2em;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Contenido principal */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+            background: linear-gradient(135deg, #36393f 0%, #2f3136 100%);
+        }
+        
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-header {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            color: #ffffff;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .section-subtitle {
+            color: #b9bbbe;
+            font-size: 0.95em;
+        }
+        
+        .card {
+            background-color: #2f3136;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+            border: 1px solid #40444b;
+        }
+        
+        /* Estilos de relojes */
         #reloj-servidor {
             text-align: center;
             font-size: 2em;
             font-family: 'Courier New', Courier, monospace;
             color: #43b581;
-            margin: 5px 0 5px 0;
+            margin: 5px 0;
             font-weight: bold;
-            text-shadow: 0 0 5px rgba(67, 181, 129, 0.5);
+            text-shadow: 0 0 8px rgba(67, 181, 129, 0.6);
         }
-        /* --- ESTILOS PARA EL RELOJ LOCAL --- */
+        
         #reloj-local {
             text-align: center;
             font-size: 1em;
             font-family: 'Courier New', Courier, monospace;
             color: #b9bbbe;
-            margin: 0px 0 20px 0;
+            margin: 0 0 20px 0;
             font-weight: normal;
         }
         
-        /* --- ESTILOS PARA LA LEYENDA DE COLORES --- */
         .leyenda-colores {
             text-align: center;
             margin-bottom: 20px;
             color: #b9bbbe;
             font-size: 0.9em;
         }
+        
         .leyenda-colores ul {
             list-style: none;
             padding: 0;
@@ -78,11 +186,13 @@
             flex-wrap: wrap;
             gap: 20px;
         }
+        
         .leyenda-colores li {
             display: flex;
             align-items: center;
             gap: 8px;
         }
+        
         .leyenda-colores .hora-spawn {
             font-size: 0.8em;
             padding: 3px 8px;
@@ -94,29 +204,39 @@
             font-size: 0.9em;
             margin-bottom: 20px;
         }
+        
+        /* Tablas */
         table {
             width: 100%;
             border-collapse: collapse;
         }
+        
         th, td {
             border: 1px solid #40444b;
             padding: 15px;
             text-align: left;
         }
+        
         th {
             background-color: #202225;
             color: #7289da;
             font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
         }
+        
         td:first-child {
             font-weight: bold;
             color: #b9bbbe;
             width: 35%;
             vertical-align: top;
         }
+        
         td:last-child {
             line-height: 1.8;
         }
+        
         .hora-spawn {
             display: inline-block;
             background-color: #40444b;
@@ -124,276 +244,703 @@
             border-radius: 12px;
             margin: 2px;
             font-size: 0.9em;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* --- NUEVOS ESTILOS DE COLOR CON PRIORIDAD --- */
-
-        /* Prioridad 1: Ventana de Spawn (Verde) */
         .ventana-spawn {
-            background-color: #43b581 !important; /* Verde estilo Discord */
+            background-color: #43b581 !important;
             color: #ffffff;
             font-weight: bold;
             transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(67, 181, 129, 0.7);
+            box-shadow: 0 0 12px rgba(67, 181, 129, 0.8);
             animation: pulse 1.5s infinite;
         }
 
-        /* Prioridad 2: Próxima Hora (Celeste) */
         .proximo-spawn {
-            background-color: #5865F2 !important; /* Celeste/Blurple estilo Discord */
+            background-color: #5865F2 !important;
             color: #ffffff;
             font-weight: bold;
-            box-shadow: 0 0 8px rgba(88, 101, 242, 0.6);
+            box-shadow: 0 0 10px rgba(88, 101, 242, 0.7);
         }
         
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(67, 181, 129, 0); }
+            70% { box-shadow: 0 0 0 10px rgba(67, 181, 129, 0); }
             100% { box-shadow: 0 0 0 0 rgba(67, 181, 129, 0); }
+        }
+        
+        /* Estilos para la tabla de expediciones */
+        .expedicion-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .expedicion-table th {
+            background: linear-gradient(135deg, #5865F2 0%, #7289da 100%);
+            color: #ffffff;
+            padding: 12px;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid #40444b;
+        }
+        
+        .expedicion-table th:first-child {
+            width: 100px;
+            white-space: nowrap;
+        }
+        
+        .expedicion-table td {
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #40444b;
+            background-color: #36393f;
+            transition: background-color 0.3s ease;
+        }
+        
+        .expedicion-table td:first-child {
+            width: 100px;
+        }
+        
+        .expedicion-table tbody tr:hover {
+            background-color: #40444b;
+        }
+        
+        .expedicion-table tbody tr.selected {
+            background-color: #2d4a2e !important;
+            border: 2px solid #43b581;
+        }
+        
+        .expedicion-table tbody tr.selected td {
+            background-color: #2d4a2e;
+        }
+        
+        .expedicion-table td:nth-child(2) {
+            text-align: left;
+            font-weight: bold;
+            color: #faa61a;
+            width: auto;
+        }
+        
+        .expedicion-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #43b581;
+        }
+        
+        .totales-container {
+            background: linear-gradient(135deg, #2d3e50 0%, #34495e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #43b581;
+            box-shadow: 0 4px 12px rgba(67, 181, 129, 0.3);
+        }
+        
+        .totales-title {
+            text-align: center;
+            color: #43b581;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .totales-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .total-item {
+            background-color: #2f3136;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #40444b;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .total-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .total-label {
+            color: #b9bbbe;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .total-valor {
+            font-size: 1.5em;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .total-cobre { color: #f39c12; }
+        .total-acero { color: #95a5a6; }
+        .total-energia { color: #3498db; }
+        .total-estatuas { color: #faa61a; }
+        
+        .recurso-valor {
+            color: #43b581;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .estatuas-valor {
+            color: #faa61a;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .icono-recurso {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 220px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .app-layout {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #202225;
+            }
+            
+            .sidebar-header h1 {
+                font-size: 1em;
+            }
+            
+            .nav-section-title {
+                padding: 8px 15px;
+            }
+            
+            .nav-item {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            
+            .main-content {
+                padding: 20px;
+                height: calc(100vh - 200px);
+            }
+            
+            .section-title {
+                font-size: 1.5em;
+            }
+            
+            th, td {
+                padding: 10px;
+                font-size: 0.85em;
+            }
+            
+            .hora-spawn {
+                font-size: 0.8em;
+                padding: 3px 7px;
+            }
+            
+            #reloj-servidor {
+                font-size: 1.5em;
+            }
+            
+            .leyenda-colores ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .hora-spawn {
+                font-size: 0.75em;
+                padding: 3px 6px;
+            }
+            
+            th, td {
+                padding: 8px;
+                font-size: 0.8em;
+            }
+            
+            .expedicion-table th,
+            .expedicion-table td {
+                padding: 8px 4px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="app-layout">
+        <!-- Sidebar de navegación -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🐉 MIR4 Guía</h1>
+                <div class="servidor">Servidor SA31</div>
+            </div>
+            
+            <nav>
+                <div class="nav-section">
+                    <div class="nav-section-title">Contenido Principal</div>
+                    <div class="nav-item active" data-section="horarios">
+                        <span class="nav-item-icon">⚔️</span>
+                        <span>Horario de Jefes</span>
+                    </div>
+                    <div class="nav-item" data-section="expediciones">
+                        <span class="nav-item-icon">🏛️</span>
+                        <span>Expedición de Clan</span>
+                    </div>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Próximamente</div>
+                    <div class="nav-item" data-section="guias" style="opacity: 0.5; cursor: not-allowed;">
+                        <span class="nav-item-icon">📖</span>
+                        <span>Guías</span>
+                    </div>
+                    <div class="nav-item" data-section="eventos" style="opacity: 0.5; cursor: not-allowed;">
+                        <span class="nav-item-icon">🎉</span>
+                        <span>Eventos</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+        
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <!-- Sección: Horario de Jefes -->
+            <div id="horarios" class="content-section active">
+                <div class="section-header">
+                    <h2 class="section-title">⚔️ Horario de Jefes</h2>
+                    <p class="section-subtitle">Consulta los horarios de aparición sincronizados con el servidor SA31</p>
+                </div>
+                
+                <div class="card">
+                    <div id="reloj-servidor" role="timer" aria-live="polite" aria-atomic="true">
+                        <span style="opacity: 0.5;">⏳ Sincronizando...</span>
+                    </div>
+                    
+                    <div id="reloj-local">
+                        <span style="opacity: 0.5;">⏳ Cargando hora local...</span>
+                    </div>
+                    
+                    <div class="leyenda-colores">
+                        <ul>
+                            <li>
+                                <span class="hora-spawn ventana-spawn"></span>
+                                <span>En ventana de spawn (±15 min)</span>
+                            </li>
+                            <li>
+                                <span class="hora-spawn proximo-spawn"></span>
+                                <span>Siguiente spawn</span>
+                            </li>
+                            <li>
+                                <span class="hora-spawn"></span>
+                                <span>No disponible</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <p class="info-zona-horaria">Horario sincronizado con el servidor: <strong>Hora de Brasil (UTC-3)</strong></p>
+                </div>
+                
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>JEFES SEMANALES</th>
+                                <th>Horarios de Aparición (Hora del Servidor)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>REY TORO DEMONIO (Mundo 1)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="00:00">00h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>GUARDIAN DE TEMPLO - MATA (Mundo 1)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="02:00">02h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                    <span class="hora-spawn" data-hora="22:00">22h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>RELÁMPAGO TORO CHUPA SANGRE (Mundo 1)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:00">01h</span>
+                                    <span class="hora-spawn" data-hora="03:00">03h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="07:00">07h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="11:00">11h</span>
+                                    <span class="hora-spawn" data-hora="13:00">13h</span>
+                                    <span class="hora-spawn" data-hora="15:00">15h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="19:00">19h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                    <span class="hora-spawn" data-hora="23:00">23h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>KURILAIKA (Mundo 4)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="00:00">00h</span>
+                                    <span class="hora-spawn" data-hora="13:00">13h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NEFARIO DIGNIDAD INQUEBRANTABLE (Mundo 4)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="00:00">00h</span>
+                                    <span class="hora-spawn" data-hora="02:00">02h</span>
+                                    <span class="hora-spawn" data-hora="04:00">04h</span>
+                                    <span class="hora-spawn" data-hora="06:00">06h</span>
+                                    <span class="hora-spawn" data-hora="08:00">08h</span>
+                                    <span class="hora-spawn" data-hora="10:00">10h</span>
+                                    <span class="hora-spawn" data-hora="12:00">12h</span>
+                                    <span class="hora-spawn" data-hora="14:00">14h</span>
+                                    <span class="hora-spawn" data-hora="16:00">16h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                    <span class="hora-spawn" data-hora="20:00">20h</span>
+                                    <span class="hora-spawn" data-hora="22:00">22h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>YIUN (Mundo 7)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="02:00">02h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="08:00">08h</span>
+                                    <span class="hora-spawn" data-hora="11:00">11h</span>
+                                    <span class="hora-spawn" data-hora="14:00">14h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="20:00">20h</span>
+                                    <span class="hora-spawn" data-hora="23:00">23h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>TAEHYUL (Mundo 7)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:00">01h</span>
+                                    <span class="hora-spawn" data-hora="03:00">03h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="07:00">07h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="11:00">11h</span>
+                                    <span class="hora-spawn" data-hora="13:00">13h</span>
+                                    <span class="hora-spawn" data-hora="15:00">15h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="19:00">19h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                    <span class="hora-spawn" data-hora="23:00">23h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>YEO WIHUANG (Mundo 8)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:00">01h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="13:00">13h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    <div class="container">
-        <h1>⚔️ Horario de Jefes - Servidor SA31 ⚔️</h1>
-        <!-- RELOJ DEL SERVIDOR -->
-        <div id="reloj-servidor">Cargando hora...</div>
-        <!-- RELOJ LOCAL AÑADIDO -->
-        <div id="reloj-local">Cargando hora local... (hora local)</div>
-        
-        <!-- LEYENDA DE COLORES -->
-        <div class="leyenda-colores">
-            <ul>
-                <li>
-                    <span class="hora-spawn ventana-spawn"></span>
-                    <span>En ventana de spawn (±15 min)</span>
-                </li>
-                <li>
-                    <span class="hora-spawn proximo-spawn"></span>
-                    <span>Siguiente spawn</span>
-                </li>
-                <li>
-                    <span class="hora-spawn"></span>
-                    <span>No disponible</span>
-                </li>
-            </ul>
-        </div>
-        
-        <p class="info-zona-horaria">Horario sincronizado con el servidor: <strong>Hora de Brasil (UTC-3)</strong></p>
-        <table>
-            <thead>
-                <tr>
-                    <th>JEFES SEMANALES</th>
-                    <th>Horarios de Aparición (Hora del Servidor)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>REY TORO DEMONIO (Mundo 1)</td>
-                    <td>
-                        <span class="hora-spawn" data-hora="00:00">00h</span>
-                        <span class="hora-spawn" data-hora="09:00">09h</span>
-                        <span class="hora-spawn" data-hora="18:00">18h</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>GUARDIAN DE TEMPLO - MATA (Mundo 1)</td>
-                    <td>
-                        <span class="hora-spawn" data-hora="02:00">02h</span>
-                        <span class="hora-spawn" data-hora="18:00">18h</span>
-                        <span class="hora-spawn" data-hora="22:00">22h</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>RELÁMPAGO TORO CHUPA SANGRE (Mundo 1)</td>
-                    <td>
-                        <span class="hora-spawn" data-hora="01:00">1h</span>
-                        <span class="hora-spawn" data-hora="03:00">3h</span>
-                        <span class="hora-spawn" data-hora="05:00">5h</span>
-                        <span class="hora-spawn" data-hora="07:00">7h</span>
-                        <span class="hora-spawn" data-hora="09:00">9h</span>
-                        <span class="hora-spawn" data-hora="11:00">11h</span>
-                        <span class="hora-spawn" data-hora="13:00">13h</span>
-                        <span class="hora-spawn" data-hora="15:00">15h</span>
-                        <span class="hora-spawn" data-hora="17:00">17h</span>
-                        <span class="hora-spawn" data-hora="19:00">19h</span>
-                        <span class="hora-spawn" data-hora="21:00">21h</span>
-                        <span class="hora-spawn" data-hora="23:00">23h</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>KURILAIKA (Mundo 4)</td>
-                    <td>
-                        <span class="hora-spawn" data-hora="00:00">00h</span>
-                        <span class="hora-spawn" data-hora="13:00">13h</span>
-                        <span class="hora-spawn" data-hora="18:00">18h</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>NEFARIO DIGNIDAD INQUEBRANTABLE (Mundo 4)</td>
-                    <td>
-                        <span class="hora-spawn" data-hora="00:00">00h</span>
-                        <span class="hora-spawn" data-hora="02:00">02h</span>
-                        <span class="hora-spawn" data-hora="04:00">04h</span>
-                        <span class="hora-spawn" data-hora="06:00">06h</span>
-                        <span class="hora-spawn" data-hora="08:00">08h</span>
-                        <span class="hora-spawn" data-hora="10:00">10h</span>
-                        <span class="hora-spawn" data-hora="12:00">12h</span>
-                        <span class="hora-spawn" data-hora="14:00">14h</span>
-                        <span class="hora-spawn" data-hora="16:00">16h</span>
-                        <span class="hora-spawn" data-hora="18:00">18h</span>
-                        <span class="hora-spawn" data-hora="20:00">20h</span>
-                        <span class="hora-spawn" data-hora="22:00">22h</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>YIUN (Mundo 7)</td>
-                    <td>
-                        <span class="hora-spawn" data-hora="02:00">02h</span>
-                        <span class="hora-spawn" data-hora="05:00">05h</span>
-                        <span class="hora-spawn" data-hora="08:00">08h</span>
-                        <span class="hora-spawn" data-hora="11:00">11h</span>
-                        <span class="hora-spawn" data-hora="14:00">14h</span>
-                        <span class="hora-spawn" data-hora="17:00">17h</span>
-                        <span class="hora-spawn" data-hora="20:00">20h</span>
-                        <span class="hora-spawn" data-hora="23:00">23h</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>TAEHYUL (Mundo 7)</td>
-                    <td>
-                        <span class="hora-spawn" data-hora="01:00">1h</span>
-                        <span class="hora-spawn" data-hora="03:00">3h</span>
-                        <span class="hora-spawn" data-hora="05:00">5h</span>
-                        <span class="hora-spawn" data-hora="07:00">7h</span>
-                        <span class="hora-spawn" data-hora="09:00">9h</span>
-                        <span class="hora-spawn" data-hora="11:00">11h</span>
-                        <span class="hora-spawn" data-hora="13:00">13h</span>
-                        <span class="hora-spawn" data-hora="15:00">15h</span>
-                        <span class="hora-spawn" data-hora="17:00">17h</span>
-                        <span class="hora-spawn" data-hora="19:00">19h</span>
-                        <span class="hora-spawn" data-hora="21:00">21h</span>
-                        <span class="hora-spawn" data-hora="23:00">23h</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>YEO WIHUANG (Mundo 8)</td>
-                    <td>
-            <span class="hora-spawn" data-hora="01:00">01h</span>
-            <span class="hora-spawn" data-hora="05:00">05h</span>
-                        <span class="hora-spawn" data-hora="09:00">09h</span>
-                        <span class="hora-spawn" data-hora="13:00">13h</span>
-                        <span class="hora-spawn" data-hora="17:00">17h</span>
-            <span class="hora-spawn" data-hora="21:00">21h</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <!-- Sección: Expedición de Clan -->
+            <div id="expediciones" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title">🏛️ Expedición de Clan</h2>
+                    <p class="section-subtitle">Calcula los recursos necesarios y estatuas obtenidas</p>
+                </div>
+                
+                <div class="card">
+                    <table class="expedicion-table">
+                        <thead>
+                            <tr>
+                                <th>Seleccionar</th>
+                                <th>Expedición de Clan</th>
+                                <th><span class="icono-recurso">🪙</span>Cobre</th>
+                                <th><span class="icono-recurso">⚔️</span>Acero</th>
+                                <th><span class="icono-recurso">⚡</span>Energía</th>
+                                <th><span class="icono-recurso">🗿</span>Estatuas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="22500" data-acero="1125000" data-energia="1125000" data-estatuas="18"></td>
+                                <td>Cervero</td>
+                                <td><span class="recurso-valor">22,500</span></td>
+                                <td><span class="recurso-valor">1,125,000</span></td>
+                                <td><span class="recurso-valor">1,125,000</span></td>
+                                <td><span class="estatuas-valor">18</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="20000" data-acero="1000000" data-energia="1000000" data-estatuas="16"></td>
+                                <td>Escorpion</td>
+                                <td><span class="recurso-valor">20,000</span></td>
+                                <td><span class="recurso-valor">1,000,000</span></td>
+                                <td><span class="recurso-valor">1,000,000</span></td>
+                                <td><span class="estatuas-valor">16</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="17000" data-acero="875000" data-energia="875000" data-estatuas="14"></td>
+                                <td>Emperador</td>
+                                <td><span class="recurso-valor">17,000</span></td>
+                                <td><span class="recurso-valor">875,000</span></td>
+                                <td><span class="recurso-valor">875,000</span></td>
+                                <td><span class="estatuas-valor">14</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="15000" data-acero="750000" data-energia="750000" data-estatuas="12"></td>
+                                <td>Dragón de trueno azul</td>
+                                <td><span class="recurso-valor">15,000</span></td>
+                                <td><span class="recurso-valor">750,000</span></td>
+                                <td><span class="recurso-valor">750,000</span></td>
+                                <td><span class="estatuas-valor">12</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="12500" data-acero="625000" data-energia="625000" data-estatuas="10"></td>
+                                <td>Abominación infernal</td>
+                                <td><span class="recurso-valor">12,500</span></td>
+                                <td><span class="recurso-valor">625,000</span></td>
+                                <td><span class="recurso-valor">625,000</span></td>
+                                <td><span class="estatuas-valor">10</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="10000" data-acero="500000" data-energia="500000" data-estatuas="8"></td>
+                                <td>Diablo de luna sangrienta</td>
+                                <td><span class="recurso-valor">10,000</span></td>
+                                <td><span class="recurso-valor">500,000</span></td>
+                                <td><span class="recurso-valor">500,000</span></td>
+                                <td><span class="estatuas-valor">8</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="7500" data-acero="375000" data-energia="375000" data-estatuas="6"></td>
+                                <td>Demonio de rosa infernal</td>
+                                <td><span class="recurso-valor">7,500</span></td>
+                                <td><span class="recurso-valor">375,000</span></td>
+                                <td><span class="recurso-valor">375,000</span></td>
+                                <td><span class="estatuas-valor">6</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="5000" data-acero="250000" data-energia="250000" data-estatuas="4"></td>
+                                <td>Toro</td>
+                                <td><span class="recurso-valor">5,000</span></td>
+                                <td><span class="recurso-valor">250,000</span></td>
+                                <td><span class="recurso-valor">250,000</span></td>
+                                <td><span class="estatuas-valor">4</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="expedicion-checkbox" data-cobre="2500" data-acero="125000" data-energia="125000" data-estatuas="2"></td>
+                                <td>Zorro</td>
+                                <td><span class="recurso-valor">2,500</span></td>
+                                <td><span class="recurso-valor">125,000</span></td>
+                                <td><span class="recurso-valor">125,000</span></td>
+                                <td><span class="estatuas-valor">2</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Panel de Totales -->
+                    <div class="totales-container">
+                        <div class="totales-title">📊 Total de Recursos Seleccionados</div>
+                        <div class="totales-grid">
+                            <div class="total-item">
+                                <div class="total-label">
+                                    <span class="icono-recurso">🪙</span>
+                                    <span>Cobre Total</span>
+                                </div>
+                                <div class="total-valor total-cobre" id="total-cobre">0</div>
+                            </div>
+                            <div class="total-item">
+                                <div class="total-label">
+                                    <span class="icono-recurso">⚔️</span>
+                                    <span>Acero Total</span>
+                                </div>
+                                <div class="total-valor total-acero" id="total-acero">0</div>
+                            </div>
+                            <div class="total-item">
+                                <div class="total-label">
+                                    <span class="icono-recurso">⚡</span>
+                                    <span>Energía Total</span>
+                                </div>
+                                <div class="total-valor total-energia" id="total-energia">0</div>
+                            </div>
+                            <div class="total-item">
+                                <div class="total-label">
+                                    <span class="icono-recurso">🗿</span>
+                                    <span>Estatuas Totales</span>
+                                </div>
+                                <div class="total-valor total-estatuas" id="total-estatuas">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
-        // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ DEL SERVIDOR ---
-        function actualizarReloj() {
-            const relojElemento = document.getElementById('reloj-servidor');
-            const zonaHorariaServidor = 'America/Sao_Paulo';
-            const ahora = new Date();
-            
-            const opciones = {
-                timeZone: zonaHorariaServidor,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            };
-            
-            const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
-            relojElemento.textContent = horaServidor;
-        }
-
-        // --- FUNCIÓN PARA ACTUALIZAR EL RELOJ LOCAL ---
-        function actualizarRelojLocal() {
-            const relojLocalElemento = document.getElementById('reloj-local');
-            const ahora = new Date();
-            
-            const horaLocal = ahora.toLocaleTimeString('es-ES', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit', 
-                hour12: false 
-            });
-            
-            relojLocalElemento.textContent = `${horaLocal} (hora local)`;
-        }
-
-        // --- FUNCIÓN DE RESALTADO DEFINITIVA ---
-        function resaltarProximaHora() {
-            const horasSpawn = document.querySelectorAll('td .hora-spawn');
-            const zonaHorariaServidor = 'America/Sao_Paulo'; 
-            
-            const ahora = new Date();
-            const opciones = { 
-                timeZone: zonaHorariaServidor, 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                hour12: false 
-            };
-            const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
-            const [horas, minutos] = horaServidor.split(':').map(Number);
-            const horaActualMinutos = horas * 60 + minutos;
-
-            const margenAntesMinutos = 15;
-            const margenDespuesMinutos = 5;
-
-            let proximaHoraMinutos = null;
-            let spawnsDelDia = [];
-
-            horasSpawn.forEach(span => {
-                const horaTexto = span.getAttribute('data-hora');
-                const [h, m] = horaTexto.split(':').map(Number);
-                spawnsDelDia.push(h * 60 + m);
-            });
-
-            const spawnsUnicosOrdenados = [...new Set(spawnsDelDia)].sort((a, b) => a - b);
-
-            for (const spawnMinutos of spawnsUnicosOrdenados) {
-                if (spawnMinutos > horaActualMinutos) {
-                    proximaHoraMinutos = spawnMinutos;
-                    break;
-                }
-            }
-
-            if (proximaHoraMinutos === null && spawnsUnicosOrdenados.length > 0) {
-                proximaHoraMinutos = spawnsUnicosOrdenados[0];
-            }
-
-            horasSpawn.forEach(span => {
-                span.classList.remove('ventana-spawn', 'proximo-spawn');
+        // ====== NAVEGACIÓN ENTRE SECCIONES ======
+        const navItems = document.querySelectorAll('.nav-item:not([style*="cursor: not-allowed"])');
+        const contentSections = document.querySelectorAll('.content-section');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetSection = item.getAttribute('data-section');
                 
-                const horaTexto = span.getAttribute('data-hora');
-                const [h, m] = horaTexto.split(':').map(Number);
-                const horaSpawnMinutos = h * 60 + m;
+                // Remover clase active de todos los nav items
+                navItems.forEach(nav => nav.classList.remove('active'));
+                
+                // Agregar clase active al item clickeado
+                item.classList.add('active');
+                
+                // Ocultar todas las secciones
+                contentSections.forEach(section => section.classList.remove('active'));
+                
+                // Mostrar la sección target
+                document.getElementById(targetSection).classList.add('active');
+            });
+        });
 
-                let enVentanaDeSpawn = false;
+        // ====== RELOJES Y HORARIOS ======
+        const relojElemento = document.getElementById('reloj-servidor');
+        const relojLocalElemento = document.getElementById('reloj-local');
+        const horasSpawnCache = Array.from(document.querySelectorAll('td .hora-spawn'));
+        
+        const zonaHorariaServidor = 'America/Sao_Paulo';
+        const margenAntesMinutos = 15;
+        const margenDespuesMinutos = 5;
 
-                if (horaSpawnMinutos === 0) {
-                    const minutosEnDia = 24 * 60;
-                    if (horaActualMinutos >= (minutosEnDia - margenAntesMinutos) || horaActualMinutos <= margenDespuesMinutos) {
+        function actualizarReloj() {
+            try {
+                const ahora = new Date();
+                const opciones = {
+                    timeZone: zonaHorariaServidor,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+                const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+                relojElemento.textContent = horaServidor;
+            } catch (error) {
+                console.error('Error al actualizar reloj del servidor:', error);
+                relojElemento.textContent = 'Error al cargar hora';
+            }
+        }
+
+        function actualizarRelojLocal() {
+            try {
+                const ahora = new Date();
+                const horaLocal = ahora.toLocaleTimeString('es-ES', { 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit', 
+                    hour12: false 
+                });
+                relojLocalElemento.textContent = `${horaLocal} (hora local)`;
+            } catch (error) {
+                console.error('Error al actualizar reloj local:', error);
+                relojLocalElemento.textContent = 'Error al cargar hora local';
+            }
+        }
+
+        function resaltarProximaHora() {
+            try {
+                const ahora = new Date();
+                const opciones = { 
+                    timeZone: zonaHorariaServidor, 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    hour12: false 
+                };
+                const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+                const [horas, minutos] = horaServidor.split(':').map(Number);
+                const horaActualMinutos = horas * 60 + minutos;
+
+                let proximaHoraMinutos = null;
+                let spawnsDelDia = [];
+
+                horasSpawnCache.forEach(span => {
+                    const horaTexto = span.getAttribute('data-hora');
+                    const [h, m] = horaTexto.split(':').map(Number);
+                    spawnsDelDia.push(h * 60 + m);
+                });
+
+                const spawnsUnicosOrdenados = [...new Set(spawnsDelDia)].sort((a, b) => a - b);
+
+                for (const spawnMinutos of spawnsUnicosOrdenados) {
+                    if (spawnMinutos > horaActualMinutos) {
+                        proximaHoraMinutos = spawnMinutos;
+                        break;
+                    }
+                }
+
+                if (proximaHoraMinutos === null && spawnsUnicosOrdenados.length > 0) {
+                    proximaHoraMinutos = spawnsUnicosOrdenados[0];
+                }
+
+                horasSpawnCache.forEach(span => {
+                    span.classList.remove('ventana-spawn', 'proximo-spawn');
+                    
+                    const horaTexto = span.getAttribute('data-hora');
+                    const [h, m] = horaTexto.split(':').map(Number);
+                    const horaSpawnMinutos = h * 60 + m;
+
+                    let enVentanaDeSpawn = false;
+
+                    if (horaSpawnMinutos === 0) {
+                        enVentanaDeSpawn = (horaActualMinutos >= 1425 || horaActualMinutos <= margenDespuesMinutos);
+                    } 
+                    else if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && 
+                             horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
                         enVentanaDeSpawn = true;
                     }
-                } 
-                else if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) && horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
-                    enVentanaDeSpawn = true;
-                }
 
-                if (enVentanaDeSpawn) {
-                    span.classList.add('ventana-spawn');
-                } 
-                else if (proximaHoraMinutos !== null && horaSpawnMinutos === proximaHoraMinutos) {
-                    span.classList.add('proximo-spawn');
-                }
-            });
+                    if (enVentanaDeSpawn) {
+                        span.classList.add('ventana-spawn');
+                    } 
+                    else if (proximaHoraMinutos !== null && horaSpawnMinutos === proximaHoraMinutos) {
+                        span.classList.add('proximo-spawn');
+                    }
+                });
+            } catch (error) {
+                console.error('Error al resaltar próxima hora:', error);
+            }
         }
 
         function actualizarTodo() {
@@ -405,7 +952,7 @@
         actualizarTodo();
         setInterval(actualizarReloj, 1000);
         setInterval(actualizarRelojLocal, 1000);
-        setInterval(resaltarProximaHora, 15000);
+        setInterval(resaltarProximaHora, 5000);
 
         document.addEventListener('visibilitychange', () => {
             if (!document.hidden) {
@@ -413,7 +960,58 @@
             }
         });
 
-    </script>
+        // ====== FUNCIONALIDAD DE CHECKBOXES Y CÁLCULO DE TOTALES ======
+        
+        const checkboxes = document.querySelectorAll('.expedicion-checkbox');
+        const totalCobreEl = document.getElementById('total-cobre');
+        const totalAceroEl = document.getElementById('total-acero');
+        const totalEnergiaEl = document.getElementById('total-energia');
+        const totalEstatuasEl = document.getElementById('total-estatuas');
 
+        function formatearNumero(numero) {
+            return numero.toLocaleString('es-ES');
+        }
+
+        function calcularTotales() {
+            let totalCobre = 0;
+            let totalAcero = 0;
+            let totalEnergia = 0;
+            let totalEstatuas = 0;
+
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkbox.closest('tr').classList.add('selected');
+                    
+                    totalCobre += parseInt(checkbox.getAttribute('data-cobre')) || 0;
+                    totalAcero += parseInt(checkbox.getAttribute('data-acero')) || 0;
+                    totalEnergia += parseInt(checkbox.getAttribute('data-energia')) || 0;
+                    totalEstatuas += parseInt(checkbox.getAttribute('data-estatuas')) || 0;
+                } else {
+                    checkbox.closest('tr').classList.remove('selected');
+                }
+            });
+
+            actualizarValorConAnimacion(totalCobreEl, totalCobre);
+            actualizarValorConAnimacion(totalAceroEl, totalAcero);
+            actualizarValorConAnimacion(totalEnergiaEl, totalEnergia);
+            actualizarValorConAnimacion(totalEstatuasEl, totalEstatuas);
+        }
+
+        function actualizarValorConAnimacion(elemento, nuevoValor) {
+            elemento.style.transform = 'scale(1.2)';
+            elemento.style.transition = 'transform 0.2s ease';
+            
+            setTimeout(() => {
+                elemento.textContent = formatearNumero(nuevoValor);
+                elemento.style.transform = 'scale(1)';
+            }, 100);
+        }
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', calcularTotales);
+        });
+
+        calcularTotales();
+    </script>
 </body>
 </html>
