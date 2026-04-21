@@ -510,24 +510,219 @@
             .main-content {
                 padding: 15px;
             }
-            
+
             .card {
                 padding: 15px;
             }
-            
+
             .hora-spawn {
                 font-size: 0.75em;
                 padding: 3px 6px;
             }
-            
+
             th, td {
                 padding: 8px;
                 font-size: 0.8em;
             }
-            
+
             .expedicion-table th,
             .expedicion-table td {
                 padding: 8px 4px;
+            }
+        }
+
+        /* ====== FABRICACIÓN CALCULATOR ====== */
+        .fabricacion-card {
+            padding: 20px;
+        }
+
+        .fabricacion-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .fabricacion-controles h3 {
+            color: #7289da;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+
+        .fabricacion-controles h3:first-child {
+            margin-top: 0;
+        }
+
+        .tipo-botones {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tipo-btn {
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.2s ease;
+            border-radius: 10px;
+            padding: 8px;
+            background-color: #36393f;
+        }
+
+        .tipo-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .tipo-btn.active {
+            opacity: 1;
+            border: 2px solid #5865F2;
+            box-shadow: 0 0 10px rgba(88, 101, 242, 0.5);
+        }
+
+        .inventario-grid, .recursos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .inv-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .inv-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .inv-label {
+            font-size: 0.75em;
+            color: #b9bbbe;
+        }
+
+        .inv-item input {
+            background-color: #40444b;
+            border: 1px solid #5865F2;
+            border-radius: 8px;
+            padding: 10px;
+            color: #ffffff;
+            font-size: 1em;
+            text-align: center;
+            width: 100%;
+        }
+
+        .inv-item input:focus {
+            outline: none;
+            border-color: #7289da;
+            box-shadow: 0 0 8px rgba(114, 137, 218, 0.4);
+        }
+
+        .inventario-section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .inv-row {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .inv-slot {
+            width: 45px;
+            height: 45px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #36393f;
+            border-radius: 8px;
+            border: 1px solid #40444b;
+        }
+
+        .btn-calcular {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #43b581 0%, #3d9a70 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 25px;
+        }
+
+        .btn-calcular:hover {
+            background: linear-gradient(135deg, #4fc590 0%, #45a87d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 181, 129, 0.4);
+        }
+
+        .btn-calcular:active {
+            transform: scale(0.98);
+        }
+
+        .resultado-box {
+            background-color: #36393f;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #40444b;
+        }
+
+        .resultado-box h4 {
+            color: #7289da;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #40444b;
+        }
+
+        .resultado-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .resultado-content img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .resultado-content span {
+            color: #43b581;
+            font-weight: bold;
+            font-size: 1.1em;
+            font-family: 'Courier New', monospace;
+        }
+
+        .fabricacion-resultados {
+            background-color: #2f3136;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #40444b;
+        }
+
+        @media (max-width: 900px) {
+            .fabricacion-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .inventario-grid, .recursos-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -560,6 +755,10 @@
                     <div class="nav-item" data-section="expediciones">
                         <span class="nav-item-icon">🏛️</span>
                         <span data-translate="navExpediciones">Expedición de Clan</span>
+                    </div>
+                    <div class="nav-item" data-section="fabricacion">
+                        <span class="nav-item-icon">🔧</span>
+                        <span data-translate="navFabricacion">Calculadora de Fabricación</span>
                     </div>
                 </div>
 
@@ -1036,6 +1235,204 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Sección: Calculadora de Fabricación -->
+            <div id="fabricacion" class="content-section">
+                <div class="section-header">
+                    <h2 class="section-title" data-translate="fabricacionTitulo">🔧 Calculadora de Fabricación</h2>
+                    <p class="section-subtitle" data-translate="fabricacionSubtitulo">Calcula los materiales necesarios para fabricar equipamentos</p>
+                </div>
+
+                <div class="card fabricacion-card">
+                    <div class="fabricacion-layout">
+                        <div class="fabricacion-controles">
+                            <h3 data-translate="fabricacionSelectType">Seleccionar Tipo</h3>
+                            <div class="tipo-botones">
+                                <img src="images/escama.png" alt="Armas" id="armaswitch" class="tipo-btn active" title="Armas">
+                                <img src="images/skin.png" alt="Armadura" id="ropaswitch" class="tipo-btn" title="Armadura">
+                                <img src="images/horn.png" alt="Accesorios" id="hornswitch" class="tipo-btn" title="Accesorios">
+                            </div>
+
+                            <h3 data-translate="fabricacionTuInventario">Tu Inventario</h3>
+                            <div class="inventario-section">
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgitem1t" style="background-image: url('images/pslvt.png')"></div>
+                                    <div class="inv-slot" id="imgitem1" style="background-image: url('images/pslv.png')"></div>
+                                </div>
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgitem1Rt" style="background-image: url('images/pslat.png')"></div>
+                                    <div class="inv-slot" id="imgitem1R" style="background-image: url('images/psla.png')"></div>
+                                </div>
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgitem1Ht" style="background-image: url('images/pslrt.png')"></div>
+                                    <div class="inv-slot" id="imgitem1H" style="background-image: url('images/pslr.png')"></div>
+                                </div>
+                            </div>
+
+                            <div class="inventario-grid">
+                                <div class="inv-item">
+                                    <div class="inv-label">🟢 Verde T</div>
+                                    <input type="number" id="pslti" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🟢 Verde</div>
+                                    <input type="number" id="psli" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔵 Azul T</div>
+                                    <input type="number" id="rpslti" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔵 Azul</div>
+                                    <input type="number" id="rpsli" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔴 Rojo T</div>
+                                    <input type="number" id="hpslti" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔴 Rojo</div>
+                                    <input type="number" id="hpsli" placeholder="0" min="0">
+                                </div>
+                            </div>
+
+                            <div class="inventario-section">
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgitem2t" style="background-image: url('images/omvt.png')"></div>
+                                    <div class="inv-slot" id="imgitem2" style="background-image: url('images/omv.png')"></div>
+                                </div>
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgitem2Rt" style="background-image: url('images/omat.png')"></div>
+                                    <div class="inv-slot" id="imgitem2R" style="background-image: url('images/oma.png')"></div>
+                                </div>
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgitem2Ht" style="background-image: url('images/omrt.png')"></div>
+                                    <div class="inv-slot" id="imgitem2H" style="background-image: url('images/omr.png')"></div>
+                                </div>
+                            </div>
+
+                            <div class="inventario-grid">
+                                <div class="inv-item">
+                                    <div class="inv-label">🟢 Verde T</div>
+                                    <input type="number" id="cti" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🟢 Verde</div>
+                                    <input type="number" id="ci" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔵 Azul T</div>
+                                    <input type="number" id="rcti" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔵 Azul</div>
+                                    <input type="number" id="rci" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔴 Rojo T</div>
+                                    <input type="number" id="hcti" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔴 Rojo</div>
+                                    <input type="number" id="hci" placeholder="0" min="0">
+                                </div>
+                            </div>
+
+                            <div class="inventario-section">
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgacerovt" style="background-image: url('images/acerovt.png')"></div>
+                                    <div class="inv-slot" id="imgacerov" style="background-image: url('images/acerov.png')"></div>
+                                </div>
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgaceroat" style="background-image: url('images/aceroat.png')"></div>
+                                    <div class="inv-slot" id="imgaceroa" style="background-image: url('images/aceroa.png')"></div>
+                                </div>
+                                <div class="inv-row">
+                                    <div class="inv-slot" id="imgaceroHt" style="background-image: url('images/acerort.png')"></div>
+                                    <div class="inv-slot" id="imgaceroH" style="background-image: url('images/aceror.png')"></div>
+                                </div>
+                            </div>
+
+                            <div class="inventario-grid">
+                                <div class="inv-item">
+                                    <div class="inv-label">🟢 Verde T</div>
+                                    <input type="number" id="ati" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🟢 Verde</div>
+                                    <input type="number" id="ai" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔵 Azul T</div>
+                                    <input type="number" id="rati" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔵 Azul</div>
+                                    <input type="number" id="rai" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔴 Rojo T</div>
+                                    <input type="number" id="hati" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔴 Rojo</div>
+                                    <input type="number" id="hai" placeholder="0" min="0">
+                                </div>
+                            </div>
+
+                            <h3 data-translate="fabricacionRecursos">Recursos</h3>
+                            <div class="recursos-grid">
+                                <div class="inv-item">
+                                    <div class="inv-label">💎 Polvo Mágico</div>
+                                    <input type="number" id="polvoi" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">💎 Polvo Mágico T</div>
+                                    <input type="number" id="polvoit" placeholder="0" min="0">
+                                </div>
+                            </div>
+                            <div class="recursos-grid">
+                                <div class="inv-item">
+                                    <div class="inv-label">🪙 Cobre</div>
+                                    <input type="number" id="cobrei" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">💰 Monedas (x10k)</div>
+                                    <input type="number" id="mplata" placeholder="0" min="0">
+                                </div>
+                            </div>
+                            <div class="inv-item full-width">
+                                <div class="inv-label">🎫 Dragon's Soul</div>
+                                <input type="number" id="dsi" placeholder="0" min="0">
+                            </div>
+                        </div>
+
+                        <div class="fabricacion-resultados">
+                            <button id="valor" class="btn-calcular" data-translate="fabricacionBtnCalcular">Calcular</button>
+
+                            <div class="resultado-box">
+                                <h4 data-translate="fabricacionResultadoItems">Items Necesarios</h4>
+                                <div id="resultado" class="resultado-content"></div>
+                            </div>
+
+                            <div class="resultado-box">
+                                <h4 data-translate="fabricacionResultadoAcero">Acero Necesario</h4>
+                                <div id="resultado2" class="resultado-content"></div>
+                            </div>
+
+                            <div class="resultado-box">
+                                <h4 data-translate="fabricacionResultadoMateriales">Materiales Necesarios</h4>
+                                <div id="resultado3" class="resultado-content"></div>
+                            </div>
+
+                            <div class="resultado-box">
+                                <h4 data-translate="fabricacionResultadoRecursos">Recursos Totales</h4>
+                                <div id="resultado4" class="resultado-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -1048,6 +1445,7 @@
                 navProximamente: "Próximamente",
                 navHorarios: "Horario de Jefes",
                 navExpediciones: "Expedición de Clan",
+                navFabricacion: "Calculadora de Fabricación",
                 navGuias: "Guías",
                 navEventos: "Eventos",
                 horariosTitulo: "Horario de Jefes",
@@ -1076,6 +1474,17 @@
                 energiaTotal: "Energía Total",
                 estatuasTotal: "Estatuas Totales",
                 oroTotal: "Oro Total (Resummon)",
+                // Fabricación
+                fabricacionTitulo: "Calculadora de Fabricación",
+                fabricacionSubtitulo: "Calcula los materiales necesarios para fabricar equipamentos",
+                fabricacionSelectType: "Seleccionar Tipo",
+                fabricacionTuInventario: "Tu Inventario",
+                fabricacionRecursos: "Recursos",
+                fabricacionBtnCalcular: "Calcular",
+                fabricacionResultadoItems: "Items Necesarios",
+                fabricacionResultadoAcero: "Acero Necesario",
+                fabricacionResultadoMateriales: "Materiales Necesarios",
+                fabricacionResultadoRecursos: "Recursos Totales",
                 // Jefes - usar nombres exactos del HTML
                 "Espíritu Zorro": "Espíritu Zorro",
                 "Tormenta Demoníaca": "Tormenta Demoníaca",
@@ -1095,6 +1504,7 @@
                 navProximamente: "Em Breve",
                 navHorarios: "Horário de Jefes",
                 navExpediciones: "Expedição de Clan",
+                navFabricacion: "Calculadora de Fabricação",
                 navGuias: "Guias",
                 navEventos: "Eventos",
                 horariosTitulo: "Horário de Jefes",
@@ -1123,6 +1533,17 @@
                 energiaTotal: "Energia Total",
                 estatuasTotal: "Estátuas Totais",
                 oroTotal: "Ouro Total (Resummon)",
+                // Fabricação
+                fabricacionTitulo: "Calculadora de Fabricação",
+                fabricacionSubtitulo: "Calcule os materiais necessários para fabricar equipamentos",
+                fabricacionSelectType: "Selecionar Tipo",
+                fabricacionTuInventario: "Seu Inventário",
+                fabricacionRecursos: "Recursos",
+                fabricacionBtnCalcular: "Calcular",
+                fabricacionResultadoItems: "Itens Necessários",
+                fabricacionResultadoAcero: "Aço Necessário",
+                fabricacionResultadoMateriales: "Materiais Necessários",
+                fabricacionResultadoRecursos: "Recursos Totais",
                 // Jefes
                 "Espíritu Zorro": "Espírito Raposa",
                 "Tormenta Demoníaca": "Touro Demônio",
@@ -1142,6 +1563,7 @@
                 navProximamente: "Coming Soon",
                 navHorarios: "Boss Schedule",
                 navExpediciones: "Clan Expedition",
+                navFabricacion: "Crafting Calculator",
                 navGuias: "Guides",
                 navEventos: "Events",
                 horariosTitulo: "Boss Schedule",
@@ -1170,6 +1592,17 @@
                 energiaTotal: "Total Energy",
                 estatuasTotal: "Total Statues",
                 oroTotal: "Total Gold (Resummon)",
+                // Manufacturing
+                fabricacionTitulo: "Crafting Calculator",
+                fabricacionSubtitulo: "Calculate materials needed to craft equipment",
+                fabricacionSelectType: "Select Type",
+                fabricacionTuInventario: "Your Inventory",
+                fabricacionRecursos: "Resources",
+                fabricacionBtnCalcular: "Calculate",
+                fabricacionResultadoItems: "Needed Items",
+                fabricacionResultadoAcero: "Steel Needed",
+                fabricacionResultadoMateriales: "Materials Needed",
+                fabricacionResultadoRecursos: "Total Resources",
                 // Jefes
                 "Espíritu Zorro": "Fox Spirit Beast",
                 "Tormenta Demoníaca": "Demon Bull God",
@@ -1470,6 +1903,229 @@
         });
 
         calcularTotales();
+    </script>
+
+    <script>
+        // ====== CALCULADORA DE FABRICACIÓN ======
+        var imgitem1 = "<div class='resultado-content'><img src='images/pslv.png'> ";
+        var imgitem2 = "<img src='images/psla.png'> ";
+        var imgitem3 = "<img src='images/pslr.png'> ";
+        var imgacero1 = "<img src='images/acerov.png'> ";
+        var imgacero2 = "<img src='images/aceroa.png'> ";
+        var imgacero3 = "<img src='images/aceror.png'> ";
+        var imgitem4 = "<img src='images/omv.png'> ";
+        var imgitem5 = "<img src='images/oma.png'> ";
+        var imgitem6 = "<img src='images/omr.png'> ";
+
+        var dsarm = 100000;
+        var cobrearm = 800000;
+
+        var uds = document.getElementById('dsi');
+        var pol = document.getElementById('polvoi');
+        var polt = document.getElementById('polvoit');
+        var cbr = document.getElementById('cobrei');
+        var mpl = document.getElementById('mplata');
+
+        var pslt = document.getElementById('pslti');
+        var psl = document.getElementById('psli');
+        var ct = document.getElementById('cti');
+        var c = document.getElementById('ci');
+        var at = document.getElementById('ati');
+        var a = document.getElementById('ai');
+
+        var rpslt = document.getElementById('rpslti');
+        var rpsl = document.getElementById('rpsli');
+        var rct = document.getElementById('rcti');
+        var rc = document.getElementById('rci');
+        var rat = document.getElementById('rati');
+        var ra = document.getElementById('rai');
+
+        var hpslt = document.getElementById('hpslti');
+        var hpsl = document.getElementById('hpsli');
+        var hct = document.getElementById('hcti');
+        var hc = document.getElementById('hci');
+        var hat = document.getElementById('hati');
+        var ha = document.getElementById('hai');
+
+        function agregarSeparadorMiles(numero) {
+            return numero.toLocaleString('es-ES');
+        }
+
+        // Arma
+        document.getElementById('armaswitch').addEventListener('click', function() {
+            imgitem1 = "<div class='resultado-content'><img src='images/pslv.png'> ";
+            imgitem2 = "<img src='images/psla.png'> ";
+            imgitem3 = "<img src='images/pslr.png'> ";
+            imgitem4 = "<img src='images/omv.png'> ";
+            imgitem5 = "<img src='images/oma.png'> ";
+            imgitem6 = "<img src='images/omr.png'> ";
+            imgacero1 = "<img src='images/acerov.png'> ";
+            imgacero2 = "<img src='images/aceroa.png'> ";
+            imgacero3 = "<img src='images/aceror.png'> ";
+            cobrearm = 800000;
+            dsarm = 100000;
+            actualizarClases('psl', 'om');
+            resultado();
+            setActiveBtn(this);
+        });
+
+        // Ropa
+        document.getElementById('ropaswitch').addEventListener('click', function() {
+            imgitem1 = "<div class='resultado-content'><img src='images/quintaesenciav.png'> ";
+            imgitem2 = "<img src='images/quintaesenciaa.png'> ";
+            imgitem3 = "<img src='images/quintaesenciar.png'> ";
+            imgitem4 = "<img src='images/baratijav.png'> ";
+            imgitem5 = "<img src='images/baratijaa.png'> ";
+            imgitem6 = "<img src='images/baratijar.png'> ";
+            imgacero1 = "<img src='images/acerov.png'> ";
+            imgacero2 = "<img src='images/aceroa.png'> ";
+            imgacero3 = "<img src='images/aceror.png'> ";
+            cobrearm = 400000;
+            dsarm = 50000;
+            actualizarClases('quintaesencia', 'baratija');
+            resultado();
+            setActiveBtn(this);
+        });
+
+        // Cuerno/Accesorios
+        document.getElementById('hornswitch').addEventListener('click', function() {
+            imgitem1 = "<div class='resultado-content'><img src='images/fragv.png'> ";
+            imgitem2 = "<img src='images/fraga.png'> ";
+            imgitem3 = "<img src='images/fragr.png'> ";
+            imgitem4 = "<img src='images/piedrav.png'> ";
+            imgitem5 = "<img src='images/piedraa.png'> ";
+            imgitem6 = "<img src='images/piedrar.png'> ";
+            imgacero1 = "<img src='images/platinov.png'> ";
+            imgacero2 = "<img src='images/platinoa.png'> ";
+            imgacero3 = "<img src='images/platinor.png'> ";
+            cobrearm = 800000;
+            dsarm = 100000;
+            actualizarClases('frag', 'piedra');
+            resultado();
+            setActiveBtn(this);
+        });
+
+        function setActiveBtn(btn) {
+            document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function actualizarClases(tipo1, tipo2) {
+            document.getElementById('imgitem1t').style.backgroundImage = "url('images/" + tipo1 + "vt.png')";
+            document.getElementById('imgitem1').style.backgroundImage = "url('images/" + tipo1 + "v.png')";
+            document.getElementById('imgitem1R').style.backgroundImage = "url('images/" + tipo1 + "a.png')";
+            document.getElementById('imgitem1Rt').style.backgroundImage = "url('images/" + tipo1 + "at.png')";
+            document.getElementById('imgitem1H').style.backgroundImage = "url('images/" + tipo1 + "r.png')";
+            document.getElementById('imgitem1Ht').style.backgroundImage = "url('images/" + tipo1 + "rt.png')";
+            document.getElementById('imgitem2t').style.backgroundImage = "url('images/" + tipo2 + "vt.png')";
+            document.getElementById('imgitem2').style.backgroundImage = "url('images/" + tipo2 + "v.png')";
+            document.getElementById('imgitem2R').style.backgroundImage = "url('images/" + tipo2 + "a.png')";
+            document.getElementById('imgitem2Rt').style.backgroundImage = "url('images/" + tipo2 + "at.png')";
+            document.getElementById('imgitem2H').style.backgroundImage = "url('images/" + tipo2 + "r.png')";
+            document.getElementById('imgitem2Ht').style.backgroundImage = "url('images/" + tipo2 + "rt.png')";
+        }
+
+        document.getElementById('valor').addEventListener('click', resultado);
+
+        function resultado() {
+            var iserPslv = parseInt(psl.value) || 0;
+            var userPslvt = parseInt(pslt.value) || 0;
+            var userPsl = iserPslv + userPslvt;
+            var userCv = parseInt(c.value) || 0;
+            var userCvt = parseInt(ct.value) || 0;
+            var userC = userCv + userCvt;
+            var userAv = parseInt(a.value) || 0;
+            var userAvt = parseInt(at.value) || 0;
+            var userA = userAv + userAvt;
+
+            var userPslra = parseInt(rpsl.value) || 0;
+            var userPslrat = parseInt(rpslt.value) || 0;
+            var userRpsl = userPslra + userPslrat;
+            var userRca = parseInt(rc.value) || 0;
+            var userRcat = parseInt(rct.value) || 0;
+            var userRc = userRca + userRcat;
+            var userRaa = parseInt(ra.value) || 0;
+            var userRaat = parseInt(rat.value) || 0;
+            var userRa = userRaa + userRaat;
+
+            var userHpslr = parseInt(hpsl.value) || 0;
+            var userHpslrt = parseInt(hpslt.value) || 0;
+            var userHpsl = userHpslr + userHpslrt;
+            var userHcr = parseInt(hc.value) || 0;
+            var userHcrt = parseInt(hct.value) || 0;
+            var userHc = userHcr + userHcrt;
+            var userHar = parseInt(ha.value) || 0;
+            var userHart = parseInt(hat.value) || 0;
+            var userHa = userHar + userHart;
+
+            var userDs = parseInt(uds.value) || 0;
+            var userPolvo = parseInt(pol.value) || 0;
+            var userPolvot = parseInt(polt.value) || 0;
+            var userPolv = userPolvo + userPolvot;
+            var userCobreo = parseInt(cbr.value) || 0;
+            var userMoneda = (parseInt(mpl.value) || 0) * 10000;
+            var userCbr = userCobreo + userMoneda;
+
+            var aceroHt = 300 - userHa;
+            var aceroRt = 3000 - userRa - (10 * userHa);
+            var aceroT = (10 * aceroRt) - userA;
+
+            if (aceroHt < 0) { aceroHt = 0; aceroRt = 0; aceroT = 0; }
+            if (aceroRt < 0) { aceroRt = 0; aceroT = 0; }
+            if (aceroT < 0) { aceroT = 0; }
+
+            var itemHpsl = 100 - userHpsl;
+            var itemRpsl = 1000 - userRpsl - (10 * userHpsl);
+            var itemPsl = (10 * itemRpsl) - userPsl;
+
+            if (itemHpsl < 0) { itemHpsl = 0; itemRpsl = 0; itemPsl = 0; }
+            if (itemRpsl < 0) { itemRpsl = 0; itemPsl = 0; }
+            if (itemPsl < 0) { itemPsl = 0; }
+
+            var itemHc = 100 - userHc;
+            var itemRc = 1000 - userRc - (10 * userHc);
+            var itemC = (10 * itemRc) - userC;
+
+            if (itemHc < 0) { itemHc = 0; itemRc = 0; itemC = 0; }
+            if (itemRc < 0) { itemRc = 0; itemC = 0; }
+            if (itemC < 0) { itemC = 0; }
+
+            var aceroPol = aceroHt * 25 + aceroRt * 2;
+            var itemPol = itemHpsl * 25 + itemRpsl * 2;
+            var itemDpolv = itemHc * 25 + itemRc * 2;
+            var polvu = aceroPol + itemPol + itemDpolv - userPolv;
+            if (polvu < 0) polvu = 0;
+
+            var aceroCobre = aceroHt * 20000 + aceroRt * 2000;
+            var itemCobre = itemHpsl * 20000 + itemRpsl * 2000;
+            var itemDcobre = itemHc * 20000 + itemRc * 2000;
+            var cobreT = aceroCobre + itemCobre + itemDcobre + cobrearm - userCbr;
+            if (cobreT < 0) cobreT = 0;
+
+            var DsA = aceroHt * 5000 + aceroRt * 1000;
+            var DsB = itemHpsl * 5000 + itemRpsl * 1000;
+            var DsC = itemHc * 5000 + itemRc * 1000;
+            var DsT = DsA + DsB + DsC + dsarm - userDs;
+            if (DsT < 0) DsT = 0;
+
+            var sitemPsl = agregarSeparadorMiles(itemPsl);
+            var sitemRpsl = agregarSeparadorMiles(itemRpsl);
+            var sitemHpsl = agregarSeparadorMiles(itemHpsl);
+            var saceroT = agregarSeparadorMiles(aceroT);
+            var saceroRt = agregarSeparadorMiles(aceroRt);
+            var saceroHt = agregarSeparadorMiles(aceroHt);
+            var sitemC = agregarSeparadorMiles(itemC);
+            var sitemRc = agregarSeparadorMiles(itemRc);
+            var sitemHc = agregarSeparadorMiles(itemHc);
+            var spolvu = agregarSeparadorMiles(polvu);
+            var scobreT = agregarSeparadorMiles(cobreT);
+            var sDsT = agregarSeparadorMiles(DsT);
+
+            document.getElementById('resultado').innerHTML = imgitem1 + sitemPsl + imgitem2 + sitemRpsl + imgitem3 + sitemHpsl;
+            document.getElementById('resultado2').innerHTML = imgacero1 + saceroT + imgacero2 + saceroRt + imgacero3 + saceroHt;
+            document.getElementById('resultado3').innerHTML = imgitem4 + sitemC + imgitem5 + sitemRc + imgitem6 + sitemHc;
+            document.getElementById('resultado4').innerHTML = "<div class='resultado-content'><img src='images/polv.png'> " + spolvu + " <img src='images/cobreimg.png'> " + scobreT + " <img src='images/imgds.png'> " + sDsT + "</div>";
+        }
     </script>
 </body>
 </html>
