@@ -959,6 +959,61 @@ td:last-child {
     }
 }
 
+/* ====== FONDO RESULTADO ====== */
+.result-with-fondo {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 20px;
+}
+
+.fondo-resultado {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.result-content-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}
+
+.rarity-label {
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
+}
+
+.type-label {
+    font-size: 1.2em;
+    color: #ffffff;
+    margin-top: 5px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+}
+
+.result-sections {
+    position: relative;
+    z-index: 5;
+}
+
+.result-section {
+    background: rgba(47, 49, 54, 0.95);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.item-box img {
+    background: transparent;
+}
+
 @media (max-width: 480px) {
     .main-content {
         padding: 15px;

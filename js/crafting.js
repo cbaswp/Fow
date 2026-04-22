@@ -3,12 +3,14 @@
 // Traducciones
 const craftTranslations = {
     es: {
-        rarityRare: "Raro (Azul)",
-        rarityEpic: "Épico (Morado)",
-        rarityLegendary: "Legendario (Naranja)",
+        rarityRare: "Raro",
+        rarityEpic: "Epico",
+        rarityLegendary: "Legendario",
         typeWeapon: "Armas",
         typeArmor: "Armadura",
         typeAccessory: "Accesorios",
+        typeGarra: "Garra",
+        typeOjo: "Ojo",
         itemsBase: "Items Base",
         itemsSecundary: "Items Secundarios",
         steelNeeded: "Acero/Platino",
@@ -17,12 +19,14 @@ const craftTranslations = {
         noNeed: "No necesitas este material"
     },
     pt: {
-        rarityRare: "Raro (Azul)",
-        rarityEpic: "Épico (Roxo)",
-        rarityLegendary: "Lendário (Laranja)",
+        rarityRare: "Raro",
+        rarityEpic: "Epico",
+        rarityLegendary: "Legendario",
         typeWeapon: "Armas",
         typeArmor: "Armadura",
         typeAccessory: "Acessórios",
+        typeGarra: "Garra",
+        typeOjo: "Olho",
         itemsBase: "Itens Base",
         itemsSecundary: "Itens Secundários",
         steelNeeded: "Aço/Platina",
@@ -31,12 +35,14 @@ const craftTranslations = {
         noNeed: "Não precisa deste material"
     },
     en: {
-        rarityRare: "Rare (Blue)",
-        rarityEpic: "Epic (Purple)",
-        rarityLegendary: "Legendary (Orange)",
+        rarityRare: "Rare",
+        rarityEpic: "Epic",
+        rarityLegendary: "Legendary",
         typeWeapon: "Weapons",
         typeArmor: "Armor",
         typeAccessory: "Accessories",
+        typeGarra: "Claw",
+        typeOjo: "Eye",
         itemsBase: "Base Items",
         itemsSecundary: "Secondary Items",
         steelNeeded: "Steel/Platinum",
@@ -46,23 +52,11 @@ const craftTranslations = {
     }
 };
 
-// Imágenes por tipo de equipo
-const itemImages = {
-    weapon: {
-        base: { v: 'pslv', a: 'psla', r: 'pslr', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo' },
-        sec: { v: 'omv', a: 'oma', r: 'omr', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo' },
-        steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
-    },
-    armor: {
-        base: { v: 'quintaesenciav', a: 'quintaesenciaa', r: 'quintaesenciar', nameV: 'Quintessence V', nameA: 'Quintessence A', nameR: 'Quintessence R' },
-        sec: { v: 'baratijav', a: 'baratijaa', r: 'baratijar', nameV: 'Baratija V', nameA: 'Baratija A', nameR: 'Baratija R' },
-        steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
-    },
-    accessory: {
-        base: { v: 'fragv', a: 'fraga', r: 'fragr', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo' },
-        sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', nameV: 'Piedra V', nameA: 'Piedra A', nameR: 'Piedra R' },
-        steel: { v: 'platinov', a: 'platinoa', r: 'platinor', nameV: 'Platino V', nameA: 'Platino A', nameR: 'Platino R' }
-    }
+// Fondos por rareza
+const fondosRarity = {
+    rare: 'images/Fondo raro.png',
+    epic: 'images/Fondo epico.png',
+    legendary: 'images/Fondo legendario.png'
 };
 
 // Recetas: [base, steel, polvo, polvoB, hierro, dragonS, cobre, ds]
@@ -121,12 +115,12 @@ function initCrafting() {
         calcular();
     });
     if (garraR) garraR.addEventListener('click', function() {
-        currentType = 'weapon';
+        currentType = 'garra';
         setActiveBtn([armaswitch, ropaswitch, hornswitch, this, ojitoR], this);
         calcular();
     });
     if (ojitoR) ojitoR.addEventListener('click', function() {
-        currentType = 'accessory';
+        currentType = 'ojo';
         setActiveBtn([armaswitch, ropaswitch, hornswitch, garraR, this], this);
         calcular();
     });
@@ -158,8 +152,7 @@ if (document.readyState === 'loading') {
 function calcular() {
     const lang = localStorage.getItem('mir4-lang') || 'es';
     const t = craftTranslations[lang];
-    const recipe = recipes[currentType][currentRarity];
-    const imgs = itemImages[currentType];
+    const recipe = recipes[currentType] || recipes.weapon;
 
     // Inventario
     const baseV = parseInt(document.getElementById('baseV')?.value) || 0;
@@ -209,63 +202,72 @@ function calcular() {
         legendary: { bg: 'rgba(230, 126, 34, 0.15)', border: '#e67e22', text: '#e67e22' }
     }[currentRarity];
 
+    // Fondo según rareza
+    const fondoImg = fondosRarity[currentRarity];
+
+    // Nombre del tipo para mostrar
+    let typeName = t['type' + currentType.charAt(0).toUpperCase() + currentType.slice(1)] || currentType;
+    let typeIcon = currentType;
+    if (currentType === 'garra') typeIcon = 'garra';
+    else if (currentType === 'ojo') typeIcon = 'ojo';
+
     const resultHTML = `
-    <div class="result-header" style="background: ${colors.bg}; border: 2px solid ${colors.border}; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center;">
-        <span class="rarity-title" style="color: ${colors.text}; font-size: 1.4em; font-weight: bold;">
-            ${t['rarity' + currentRarity.charAt(0).toUpperCase() + currentRarity.slice(1)]}
-        </span>
-        <span style="color: #aaa; margin-left: 15px; font-size: 1em;">
-            ${t['type' + currentType.charAt(0).toUpperCase() + currentType.slice(1)]}
-        </span>
-    </div>
-
-    <div class="result-section">
-        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.itemsBase}</h4>
-        <div class="result-row">
-            <div class="item-box"><img src="images/${imgs.base.v}.png"><span>${nBaseV}</span><label>${imgs.base.nameV}</label></div>
-            <div class="item-box"><img src="images/${imgs.base.a}.png"><span>${nBaseA}</span><label>${imgs.base.nameA}</label></div>
-            <div class="item-box"><img src="images/${imgs.base.r}.png"><span>${nBaseR}</span><label>${imgs.base.nameR}</label></div>
+    <div class="result-with-fondo" style="position: relative; text-align: center;">
+        <img src="${fondoImg}" alt="fondo" class="fondo-resultado">
+        <div class="result-content-overlay">
+            <div class="rarity-label" style="color: ${colors.text};">${t['rarity' + currentRarity.charAt(0).toUpperCase() + currentRarity.slice(1)]}</div>
+            <div class="type-label">${typeName}</div>
         </div>
     </div>
 
-    <div class="result-section">
-        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.itemsSecundary}</h4>
-        <div class="result-row">
-            <div class="item-box"><img src="images/${imgs.sec.v}.png"><span>${nSecV}</span><label>${imgs.sec.nameV}</label></div>
-            <div class="item-box"><img src="images/${imgs.sec.a}.png"><span>${nSecA}</span><label>${imgs.sec.nameA}</label></div>
-            <div class="item-box"><img src="images/${imgs.sec.r}.png"><span>${nSecR}</span><label>${imgs.sec.nameR}</label></div>
+    <div class="result-sections">
+        <div class="result-section" style="border-left: 4px solid ${colors.border};">
+            <h4 style="color: ${colors.text};">${t.itemsBase}</h4>
+            <div class="result-row">
+                <div class="item-box"><img src="images/escama.png"><span>${nBaseV}</span><label>Verde</label></div>
+                <div class="item-box"><img src="images/escama.png"><span>${nBaseA}</span><label>Azul</label></div>
+                <div class="item-box"><img src="images/escama.png"><span>${nBaseR}</span><label>Rojo</label></div>
+            </div>
         </div>
-    </div>
 
-    <div class="result-section">
-        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.steelNeeded}</h4>
-        <div class="result-row">
-            <div class="item-box"><img src="images/${imgs.steel.v}.png"><span>${nSteelV}</span><label>${imgs.steel.nameV}</label></div>
-            <div class="item-box"><img src="images/${imgs.steel.a}.png"><span>${nSteelA}</span><label>${imgs.steel.nameA}</label></div>
-            <div class="item-box"><img src="images/${imgs.steel.r}.png"><span>${nSteelR}</span><label>${imgs.steel.nameR}</label></div>
+        <div class="result-section" style="border-left: 4px solid ${colors.border};">
+            <h4 style="color: ${colors.text};">${t.itemsSecundary}</h4>
+            <div class="result-row">
+                <div class="item-box"><img src="images/piel.png"><span>${nSecV}</span><label>Verde</label></div>
+                <div class="item-box"><img src="images/piel.png"><span>${nSecA}</span><label>Azul</label></div>
+                <div class="item-box"><img src="images/piel.png"><span>${nSecR}</span><label>Rojo</label></div>
+            </div>
         </div>
-    </div>
 
-    <div class="result-section">
-        <h4 style="color: #7289da; margin-bottom: 12px;">${t.basicResources}</h4>
-        <div class="resources-row">
-            <div class="resource-box"><img src="images/polv.png"><span>${formatNum(nPolvo)}</span><label>Polvo</label></div>
-            <div class="resource-box"><img src="images/cobreimg.png"><span>${formatNum(nCobre)}</span><label>Cobre</label></div>
-            <div class="resource-box"><img src="images/imgds.png"><span>${formatNum(nDs)}</span><label>DS</label></div>
+        <div class="result-section" style="border-left: 4px solid ${colors.border};">
+            <h4 style="color: ${colors.text};">${t.steelNeeded}</h4>
+            <div class="result-row">
+                <div class="item-box"><img src="images/acero.png"><span>${nSteelV}</span><label>Verde</label></div>
+                <div class="item-box"><img src="images/acero.png"><span>${nSteelA}</span><label>Azul</label></div>
+                <div class="item-box"><img src="images/acero.png"><span>${nSteelR}</span><label>Rojo</label></div>
+            </div>
         </div>
-    </div>`;
+
+        <div class="result-section" style="border-left: 4px solid #7289da;">
+            <h4 style="color: #7289da;">${t.basicResources}</h4>
+            <div class="resources-row">
+                <div class="resource-box"><img src="images/polv.png"><span>${formatNum(nPolvo)}</span><label>Polvo</label></div>
+                <div class="resource-box"><img src="images/cobreimg.png"><span>${formatNum(nCobre)}</span><label>Cobre</label></div>
+                <div class="resource-box"><img src="images/imgds.png"><span>${formatNum(nDs)}</span><label>DS</label></div>
+            </div>
+        </div>`;
 
     const specialSection = currentRarity !== 'rare' ? `
-    <div class="result-section epic-section">
-        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.specialResources}</h4>
-        <div class="resources-row">
-            <div class="resource-box epic"><img src="images/polvob.png"><span>${formatNum(nPolvoB)}</span><label>Polvo Brillante</label></div>
-            <div class="resource-box epic"><img src="images/hierroo.png"><span>${formatNum(nHierro)}</span><label>Hierro Oscuro</label></div>
-            <div class="resource-box epic"><img src="images/dragons.png"><span>${formatNum(nDragonS)}</span><label>Dragon Steel</label></div>
-        </div>
-    </div>` : '';
+        <div class="result-section epic-section" style="border-left: 4px solid ${colors.border};">
+            <h4 style="color: ${colors.text};">${t.specialResources}</h4>
+            <div class="resources-row">
+                <div class="resource-box epic"><img src="images/polvob.png"><span>${formatNum(nPolvoB)}</span><label>Polvo Brillante</label></div>
+                <div class="resource-box epic"><img src="images/hierroo.png"><span>${formatNum(nHierro)}</span><label>Hierro Oscuro</label></div>
+                <div class="resource-box epic"><img src="images/dragons.png"><span>${formatNum(nDragonS)}</span><label>Dragon Steel</label></div>
+            </div>
+        </div>` : '';
 
     const note = `<div class="result-note">${t.noNeed}</div>`;
 
-    document.getElementById('resultado').innerHTML = resultHTML + specialSection + note;
+    document.getElementById('resultado').innerHTML = resultHTML + specialSection + note + '</div>';
 }
