@@ -259,9 +259,9 @@ function calcular() {
     <div class="result-section epic-section">
         <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.specialResources}</h4>
         <div class="resources-row">
-            <div class="resource-box epic"><img src="images/polv.png"><span>${formatNum(nPolvoB)}</span><label>Polvo Brillante</label></div>
-            <div class="resource-box epic"><img src="images/polv.png"><span>${formatNum(nHierro)}</span><label>Hierro Oscuro</label></div>
-            <div class="resource-box epic"><img src="images/polv.png"><span>${formatNum(nDragonS)}</span><label>Dragon Steel</label></div>
+            <div class="resource-box epic"><img src="images/polvob.png"><span>${formatNum(nPolvoB)}</span><label>Polvo Brillante</label></div>
+            <div class="resource-box epic"><img src="images/hierroo.png"><span>${formatNum(nHierro)}</span><label>Hierro Oscuro</label></div>
+            <div class="resource-box epic"><img src="images/dragons.png"><span>${formatNum(nDragonS)}</span><label>Dragon Steel</label></div>
         </div>
     </div>` : '';
 
