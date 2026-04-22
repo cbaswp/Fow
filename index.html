@@ -1251,6 +1251,8 @@
                                 <img src="images/escama.png" alt="Armas" id="armaswitch" class="tipo-btn active" title="Armas">
                                 <img src="images/skin.png" alt="Armadura" id="ropaswitch" class="tipo-btn" title="Armadura">
                                 <img src="images/horn.png" alt="Accesorios" id="hornswitch" class="tipo-btn" title="Accesorios">
+                                <img src="images/garraR.png" alt="Garra" id="garraR" class="tipo-btn" title="Garra (Armas)">
+                                <img src="images/ojitoR.png" alt="Ojo" id="ojitoR" class="tipo-btn" title="Ojo (Accesorios)">
                             </div>
 
                             <h3 data-translate="fabricacionTuInventario">Tu Inventario</h3>
@@ -2000,6 +2002,42 @@
             imgacero3 = "<img src='images/platinor.png'> ";
             cobrearm = 800000;
             dsarm = 100000;
+            actualizarClases('frag', 'piedra');
+            resultado();
+            setActiveBtn(this);
+        });
+
+        // Garra (mismo que Armas)
+        document.getElementById('garraR').addEventListener('click', function() {
+            imgitem1 = "<div class='resultado-content'><img src='images/pslv.png'> ";
+            imgitem2 = "<img src='images/psla.png'> ";
+            imgitem3 = "<img src='images/pslr.png'> ";
+            imgitem4 = "<img src='images/omv.png'> ";
+            imgitem5 = "<img src='images/oma.png'> ";
+            imgitem6 = "<img src='images/omr.png'> ";
+            imgacero1 = "<img src='images/acerov.png'> ";
+            imgacero2 = "<img src='images/aceroa.png'> ";
+            imgacero3 = "<img src='images/aceror.png'> ";
+            cobrearm = 800000;
+            dsarm = 800000;
+            actualizarClases('psl', 'om');
+            resultado();
+            setActiveBtn(this);
+        });
+
+        // Ojo (mismo que Accesorios)
+        document.getElementById('ojitoR').addEventListener('click', function() {
+            imgitem1 = "<div class='resultado-content'><img src='images/fragv.png'> ";
+            imgitem2 = "<img src='images/fraga.png'> ";
+            imgitem3 = "<img src='images/fragr.png'> ";
+            imgitem4 = "<img src='images/piedrav.png'> ";
+            imgitem5 = "<img src='images/piedraa.png'> ";
+            imgitem6 = "<img src='images/piedrar.png'> ";
+            imgacero1 = "<img src='images/platinov.png'> ";
+            imgacero2 = "<img src='images/platinoa.png'> ";
+            imgacero3 = "<img src='images/platinor.png'> ";
+            cobrearm = 800000;
+            dsarm = 800000;
             actualizarClases('frag', 'piedra');
             resultado();
             setActiveBtn(this);
