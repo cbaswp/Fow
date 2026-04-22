@@ -11,8 +11,8 @@ const craftTranslations = {
         typeAccessory: "Accesorios",
         typeGarra: "Garra",
         typeOjo: "Ojo",
-        itemsBase: "Items Base",
-        itemsSecundary: "Items Secundarios",
+        itemsBase: "PSL",
+        itemsSecundary: "OM",
         steelNeeded: "Acero/Platino",
         basicResources: "Recursos Básicos",
         specialResources: "Recursos Especiales",
@@ -27,8 +27,8 @@ const craftTranslations = {
         typeAccessory: "Acessórios",
         typeGarra: "Garra",
         typeOjo: "Olho",
-        itemsBase: "Itens Base",
-        itemsSecundary: "Itens Secundários",
+        itemsBase: "PSL",
+        itemsSecundary: "OM",
         steelNeeded: "Aço/Platina",
         basicResources: "Recursos Básicos",
         specialResources: "Recursos Especiais",
@@ -43,8 +43,8 @@ const craftTranslations = {
         typeAccessory: "Accessories",
         typeGarra: "Claw",
         typeOjo: "Eye",
-        itemsBase: "Base Items",
-        itemsSecundary: "Secondary Items",
+        itemsBase: "PSL",
+        itemsSecundary: "OM",
         steelNeeded: "Steel/Platinum",
         basicResources: "Basic Resources",
         specialResources: "Special Resources",
@@ -60,21 +60,22 @@ const fondosRarity = {
 };
 
 // Recetas: [base, steel, polvo, polvoB, hierro, dragonS, cobre, ds]
+// Epic: PSL Verde 10000, PSL Azul 1000, PSL Rojo 100, Acero Verde 30000, Acero Azul 3000, Acero Rojo 300
 const recipes = {
     weapon: {
         rare:    { base: 10, steel: 3, polvo: 125, polvoB: 0, hierro: 0, dragonS: 0, cobre: 4000, ds: 1000 },
-        epic:    { base: 100, steel: 30, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
-        legendary:{ base: 1000, steel: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
+        epic:    { baseV: 10000, baseA: 1000, baseR: 100, steelV: 30000, steelA: 3000, steelR: 300, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
+        legendary:{ baseV: 100000, baseA: 10000, baseR: 1000, baseL: 100, steelV: 300000, steelA: 30000, steelR: 3000, steelL: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
     },
     armor: {
         rare:    { base: 10, steel: 3, polvo: 125, polvoB: 0, hierro: 0, dragonS: 0, cobre: 4000, ds: 1000 },
-        epic:    { base: 100, steel: 30, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
-        legendary:{ base: 1000, steel: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
+        epic:    { baseV: 10000, baseA: 1000, baseR: 100, steelV: 30000, steelA: 3000, steelR: 300, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
+        legendary:{ baseV: 100000, baseA: 10000, baseR: 1000, baseL: 100, steelV: 300000, steelA: 30000, steelR: 3000, steelL: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
     },
     accessory: {
         rare:    { base: 10, steel: 3, polvo: 125, polvoB: 0, hierro: 0, dragonS: 0, cobre: 4000, ds: 1000 },
-        epic:    { base: 100, steel: 30, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
-        legendary:{ base: 1000, steel: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
+        epic:    { baseV: 10000, baseA: 1000, baseR: 100, steelV: 30000, steelA: 3000, steelR: 300, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
+        legendary:{ baseV: 100000, baseA: 10000, baseR: 1000, baseL: 100, steelV: 300000, steelA: 30000, steelR: 3000, steelL: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
     }
 };
 
@@ -156,41 +157,67 @@ if (document.readyState === 'loading') {
 function calcular() {
     const lang = localStorage.getItem('mir4-lang') || 'es';
     const t = craftTranslations[lang];
-    const recipe = recipes[currentType] || recipes.weapon;
+
+    // Obtener tipo y rareza válidos
+    const validTypes = ['weapon', 'armor', 'accessory', 'garra', 'ojo'];
+    const validRarities = ['rare', 'epic', 'legendary'];
+    const safeType = validTypes.includes(currentType) ? currentType : 'weapon';
+    const safeRarity = validRarities.includes(currentRarity) ? currentRarity : 'legendary';
+
+    // garra y ojo usan las mismas recetas que weapon
+    const recipeType = (safeType === 'garra' || safeType === 'ojo') ? 'weapon' : safeType;
+    const recipe = recipes[recipeType]?.[safeRarity] || recipes.weapon.legendary;
 
     // Inventario
-    const baseV = parseInt(document.getElementById('baseV')?.value) || 0;
-    const baseA = parseInt(document.getElementById('baseA')?.value) || 0;
-    const baseR = parseInt(document.getElementById('baseR')?.value) || 0;
+    const getVal = (id) => {
+        const el = document.getElementById(id);
+        const val = el ? parseInt(el.value, 10) : 0;
+        return isNaN(val) ? 0 : val;
+    };
 
-    const secV = parseInt(document.getElementById('secV')?.value) || 0;
-    const secA = parseInt(document.getElementById('secA')?.value) || 0;
-    const secR = parseInt(document.getElementById('secR')?.value) || 0;
+    const baseV = getVal('baseV');
+    const baseA = getVal('baseA');
+    const baseR = getVal('baseR');
+    const secV = getVal('secV');
+    const secA = getVal('secA');
+    const secR = getVal('secR');
+    const steelV = getVal('steelV');
+    const steelA = getVal('steelA');
+    const steelR = getVal('steelR');
+    const polvo = getVal('polvoi');
+    const cobre = getVal('cobrei');
+    const monedas = getVal('mplata') * 10000;
+    const ds = getVal('dsi');
+    const polvoB = getVal('polvob');
+    const hierro = getVal('hierroo');
+    const dragonS = getVal('dragons');
 
-    const steelV = parseInt(document.getElementById('steelV')?.value) || 0;
-    const steelA = parseInt(document.getElementById('steelA')?.value) || 0;
-    const steelR = parseInt(document.getElementById('steelR')?.value) || 0;
+    // Cálculos - para Epic y Legendary se usan valores diferentes por color
+    const isEpic = safeRarity === 'epic';
+    const isLegendary = safeRarity === 'legendary';
+    const reqBaseV = isEpic ? (recipe.baseV || recipe.base) : (isLegendary ? recipe.baseV : recipe.base);
+    const reqBaseA = isEpic ? (recipe.baseA || recipe.base) : (isLegendary ? recipe.baseA : recipe.base);
+    const reqBaseR = isEpic ? (recipe.baseR || recipe.base) : (isLegendary ? recipe.baseR : recipe.base);
+    const reqBaseL = isLegendary ? recipe.baseL : 0;
+    const reqSteelV = isEpic ? (recipe.steelV || recipe.steel) : (isLegendary ? recipe.steelV : recipe.steel);
+    const reqSteelA = isEpic ? (recipe.steelA || recipe.steel) : (isLegendary ? recipe.steelA : recipe.steel);
+    const reqSteelR = isEpic ? (recipe.steelR || recipe.steel) : (isLegendary ? recipe.steelR : recipe.steel);
+    const reqSteelL = isLegendary ? recipe.steelL : 0;
 
-    const polvo = parseInt(document.getElementById('polvoi')?.value) || 0;
-    const cobre = parseInt(document.getElementById('cobrei')?.value) || 0;
-    const monedas = (parseInt(document.getElementById('mplata')?.value) || 0) * 10000;
-    const ds = parseInt(document.getElementById('dsi')?.value) || 0;
-    const polvoB = parseInt(document.getElementById('polvob')?.value) || 0;
-    const hierro = parseInt(document.getElementById('hierroo')?.value) || 0;
-    const dragonS = parseInt(document.getElementById('dragons')?.value) || 0;
+    const nBaseV = Math.max(0, reqBaseV - baseV);
+    const nBaseA = Math.max(0, reqBaseA - baseA);
+    const nBaseR = Math.max(0, reqBaseR - baseR);
+    const nBaseL = Math.max(0, reqBaseL - 0);
 
-    // Cálculos
-    const nBaseV = Math.max(0, recipe.base - baseV);
-    const nBaseA = Math.max(0, recipe.base - baseA);
-    const nBaseR = Math.max(0, recipe.base - baseR);
+    const nSecV = Math.max(0, reqBaseV - secV);
+    const nSecA = Math.max(0, reqBaseA - secA);
+    const nSecR = Math.max(0, reqBaseR - secR);
+    const nSecL = Math.max(0, reqBaseL - 0);
 
-    const nSecV = Math.max(0, recipe.base - secV);
-    const nSecA = Math.max(0, recipe.base - secA);
-    const nSecR = Math.max(0, recipe.base - secR);
-
-    const nSteelV = Math.max(0, recipe.steel - steelV);
-    const nSteelA = Math.max(0, recipe.steel - steelA);
-    const nSteelR = Math.max(0, recipe.steel - steelR);
+    const nSteelV = Math.max(0, reqSteelV - steelV);
+    const nSteelA = Math.max(0, reqSteelA - steelA);
+    const nSteelR = Math.max(0, reqSteelR - steelR);
+    const nSteelL = Math.max(0, reqSteelL - 0);
 
     const nPolvo = Math.max(0, recipe.polvo - polvo);
     const nCobre = Math.max(0, recipe.cobre - cobre - monedas);
@@ -210,47 +237,49 @@ function calcular() {
     const fondoImg = fondosRarity[currentRarity];
 
     // Nombre del tipo para mostrar
-    let typeName = t['type' + currentType.charAt(0).toUpperCase() + currentType.slice(1)] || currentType;
-    let typeIcon = currentType;
-    if (currentType === 'garra') typeIcon = 'garra';
-    else if (currentType === 'ojo') typeIcon = 'ojo';
+    const typeKey = 'type' + safeType.charAt(0).toUpperCase() + safeType.slice(1);
+    let typeName = t[typeKey] || t[safeType] || safeType;
 
     // Imágenes por tipo de equipo para el resultado
+    // Para Legendary se usan imágenes con sufijo "l" (verde+amarillo, azul+amarillo, rojo+amarillo)
     const resultImages = {
         weapon: {
-            base: { v: 'pslv', a: 'psla', r: 'pslr', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo' },
-            sec: { v: 'omv', a: 'oma', r: 'omr', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo' },
-            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
+            base: { v: 'pslv', a: 'psla', r: 'pslr', l: 'psll', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo', nameL: 'PSL Amarillo' },
+            sec: { v: 'omv', a: 'oma', r: 'omr', l: 'oml', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo', nameL: 'OM Amarillo' },
+            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', l: 'acerol', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo', nameL: 'Acero Amarillo' }
         },
         armor: {
-            base: { v: 'quintaesenciav', a: 'quintaesenciaa', r: 'quintaesenciar', nameV: 'Quintessence Verde', nameA: 'Quintessence Azul', nameR: 'Quintessence Rojo' },
-            sec: { v: 'baratijav', a: 'baratijaa', r: 'baratijar', nameV: 'Baratija Verde', nameA: 'Baratija Azul', nameR: 'Baratija Rojo' },
-            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
+            base: { v: 'quintaesenciav', a: 'quintaesenciaa', r: 'quintaesenciar', l: 'quintaesencial', nameV: 'Quintessence Verde', nameA: 'Quintessence Azul', nameR: 'Quintessence Rojo', nameL: 'Quintessence Amarillo' },
+            sec: { v: 'baratijav', a: 'baratijaa', r: 'baratijar', l: 'baratijal', nameV: 'Baratija Verde', nameA: 'Baratija Azul', nameR: 'Baratija Rojo', nameL: 'Baratija Amarillo' },
+            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', l: 'acerol', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo', nameL: 'Acero Amarillo' }
         },
         accessory: {
-            base: { v: 'fragv', a: 'fraga', r: 'fragr', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo' },
-            sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', nameV: 'Piedra Verde', nameA: 'Piedra Azul', nameR: 'Piedra Rojo' },
-            steel: { v: 'platinov', a: 'platinoa', r: 'platinor', nameV: 'Platino Verde', nameA: 'Platino Azul', nameR: 'Platino Rojo' }
+            base: { v: 'fragv', a: 'fraga', r: 'fragr', l: 'fragl', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo', nameL: 'Frag Amarillo' },
+            sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', l: 'piedral', nameV: 'Piedra Verde', nameA: 'Piedra Azul', nameR: 'Piedra Rojo', nameL: 'Piedra Amarillo' },
+            steel: { v: 'platinov', a: 'platinoa', r: 'platinor', l: 'platinol', nameV: 'Platino Verde', nameA: 'Platino Azul', nameR: 'Platino Rojo', nameL: 'Platino Amarillo' }
         },
         garra: {
-            base: { v: 'pslv', a: 'psla', r: 'pslr', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo' },
-            sec: { v: 'omv', a: 'oma', r: 'omr', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo' },
-            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
+            base: { v: 'pslv', a: 'psla', r: 'pslr', l: 'psll', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo', nameL: 'PSL Amarillo' },
+            sec: { v: 'omv', a: 'oma', r: 'omr', l: 'oml', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo', nameL: 'OM Amarillo' },
+            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', l: 'acerol', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo', nameL: 'Acero Amarillo' }
         },
         ojo: {
-            base: { v: 'fragv', a: 'fraga', r: 'fragr', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo' },
-            sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', nameV: 'Piedra Verde', nameA: 'Piedra Azul', nameR: 'Piedra Rojo' },
-            steel: { v: 'platinov', a: 'platinoa', r: 'platinor', nameV: 'Platino Verde', nameA: 'Platino Azul', nameR: 'Platino Rojo' }
+            base: { v: 'fragv', a: 'fraga', r: 'fragr', l: 'fragl', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo', nameL: 'Frag Amarillo' },
+            sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', l: 'piedral', nameV: 'Piedra Verde', nameA: 'Piedra Azul', nameR: 'Piedra Rojo', nameL: 'Piedra Amarillo' },
+            steel: { v: 'platinov', a: 'platinoa', r: 'platinor', l: 'platinol', nameV: 'Platino Verde', nameA: 'Platino Azul', nameR: 'Platino Rojo', nameL: 'Platino Amarillo' }
         }
     };
 
-    const resImg = resultImages[currentType] || resultImages.weapon;
+    const resImg = resultImages[safeType] || resultImages.weapon;
+
+    const rarityKey = 'rarity' + safeRarity.charAt(0).toUpperCase() + safeRarity.slice(1);
+    const rarityLabel = t[rarityKey] || safeRarity;
 
     const resultHTML = `
     <div class="result-with-fondo" style="position: relative; text-align: center;">
         <img src="${fondoImg}" alt="fondo" class="fondo-resultado">
         <div class="result-content-overlay">
-            <div class="rarity-label" style="color: ${colors.text};">${t['rarity' + currentRarity.charAt(0).toUpperCase() + currentRarity.slice(1)]}</div>
+            <div class="rarity-label" style="color: ${colors.text};">${rarityLabel}</div>
             <div class="type-label">${typeName}</div>
         </div>
     </div>
@@ -262,6 +291,7 @@ function calcular() {
                 <div class="item-box"><img src="images/${resImg.base.v}.png"><span>${nBaseV}</span><label>${resImg.base.nameV}</label></div>
                 <div class="item-box"><img src="images/${resImg.base.a}.png"><span>${nBaseA}</span><label>${resImg.base.nameA}</label></div>
                 <div class="item-box"><img src="images/${resImg.base.r}.png"><span>${nBaseR}</span><label>${resImg.base.nameR}</label></div>
+                ${safeRarity === 'legendary' ? `<div class="item-box legendary-item"><img src="images/Fondo legendario.png" alt="fondo" class="fondo-item"><img src="images/${resImg.base.l}.png" alt="item" class="item-img"><span>${nBaseL}</span><label>${resImg.base.nameL}</label></div>` : ''}
             </div>
         </div>
 
@@ -271,6 +301,7 @@ function calcular() {
                 <div class="item-box"><img src="images/${resImg.sec.v}.png"><span>${nSecV}</span><label>${resImg.sec.nameV}</label></div>
                 <div class="item-box"><img src="images/${resImg.sec.a}.png"><span>${nSecA}</span><label>${resImg.sec.nameA}</label></div>
                 <div class="item-box"><img src="images/${resImg.sec.r}.png"><span>${nSecR}</span><label>${resImg.sec.nameR}</label></div>
+                ${safeRarity === 'legendary' ? `<div class="item-box legendary-item"><img src="images/Fondo legendario.png" alt="fondo" class="fondo-item"><img src="images/${resImg.sec.l}.png" alt="item" class="item-img"><span>${nSecL}</span><label>${resImg.sec.nameL}</label></div>` : ''}
             </div>
         </div>
 
@@ -280,6 +311,7 @@ function calcular() {
                 <div class="item-box"><img src="images/${resImg.steel.v}.png"><span>${nSteelV}</span><label>${resImg.steel.nameV}</label></div>
                 <div class="item-box"><img src="images/${resImg.steel.a}.png"><span>${nSteelA}</span><label>${resImg.steel.nameA}</label></div>
                 <div class="item-box"><img src="images/${resImg.steel.r}.png"><span>${nSteelR}</span><label>${resImg.steel.nameR}</label></div>
+                ${safeRarity === 'legendary' ? `<div class="item-box legendary-item"><img src="images/Fondo legendario.png" alt="fondo" class="fondo-item"><img src="images/${resImg.steel.l}.png" alt="item" class="item-img"><span>${nSteelL}</span><label>${resImg.steel.nameL}</label></div>` : ''}
             </div>
         </div>
 
@@ -292,7 +324,7 @@ function calcular() {
             </div>
         </div>`;
 
-    const specialSection = currentRarity !== 'rare' ? `
+    const specialSection = safeRarity !== 'rare' ? `
         <div class="result-section epic-section" style="border-left: 4px solid ${colors.border};">
             <h4 style="color: ${colors.text};">${t.specialResources}</h4>
             <div class="resources-row">
