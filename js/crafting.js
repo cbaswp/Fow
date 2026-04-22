@@ -130,6 +130,11 @@ function initCrafting() {
         btn.addEventListener('click', function() {
             currentRarity = this.dataset.rarity;
             setActiveBtn(Array.from(document.querySelectorAll('.rare-btn')), this);
+            // Cambiar el fondo de Tipo según la rareza
+            const tipoFondo = document.getElementById('tipo-fondo');
+            if (tipoFondo) {
+                tipoFondo.src = fondosRarity[currentRarity];
+            }
             calcular();
         });
     });

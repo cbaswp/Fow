@@ -491,6 +491,60 @@ td:last-child {
     box-shadow: 0 0 10px rgba(88, 101, 242, 0.5);
 }
 
+/* Tipo con Fondo */
+.tipo-con-fondo {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tipo-fondo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.tipo-botones {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    background: transparent;
+}
+
+.tipo-btn {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    padding: 6px;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid transparent;
+}
+
+.tipo-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.08);
+}
+
+.tipo-btn.active {
+    opacity: 1;
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+
 .inventario-grid, .recursos-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
