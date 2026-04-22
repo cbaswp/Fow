@@ -97,31 +97,37 @@ function setActiveBtn(btns, active) {
 }
 
 // Inicializar eventos
-document.addEventListener('DOMContentLoaded', function() {
+function initCrafting() {
     // Botones de categoría
-    document.getElementById('armaswitch')?.addEventListener('click', function() {
+    const armaswitch = document.getElementById('armaswitch');
+    const ropaswitch = document.getElementById('ropaswitch');
+    const hornswitch = document.getElementById('hornswitch');
+    const garraR = document.getElementById('garraR');
+    const ojitoR = document.getElementById('ojitoR');
+
+    if (armaswitch) armaswitch.addEventListener('click', function() {
         currentType = 'weapon';
-        setActiveBtn([this, document.getElementById('ropaswitch'), document.getElementById('hornswitch'), document.getElementById('garraR'), document.getElementById('ojitoR')], this);
+        setActiveBtn([this, ropaswitch, hornswitch, garraR, ojitoR], this);
         calcular();
     });
-    document.getElementById('ropaswitch')?.addEventListener('click', function() {
+    if (ropaswitch) ropaswitch.addEventListener('click', function() {
         currentType = 'armor';
-        setActiveBtn([document.getElementById('armaswitch'), this, document.getElementById('hornswitch'), document.getElementById('garraR'), document.getElementById('ojitoR')], this);
+        setActiveBtn([armaswitch, this, hornswitch, garraR, ojitoR], this);
         calcular();
     });
-    document.getElementById('hornswitch')?.addEventListener('click', function() {
+    if (hornswitch) hornswitch.addEventListener('click', function() {
         currentType = 'accessory';
-        setActiveBtn([document.getElementById('armaswitch'), document.getElementById('ropaswitch'), this, document.getElementById('garraR'), document.getElementById('ojitoR')], this);
+        setActiveBtn([armaswitch, ropaswitch, this, garraR, ojitoR], this);
         calcular();
     });
-    document.getElementById('garraR')?.addEventListener('click', function() {
+    if (garraR) garraR.addEventListener('click', function() {
         currentType = 'weapon';
-        setActiveBtn([document.getElementById('armaswitch'), document.getElementById('ropaswitch'), document.getElementById('hornswitch'), this, document.getElementById('ojitoR')], this);
+        setActiveBtn([armaswitch, ropaswitch, hornswitch, this, ojitoR], this);
         calcular();
     });
-    document.getElementById('ojitoR')?.addEventListener('click', function() {
+    if (ojitoR) ojitoR.addEventListener('click', function() {
         currentType = 'accessory';
-        setActiveBtn([document.getElementById('armaswitch'), document.getElementById('ropaswitch'), document.getElementById('hornswitch'), document.getElementById('garraR'), this], this);
+        setActiveBtn([armaswitch, ropaswitch, hornswitch, garraR, this], this);
         calcular();
     });
 
@@ -140,7 +146,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calcular();
-});
+}
+
+// Ejecutar cuando el DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCrafting);
+} else {
+    initCrafting();
+}
 
 function calcular() {
     const lang = localStorage.getItem('mir4-lang') || 'es';
