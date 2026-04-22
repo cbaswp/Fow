@@ -211,6 +211,37 @@ function calcular() {
     if (currentType === 'garra') typeIcon = 'garra';
     else if (currentType === 'ojo') typeIcon = 'ojo';
 
+    // Imágenes por tipo de equipo para el resultado
+    const resultImages = {
+        weapon: {
+            base: { v: 'pslv', a: 'psla', r: 'pslr', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo' },
+            sec: { v: 'omv', a: 'oma', r: 'omr', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo' },
+            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
+        },
+        armor: {
+            base: { v: 'quintaesenciav', a: 'quintaesenciaa', r: 'quintaesenciar', nameV: 'Quintessence Verde', nameA: 'Quintessence Azul', nameR: 'Quintessence Rojo' },
+            sec: { v: 'baratijav', a: 'baratijaa', r: 'baratijar', nameV: 'Baratija Verde', nameA: 'Baratija Azul', nameR: 'Baratija Rojo' },
+            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
+        },
+        accessory: {
+            base: { v: 'fragv', a: 'fraga', r: 'fragr', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo' },
+            sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', nameV: 'Piedra Verde', nameA: 'Piedra Azul', nameR: 'Piedra Rojo' },
+            steel: { v: 'platinov', a: 'platinoa', r: 'platinor', nameV: 'Platino Verde', nameA: 'Platino Azul', nameR: 'Platino Rojo' }
+        },
+        garra: {
+            base: { v: 'pslv', a: 'psla', r: 'pslr', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo' },
+            sec: { v: 'omv', a: 'oma', r: 'omr', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo' },
+            steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
+        },
+        ojo: {
+            base: { v: 'fragv', a: 'fraga', r: 'fragr', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo' },
+            sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', nameV: 'Piedra Verde', nameA: 'Piedra Azul', nameR: 'Piedra Rojo' },
+            steel: { v: 'platinov', a: 'platinoa', r: 'platinor', nameV: 'Platino Verde', nameA: 'Platino Azul', nameR: 'Platino Rojo' }
+        }
+    };
+
+    const resImg = resultImages[currentType] || resultImages.weapon;
+
     const resultHTML = `
     <div class="result-with-fondo" style="position: relative; text-align: center;">
         <img src="${fondoImg}" alt="fondo" class="fondo-resultado">
@@ -224,27 +255,27 @@ function calcular() {
         <div class="result-section" style="border-left: 4px solid ${colors.border};">
             <h4 style="color: ${colors.text};">${t.itemsBase}</h4>
             <div class="result-row">
-                <div class="item-box"><img src="images/escama.png"><span>${nBaseV}</span><label>Verde</label></div>
-                <div class="item-box"><img src="images/escama.png"><span>${nBaseA}</span><label>Azul</label></div>
-                <div class="item-box"><img src="images/escama.png"><span>${nBaseR}</span><label>Rojo</label></div>
+                <div class="item-box"><img src="images/${resImg.base.v}.png"><span>${nBaseV}</span><label>${resImg.base.nameV}</label></div>
+                <div class="item-box"><img src="images/${resImg.base.a}.png"><span>${nBaseA}</span><label>${resImg.base.nameA}</label></div>
+                <div class="item-box"><img src="images/${resImg.base.r}.png"><span>${nBaseR}</span><label>${resImg.base.nameR}</label></div>
             </div>
         </div>
 
         <div class="result-section" style="border-left: 4px solid ${colors.border};">
             <h4 style="color: ${colors.text};">${t.itemsSecundary}</h4>
             <div class="result-row">
-                <div class="item-box"><img src="images/piel.png"><span>${nSecV}</span><label>Verde</label></div>
-                <div class="item-box"><img src="images/piel.png"><span>${nSecA}</span><label>Azul</label></div>
-                <div class="item-box"><img src="images/piel.png"><span>${nSecR}</span><label>Rojo</label></div>
+                <div class="item-box"><img src="images/${resImg.sec.v}.png"><span>${nSecV}</span><label>${resImg.sec.nameV}</label></div>
+                <div class="item-box"><img src="images/${resImg.sec.a}.png"><span>${nSecA}</span><label>${resImg.sec.nameA}</label></div>
+                <div class="item-box"><img src="images/${resImg.sec.r}.png"><span>${nSecR}</span><label>${resImg.sec.nameR}</label></div>
             </div>
         </div>
 
         <div class="result-section" style="border-left: 4px solid ${colors.border};">
             <h4 style="color: ${colors.text};">${t.steelNeeded}</h4>
             <div class="result-row">
-                <div class="item-box"><img src="images/acero.png"><span>${nSteelV}</span><label>Verde</label></div>
-                <div class="item-box"><img src="images/acero.png"><span>${nSteelA}</span><label>Azul</label></div>
-                <div class="item-box"><img src="images/acero.png"><span>${nSteelR}</span><label>Rojo</label></div>
+                <div class="item-box"><img src="images/${resImg.steel.v}.png"><span>${nSteelV}</span><label>${resImg.steel.nameV}</label></div>
+                <div class="item-box"><img src="images/${resImg.steel.a}.png"><span>${nSteelA}</span><label>${resImg.steel.nameA}</label></div>
+                <div class="item-box"><img src="images/${resImg.steel.r}.png"><span>${nSteelR}</span><label>${resImg.steel.nameR}</label></div>
             </div>
         </div>
 
