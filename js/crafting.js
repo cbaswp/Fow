@@ -1,423 +1,258 @@
-// ====== CALCULADORA DE FABRICACIÓN MEJORADA ======
-// Versión con sistema de Rare, Epic y Legendary
+// ====== CALCULADORA DE FABRICACIÓN ======
 
-// Traducciones para la calculadora
+// Traducciones
 const craftTranslations = {
     es: {
-        title: "Calculadora de Forjado",
-        selectType: "Seleccionar Categoría",
-        selectRarity: "Rareza Objetivo",
         rarityRare: "Raro (Azul)",
         rarityEpic: "Épico (Morado)",
         rarityLegendary: "Legendario (Naranja)",
         typeWeapon: "Armas",
         typeArmor: "Armadura",
         typeAccessory: "Accesorios",
-        typeGarra: "Garra",
-        typeOjo: "Ojo",
-        inventory: "Tu Inventario",
-        resources: "Recursos",
-        calculate: "Calcular",
-        result: "Resultado",
-        need: "Necesitas",
-        have: "Tienes",
-        missing: "Faltan",
-        noNeed: "No necesitas",
-        // Materiales
-        matPslV: "PSL Verde",
-        matPslA: "PSL Azul",
-        matPslR: "PSL Rojo",
-        matOmV: "OM Verde",
-        matOmA: "OM Azul",
-        matOmR: "OM Rojo",
-        matAceroV: "Acero Verde",
-        matAceroA: "Acero Azul",
-        matAceroR: "Acero Rojo",
-        matPlatinoV: "Platino Verde",
-        matPlatinoA: "Platino Azul",
-        matPlatinoR: "Platino Rojo",
-        matPolvo: "Polvo Mágico",
-        matCobre: "Cobre",
-        matMonedas: "Monedas (x10k)",
-        matDs: "Dragon's Soul",
-        matPolvoB: "Polvo Brillante",
-        matHierro: "Hierro Oscuro",
-        matDragonS: "Dragon Steel",
-        matElixir: "Elixir de Vida",
-        matCrystal: "Cristal de Hielo"
+        itemsBase: "Items Base",
+        itemsSecundary: "Items Secundarios",
+        steelNeeded: "Acero/Platino",
+        basicResources: "Recursos Básicos",
+        specialResources: "Recursos Especiales",
+        noNeed: "No necesitas este material"
     },
     pt: {
-        title: "Calculadora de Forja",
-        selectType: "Selecionar Categoria",
-        selectRarity: "Raridade Alvo",
         rarityRare: "Raro (Azul)",
         rarityEpic: "Épico (Roxo)",
         rarityLegendary: "Lendário (Laranja)",
         typeWeapon: "Armas",
         typeArmor: "Armadura",
         typeAccessory: "Acessórios",
-        typeGarra: "Garra",
-        typeOjo: "Olho",
-        inventory: "Seu Inventário",
-        resources: "Recursos",
-        calculate: "Calcular",
-        result: "Resultado",
-        need: "Precisa",
-        have: "Tem",
-        missing: "Faltam",
-        noNeed: "Não precisa",
-        matPslV: "PSL Verde",
-        matPslA: "PSL Azul",
-        matPslR: "PSL Vermelho",
-        matOmV: "OM Verde",
-        matOmA: "OM Azul",
-        matOmR: "OM Vermelho",
-        matAceroV: "Aço Verde",
-        matAceroA: "Aço Azul",
-        matAceroR: "Aço Vermelho",
-        matPlatinoV: "Platina Verde",
-        matPlatinoA: "Platina Azul",
-        matPlatinoR: "Platina Vermelho",
-        matPolvo: "Pó Mágico",
-        matCobre: "Cobre",
-        matMonedas: "Moedas (x10k)",
-        matDs: "Dragon's Soul",
-        matPolvoB: "Pó Brilhante",
-        matHierro: "Ferro Negro",
-        matDragonS: "Dragon Steel",
-        matElixir: "Elixir de Vida",
-        matCrystal: "Cristal de Gelo"
+        itemsBase: "Itens Base",
+        itemsSecundary: "Itens Secundários",
+        steelNeeded: "Aço/Platina",
+        basicResources: "Recursos Básicos",
+        specialResources: "Recursos Especiais",
+        noNeed: "Não precisa deste material"
     },
     en: {
-        title: "Forging Calculator",
-        selectType: "Select Category",
-        selectRarity: "Target Rarity",
         rarityRare: "Rare (Blue)",
         rarityEpic: "Epic (Purple)",
         rarityLegendary: "Legendary (Orange)",
         typeWeapon: "Weapons",
         typeArmor: "Armor",
         typeAccessory: "Accessories",
-        typeGarra: "Claw",
-        typeOjo: "Eye",
-        inventory: "Your Inventory",
-        resources: "Resources",
-        calculate: "Calculate",
-        result: "Result",
-        need: "Need",
-        have: "Have",
-        missing: "Missing",
-        noNeed: "Not needed",
-        matPslV: "PSL Green",
-        matPslA: "PSL Blue",
-        matPslR: "PSL Red",
-        matOmV: "OM Green",
-        matOmA: "OM Blue",
-        matOmR: "OM Red",
-        matAceroV: "Steel Green",
-        matAceroA: "Steel Blue",
-        matAceroR: "Steel Red",
-        matPlatinoV: "Platinum Green",
-        matPlatinoA: "Platinum Blue",
-        matPlatinoR: "Platinum Red",
-        matPolvo: "Magic Powder",
-        matCobre: "Copper",
-        matMonedas: "Coins (x10k)",
-        matDs: "Dragon's Soul",
-        matPolvoB: "Glittering Powder",
-        matHierro: "Dark Steel",
-        matDragonS: "Dragon Steel",
-        matElixir: "Life Elixir",
-        matCrystal: "Ice Crystal"
+        itemsBase: "Base Items",
+        itemsSecundary: "Secondary Items",
+        steelNeeded: "Steel/Platinum",
+        basicResources: "Basic Resources",
+        specialResources: "Special Resources",
+        noNeed: "You don't need this material"
     }
 };
 
-// Configuración de recetas por tipo y rareza
-// Formato: [verde, azul, rojo, acero, recursos fijos, polvo, cobre, ds]
-const recipes = {
-    // ARMAS (PSL + OM + Acero)
+// Imágenes por tipo de equipo
+const itemImages = {
     weapon: {
-        rare: {
-            name: "PSL + OM",
-            base: { v: 10, a: 10, r: 10 },
-            acero: { v: 3, a: 3, r: 3 },
-            polvo: 125,
-            cobre: 4000,
-            ds: 1000
-        },
-        epic: {
-            name: "PSL + OM",
-            base: { v: 100, a: 100, r: 100 },
-            acero: { v: 30, a: 30, r: 30 },
-            polvo: 1250,
-            polvoB: 25,
-            hierro: 5000,
-            cobre: 20000,
-            ds: 10000
-        },
-        legendary: {
-            name: "PSL + OM",
-            base: { v: 1000, a: 1000, r: 1000 },
-            acero: { v: 300, a: 300, r: 300 },
-            polvo: 12500,
-            polvoB: 125,
-            hierro: 25000,
-            dragonS: 5000,
-            cobre: 100000,
-            ds: 50000
-        }
+        base: { v: 'pslv', a: 'psla', r: 'pslr', nameV: 'PSL Verde', nameA: 'PSL Azul', nameR: 'PSL Rojo' },
+        sec: { v: 'omv', a: 'oma', r: 'omr', nameV: 'OM Verde', nameA: 'OM Azul', nameR: 'OM Rojo' },
+        steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
     },
-    // ARMADURA (Quintessence + Baratija + Acero)
     armor: {
-        rare: {
-            name: "Quintessence + Baratija",
-            base: { v: 10, a: 10, r: 10 },
-            acero: { v: 3, a: 3, r: 3 },
-            polvo: 125,
-            cobre: 4000,
-            ds: 1000
-        },
-        epic: {
-            name: "Quintessence + Baratija",
-            base: { v: 100, a: 100, r: 100 },
-            acero: { v: 30, a: 30, r: 30 },
-            polvo: 1250,
-            polvoB: 25,
-            hierro: 5000,
-            cobre: 20000,
-            ds: 10000
-        },
-        legendary: {
-            name: "Quintessence + Baratija",
-            base: { v: 1000, a: 1000, r: 1000 },
-            acero: { v: 300, a: 300, r: 300 },
-            polvo: 12500,
-            polvoB: 125,
-            hierro: 25000,
-            dragonS: 5000,
-            cobre: 100000,
-            ds: 50000
-        }
+        base: { v: 'quintaesenciav', a: 'quintaesenciaa', r: 'quintaesenciar', nameV: 'Quintessence V', nameA: 'Quintessence A', nameR: 'Quintessence R' },
+        sec: { v: 'baratijav', a: 'baratijaa', r: 'baratijar', nameV: 'Baratija V', nameA: 'Baratija A', nameR: 'Baratija R' },
+        steel: { v: 'acerov', a: 'aceroa', r: 'aceror', nameV: 'Acero Verde', nameA: 'Acero Azul', nameR: 'Acero Rojo' }
     },
-    // ACCESORIOS (Frag + Piedra + Platino)
     accessory: {
-        rare: {
-            name: "Frag + Piedra",
-            base: { v: 10, a: 10, r: 10 },
-            acero: { v: 3, a: 3, r: 3 },
-            polvo: 125,
-            cobre: 4000,
-            ds: 1000
-        },
-        epic: {
-            name: "Frag + Piedra",
-            base: { v: 100, a: 100, r: 100 },
-            acero: { v: 30, a: 30, r: 30 },
-            polvo: 1250,
-            polvoB: 25,
-            hierro: 5000,
-            cobre: 20000,
-            ds: 10000
-        },
-        legendary: {
-            name: "Frag + Piedra",
-            base: { v: 1000, a: 1000, r: 1000 },
-            acero: { v: 300, a: 300, r: 30 },
-            polvo: 12500,
-            polvoB: 125,
-            hierro: 25000,
-            dragonS: 5000,
-            cobre: 100000,
-            ds: 50000
-        }
+        base: { v: 'fragv', a: 'fraga', r: 'fragr', nameV: 'Frag Verde', nameA: 'Frag Azul', nameR: 'Frag Rojo' },
+        sec: { v: 'piedrav', a: 'piedraa', r: 'piedrar', nameV: 'Piedra V', nameA: 'Piedra A', nameR: 'Piedra R' },
+        steel: { v: 'platinov', a: 'platinoa', r: 'platinor', nameV: 'Platino V', nameA: 'Platino A', nameR: 'Platino R' }
     }
 };
 
-// Estado actual
+// Recetas: [base, steel, polvo, polvoB, hierro, dragonS, cobre, ds]
+const recipes = {
+    weapon: {
+        rare:    { base: 10, steel: 3, polvo: 125, polvoB: 0, hierro: 0, dragonS: 0, cobre: 4000, ds: 1000 },
+        epic:    { base: 100, steel: 30, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
+        legendary:{ base: 1000, steel: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
+    },
+    armor: {
+        rare:    { base: 10, steel: 3, polvo: 125, polvoB: 0, hierro: 0, dragonS: 0, cobre: 4000, ds: 1000 },
+        epic:    { base: 100, steel: 30, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
+        legendary:{ base: 1000, steel: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
+    },
+    accessory: {
+        rare:    { base: 10, steel: 3, polvo: 125, polvoB: 0, hierro: 0, dragonS: 0, cobre: 4000, ds: 1000 },
+        epic:    { base: 100, steel: 30, polvo: 1250, polvoB: 25, hierro: 5000, dragonS: 0, cobre: 20000, ds: 10000 },
+        legendary:{ base: 1000, steel: 300, polvo: 12500, polvoB: 125, hierro: 25000, dragonS: 5000, cobre: 100000, ds: 50000 }
+    }
+};
+
 let currentType = 'weapon';
-let currentRarity = 'rare';
+let currentRarity = 'legendary';
 
-function formatNumber(num) {
-    return num.toLocaleString('es-ES');
+function formatNum(n) {
+    return n.toLocaleString('es-ES');
 }
 
-function getImagePath(baseName) {
-    return `images/${baseName}.png`;
+function setActiveBtn(btns, active) {
+    btns.forEach(b => b.classList.remove('active'));
+    active.classList.add('active');
 }
 
-function setActiveButton(btn) {
-    document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
-
-function setActiveRarity(btn) {
-    document.querySelectorAll('.rare-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-}
-
-// Cambio de tipo de equipo
-document.getElementById('armaswitch').addEventListener('click', function() {
-    currentType = 'weapon';
-    setActiveButton(this);
-    calcular();
-});
-
-document.getElementById('ropaswitch').addEventListener('click', function() {
-    currentType = 'armor';
-    setActiveButton(this);
-    calcular();
-});
-
-document.getElementById('hornswitch').addEventListener('click', function() {
-    currentType = 'accessory';
-    setActiveButton(this);
-    calcular();
-});
-
-document.getElementById('garraR').addEventListener('click', function() {
-    currentType = 'weapon';
-    setActiveButton(this);
-    calcular();
-});
-
-document.getElementById('ojitoR').addEventListener('click', function() {
-    currentType = 'accessory';
-    setActiveButton(this);
-    calcular();
-});
-
-// Cambio de rareza
-document.querySelectorAll('.rare-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        currentRarity = this.dataset.rarity;
-        setActiveRarity(this);
+// Inicializar eventos
+document.addEventListener('DOMContentLoaded', function() {
+    // Botones de categoría
+    document.getElementById('armaswitch')?.addEventListener('click', function() {
+        currentType = 'weapon';
+        setActiveBtn([this, document.getElementById('ropaswitch'), document.getElementById('hornswitch'), document.getElementById('garraR'), document.getElementById('ojitoR')], this);
         calcular();
     });
+    document.getElementById('ropaswitch')?.addEventListener('click', function() {
+        currentType = 'armor';
+        setActiveBtn([document.getElementById('armaswitch'), this, document.getElementById('hornswitch'), document.getElementById('garraR'), document.getElementById('ojitoR')], this);
+        calcular();
+    });
+    document.getElementById('hornswitch')?.addEventListener('click', function() {
+        currentType = 'accessory';
+        setActiveBtn([document.getElementById('armaswitch'), document.getElementById('ropaswitch'), this, document.getElementById('garraR'), document.getElementById('ojitoR')], this);
+        calcular();
+    });
+    document.getElementById('garraR')?.addEventListener('click', function() {
+        currentType = 'weapon';
+        setActiveBtn([document.getElementById('armaswitch'), document.getElementById('ropaswitch'), document.getElementById('hornswitch'), this, document.getElementById('ojitoR')], this);
+        calcular();
+    });
+    document.getElementById('ojitoR')?.addEventListener('click', function() {
+        currentType = 'accessory';
+        setActiveBtn([document.getElementById('armaswitch'), document.getElementById('ropaswitch'), document.getElementById('hornswitch'), document.getElementById('garraR'), this], this);
+        calcular();
+    });
+
+    // Botones de rareza
+    document.querySelectorAll('.rare-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentRarity = this.dataset.rarity;
+            setActiveBtn(Array.from(document.querySelectorAll('.rare-btn')), this);
+            calcular();
+        });
+    });
+
+    // Auto-calcular
+    document.querySelectorAll('.inv-item input').forEach(input => {
+        input.addEventListener('input', calcular);
+    });
+
+    calcular();
 });
 
-// Función principal de cálculo
 function calcular() {
-    const lang = localStorage.getItem('language') || 'es';
+    const lang = localStorage.getItem('mir4-lang') || 'es';
     const t = craftTranslations[lang];
+    const recipe = recipes[currentType][currentRarity];
+    const imgs = itemImages[currentType];
 
-    // Obtener valores del inventario
-    const pslV = parseInt(document.getElementById('psli')?.value) || 0;
-    const pslA = parseInt(document.getElementById('rpsli')?.value) || 0;
-    const pslR = parseInt(document.getElementById('hpsli')?.value) || 0;
+    // Inventario
+    const baseV = parseInt(document.getElementById('baseV')?.value) || 0;
+    const baseA = parseInt(document.getElementById('baseA')?.value) || 0;
+    const baseR = parseInt(document.getElementById('baseR')?.value) || 0;
 
-    const omV = parseInt(document.getElementById('ci')?.value) || 0;
-    const omA = parseInt(document.getElementById('rci')?.value) || 0;
-    const omR = parseInt(document.getElementById('hci')?.value) || 0;
+    const secV = parseInt(document.getElementById('secV')?.value) || 0;
+    const secA = parseInt(document.getElementById('secA')?.value) || 0;
+    const secR = parseInt(document.getElementById('secR')?.value) || 0;
 
-    const aceroV = parseInt(document.getElementById('ai')?.value) || 0;
-    const aceroA = parseInt(document.getElementById('rai')?.value) || 0;
-    const aceroR = parseInt(document.getElementById('hai')?.value) || 0;
-
-    const platinoV = parseInt(document.getElementById('platv')?.value) || 0;
-    const platinoA = parseInt(document.getElementById('plata')?.value) || 0;
-    const platinoR = parseInt(document.getElementById('platr')?.value) || 0;
+    const steelV = parseInt(document.getElementById('steelV')?.value) || 0;
+    const steelA = parseInt(document.getElementById('steelA')?.value) || 0;
+    const steelR = parseInt(document.getElementById('steelR')?.value) || 0;
 
     const polvo = parseInt(document.getElementById('polvoi')?.value) || 0;
     const cobre = parseInt(document.getElementById('cobrei')?.value) || 0;
     const monedas = (parseInt(document.getElementById('mplata')?.value) || 0) * 10000;
     const ds = parseInt(document.getElementById('dsi')?.value) || 0;
-
     const polvoB = parseInt(document.getElementById('polvob')?.value) || 0;
     const hierro = parseInt(document.getElementById('hierroo')?.value) || 0;
     const dragonS = parseInt(document.getElementById('dragons')?.value) || 0;
 
-    // Obtener receta según tipo y rareza
-    const recipe = recipes[currentType][currentRarity];
+    // Cálculos
+    const nBaseV = Math.max(0, recipe.base - baseV);
+    const nBaseA = Math.max(0, recipe.base - baseA);
+    const nBaseR = Math.max(0, recipe.base - baseR);
 
-    // Calcular faltantes
-    let resultHTML = `<div class="result-header"><span class="rarity-${currentRarity}">${t['rarity' + currentRarity.charAt(0).toUpperCase() + currentRarity.slice(1)]}</span></div>`;
+    const nSecV = Math.max(0, recipe.base - secV);
+    const nSecA = Math.max(0, recipe.base - secA);
+    const nSecR = Math.max(0, recipe.base - secR);
 
-    resultHTML += '<div class="result-section">';
-    resultHTML += `<h4>${t.typeWeapon} / ${recipe.name}</h4>`;
+    const nSteelV = Math.max(0, recipe.steel - steelV);
+    const nSteelA = Math.max(0, recipe.steel - steelA);
+    const nSteelR = Math.max(0, recipe.steel - steelR);
 
-    // Items base (PSL o Quintessence + OM o Frag + Piedra)
-    const baseV = Math.max(0, recipe.base.v - pslV);
-    const baseA = Math.max(0, recipe.base.a - pslA);
-    const baseR = Math.max(0, recipe.base.r - pslR);
+    const nPolvo = Math.max(0, recipe.polvo - polvo);
+    const nCobre = Math.max(0, recipe.cobre - cobre - monedas);
+    const nDs = Math.max(0, recipe.ds - ds);
+    const nPolvoB = Math.max(0, recipe.polvoB - polvoB);
+    const nHierro = Math.max(0, recipe.hierro - hierro);
+    const nDragonS = Math.max(0, recipe.dragonS - dragonS);
 
-    resultHTML += '<div class="result-row">';
-    resultHTML += `<img src="${getImagePath('pslv')}" alt="PSL V"><span>${baseV > 0 ? baseV : '0'}</span>`;
-    resultHTML += `<img src="${getImagePath('psla')}" alt="PSL A"><span>${baseA > 0 ? baseA : '0'}</span>`;
-    resultHTML += `<img src="${getImagePath('pslr')}" alt="PSL R"><span>${baseR > 0 ? baseR : '0'}</span>`;
-    resultHTML += '</div>';
+    // Colores por rareza
+    const colors = {
+        rare: { bg: 'rgba(88, 101, 242, 0.15)', border: '#5865F2', text: '#5865F2' },
+        epic: { bg: 'rgba(155, 89, 182, 0.15)', border: '#9b59b6', text: '#9b59b6' },
+        legendary: { bg: 'rgba(230, 126, 34, 0.15)', border: '#e67e22', text: '#e67e22' }
+    }[currentRarity];
 
-    // Items secundarios (OM o Frag o Baratija)
-    const secV = Math.max(0, recipe.base.v - omV);
-    const secA = Math.max(0, recipe.base.a - omA);
-    const secR = Math.max(0, recipe.base.r - omR);
+    const resultHTML = `
+    <div class="result-header" style="background: ${colors.bg}; border: 2px solid ${colors.border}; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center;">
+        <span class="rarity-title" style="color: ${colors.text}; font-size: 1.4em; font-weight: bold;">
+            ${t['rarity' + currentRarity.charAt(0).toUpperCase() + currentRarity.slice(1)]}
+        </span>
+        <span style="color: #aaa; margin-left: 15px; font-size: 1em;">
+            ${t['type' + currentType.charAt(0).toUpperCase() + currentType.slice(1)]}
+        </span>
+    </div>
 
-    resultHTML += '<div class="result-row">';
-    resultHTML += `<img src="${getImagePath('omv')}" alt="OM V"><span>${secV > 0 ? secV : '0'}</span>`;
-    resultHTML += `<img src="${getImagePath('oma')}" alt="OM A"><span>${secA > 0 ? secA : '0'}</span>`;
-    resultHTML += `<img src="${getImagePath('omr')}" alt="OM R"><span>${secR > 0 ? secR : '0'}</span>`;
-    resultHTML += '</div>';
-    resultHTML += '</div>';
+    <div class="result-section">
+        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.itemsBase}</h4>
+        <div class="result-row">
+            <div class="item-box"><img src="images/${imgs.base.v}.png"><span>${nBaseV}</span><label>${imgs.base.nameV}</label></div>
+            <div class="item-box"><img src="images/${imgs.base.a}.png"><span>${nBaseA}</span><label>${imgs.base.nameA}</label></div>
+            <div class="item-box"><img src="images/${imgs.base.r}.png"><span>${nBaseR}</span><label>${imgs.base.nameR}</label></div>
+        </div>
+    </div>
 
-    // Acero
-    resultHTML += '<div class="result-section">';
-    resultHTML += '<h4>Acero / Platino</h4>';
-    const aceroNeededV = Math.max(0, recipe.acero.v - aceroV);
-    const aceroNeededA = Math.max(0, recipe.acero.a - aceroA);
-    const aceroNeededR = Math.max(0, recipe.acero.r - aceroR);
+    <div class="result-section">
+        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.itemsSecundary}</h4>
+        <div class="result-row">
+            <div class="item-box"><img src="images/${imgs.sec.v}.png"><span>${nSecV}</span><label>${imgs.sec.nameV}</label></div>
+            <div class="item-box"><img src="images/${imgs.sec.a}.png"><span>${nSecA}</span><label>${imgs.sec.nameA}</label></div>
+            <div class="item-box"><img src="images/${imgs.sec.r}.png"><span>${nSecR}</span><label>${imgs.sec.nameR}</label></div>
+        </div>
+    </div>
 
-    resultHTML += '<div class="result-row">';
-    resultHTML += `<img src="${getImagePath('acerov')}" alt="Acero V"><span>${aceroNeededV > 0 ? aceroNeededV : '0'}</span>`;
-    resultHTML += `<img src="${getImagePath('aceroa')}" alt="Acero A"><span>${aceroNeededA > 0 ? aceroNeededA : '0'}</span>`;
-    resultHTML += `<img src="${getImagePath('aceror')}" alt="Acero R"><span>${aceroNeededR > 0 ? aceroNeededR : '0'}</span>`;
-    resultHTML += '</div>';
-    resultHTML += '</div>';
+    <div class="result-section">
+        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.steelNeeded}</h4>
+        <div class="result-row">
+            <div class="item-box"><img src="images/${imgs.steel.v}.png"><span>${nSteelV}</span><label>${imgs.steel.nameV}</label></div>
+            <div class="item-box"><img src="images/${imgs.steel.a}.png"><span>${nSteelA}</span><label>${imgs.steel.nameA}</label></div>
+            <div class="item-box"><img src="images/${imgs.steel.r}.png"><span>${nSteelR}</span><label>${imgs.steel.nameR}</label></div>
+        </div>
+    </div>
 
-    // Recursos básicos
-    resultHTML += '<div class="result-section">';
-    resultHTML += `<h4>${t.resources}</h4>`;
-    resultHTML += '<div class="result-row">';
+    <div class="result-section">
+        <h4 style="color: #7289da; margin-bottom: 12px;">${t.basicResources}</h4>
+        <div class="resources-row">
+            <div class="resource-box"><img src="images/polv.png"><span>${formatNum(nPolvo)}</span><label>Polvo</label></div>
+            <div class="resource-box"><img src="images/cobreimg.png"><span>${formatNum(nCobre)}</span><label>Cobre</label></div>
+            <div class="resource-box"><img src="images/imgds.png"><span>${formatNum(nDs)}</span><label>DS</label></div>
+        </div>
+    </div>`;
 
-    const polvoNeeded = Math.max(0, recipe.polvo - polvo);
-    const cobreNeeded = Math.max(0, recipe.cobre - cobre - monedas);
-    const dsNeeded = Math.max(0, recipe.ds - ds);
+    const specialSection = currentRarity !== 'rare' ? `
+    <div class="result-section epic-section">
+        <h4 style="color: ${colors.text}; margin-bottom: 12px;">${t.specialResources}</h4>
+        <div class="resources-row">
+            <div class="resource-box epic"><img src="images/polv.png"><span>${formatNum(nPolvoB)}</span><label>Polvo Brillante</label></div>
+            <div class="resource-box epic"><img src="images/polv.png"><span>${formatNum(nHierro)}</span><label>Hierro Oscuro</label></div>
+            <div class="resource-box epic"><img src="images/polv.png"><span>${formatNum(nDragonS)}</span><label>Dragon Steel</label></div>
+        </div>
+    </div>` : '';
 
-    resultHTML += `<div class="resource-item"><img src="${getImagePath('polv')}" alt="Polvo"><span>${polvoNeeded > 0 ? formatNumber(polvNeeded) : '0'}</span></div>`;
-    resultHTML += `<div class="resource-item"><img src="${getImagePath('cobreimg')}" alt="Cobre"><span>${cobreNeeded > 0 ? formatNumber(cobreNeeded) : '0'}</span></div>`;
-    resultHTML += `<div class="resource-item"><img src="${getImagePath('imgds')}" alt="DS"><span>${dsNeeded > 0 ? formatNumber(dsNeeded) : '0'}</span></div>`;
-    resultHTML += '</div>';
+    const note = `<div class="result-note">${t.noNeed}</div>`;
 
-    // Recursos Epic/Legendary
-    if (currentRarity !== 'rare') {
-        resultHTML += '<div class="result-row epic-resources">';
-
-        const polvoBNeeded = Math.max(0, recipe.polvoB - polvoB);
-        const hierroNeeded = Math.max(0, recipe.hierro - hierro);
-
-        resultHTML += `<div class="resource-item epic"><img src="${getImagePath('polv')}" alt="Polvo Brillante"><span class="label">PB</span><span>${polvoBNeeded > 0 ? formatNumber(polvBNeeded) : '0'}</span></div>`;
-        resultHTML += `<div class="resource-item epic"><img src="${getImagePath('polv')}" alt="Hierro Oscuro"><span class="label">HO</span><span>${hierroNeeded > 0 ? formatNumber(hierroNeeded) : '0'}</span></div>`;
-
-        if (recipe.dragonS) {
-            const dragonSNeeded = Math.max(0, recipe.dragonS - dragonS);
-            resultHTML += `<div class="resource-item epic"><img src="${getImagePath('polv')}" alt="Dragon Steel"><span class="label">DS</span><span>${dragonSNeeded > 0 ? formatNumber(dragonSNeeded) : '0'}</span></div>`;
-        }
-        resultHTML += '</div>';
-    }
-    resultHTML += '</div>';
-
-    // Actualizar resultado
-    const resultDiv = document.getElementById('resultado');
-    if (resultDiv) {
-        resultDiv.innerHTML = resultHTML;
-    }
-
-    // Resultado simplificado para legacy
-    document.getElementById('resultado').innerHTML = resultHTML;
+    document.getElementById('resultado').innerHTML = resultHTML + specialSection + note;
 }
-
-// Auto-calcular cuando cambian los inputs
-document.querySelectorAll('.inv-item input').forEach(input => {
-    input.addEventListener('input', calcular);
-});
-
-// Calcular al cargar
-calcular();
