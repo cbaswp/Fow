@@ -525,14 +525,31 @@
             <!-- Sección: Calculadora de Fabricación -->
             <div id="fabricacion" class="content-section">
                 <div class="section-header">
-                    <h2 class="section-title" data-translate="fabricacionTitulo">🔧 Calculadora de Fabricación</h2>
-                    <p class="section-subtitle" data-translate="fabricacionSubtitulo">Calcula los materiales necesarios para fabricar equipamentos</p>
+                    <h2 class="section-title" data-translate="fabricacionTitulo">🔧 Calculadora de Forjado</h2>
+                    <p class="section-subtitle" data-translate="fabricacionSubtitulo">Calcula los materiales necesarios para fabricar equipos épicos y legendarios</p>
                 </div>
 
                 <div class="card fabricacion-card">
                     <div class="fabricacion-layout">
                         <div class="fabricacion-controles">
-                            <h3 data-translate="fabricacionSelectType">Seleccionar Tipo</h3>
+                            <!-- Selector de Rareza -->
+                            <h3 data-translate="fabricacionSelectType">Rareza Objetivo</h3>
+                            <div class="rareza-botones">
+                                <button class="rare-btn" data-rarity="rare">
+                                    <span class="rare-icon rare">R</span>
+                                    <span data-translate="rarityRare">Raro (Azul)</span>
+                                </button>
+                                <button class="rare-btn" data-rarity="epic">
+                                    <span class="rare-icon epic">E</span>
+                                    <span data-translate="rarityEpic">Épico (Morado)</span>
+                                </button>
+                                <button class="rare-btn active" data-rarity="legendary">
+                                    <span class="rare-icon legendary">L</span>
+                                    <span data-translate="rarityLegendary">Legendario (Naranja)</span>
+                                </button>
+                            </div>
+
+                            <h3 data-translate="fabricacionSelectType">Seleccionar Categoría</h3>
                             <div class="tipo-botones">
                                 <img src="images/escama.png" alt="Armas" id="armaswitch" class="tipo-btn active" title="Armas">
                                 <img src="images/skin.png" alt="Armadura" id="ropaswitch" class="tipo-btn" title="Armadura">
@@ -588,6 +605,21 @@
                                 </div>
                             </div>
 
+                            <div class="inventario-grid">
+                                <div class="inv-item">
+                                    <div class="inv-label">🟢 Platino Verde</div>
+                                    <input type="number" id="platv" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔵 Platino Azul</div>
+                                    <input type="number" id="plata" placeholder="0" min="0">
+                                </div>
+                                <div class="inv-item">
+                                    <div class="inv-label">🔴 Platino Rojo</div>
+                                    <input type="number" id="platr" placeholder="0" min="0">
+                                </div>
+                            </div>
+
                             <h3 data-translate="fabricacionRecursos">Recursos</h3>
                             <div class="recursos-grid">
                                 <div class="inv-item">
@@ -609,29 +641,33 @@
                                     <input type="number" id="dsi" placeholder="0" min="0">
                                 </div>
                             </div>
+
+                            <!-- Recursos Epic/Legendary -->
+                            <div class="recursos-avanzados">
+                                <h4>Recursos Especiales</h4>
+                                <div class="recursos-grid">
+                                    <div class="inv-item">
+                                        <div class="inv-label">✨ Polvo Brillante</div>
+                                        <input type="number" id="polvob" placeholder="0" min="0">
+                                    </div>
+                                    <div class="inv-item">
+                                        <div class="inv-label">⬛ Hierro Oscuro</div>
+                                        <input type="number" id="hierroo" placeholder="0" min="0">
+                                    </div>
+                                </div>
+                                <div class="recursos-grid">
+                                    <div class="inv-item">
+                                        <div class="inv-label">🐉 Dragon Steel</div>
+                                        <input type="number" id="dragons" placeholder="0" min="0">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="fabricacion-resultados">
-                            <button id="valor" class="btn-calcular" data-translate="fabricacionBtnCalcular">Calcular</button>
-
-                            <div class="resultado-box">
-                                <h4 data-translate="fabricacionResultadoItems">Items Necesarios</h4>
+                            <div class="resultado-box main-result">
+                                <h4 data-translate="fabricacionResultadoItems">Materiales Necesarios</h4>
                                 <div id="resultado" class="resultado-content"></div>
-                            </div>
-
-                            <div class="resultado-box">
-                                <h4 data-translate="fabricacionResultadoAcero">Acero Necesario</h4>
-                                <div id="resultado2" class="resultado-content"></div>
-                            </div>
-
-                            <div class="resultado-box">
-                                <h4 data-translate="fabricacionResultadoMateriales">Materiales Necesarios</h4>
-                                <div id="resultado3" class="resultado-content"></div>
-                            </div>
-
-                            <div class="resultado-box">
-                                <h4 data-translate="fabricacionResultadoRecursos">Recursos Totales</h4>
-                                <div id="resultado4" class="resultado-content"></div>
                             </div>
                         </div>
                     </div>

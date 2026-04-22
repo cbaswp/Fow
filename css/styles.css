@@ -615,6 +615,180 @@ td:last-child {
     font-family: 'Courier New', monospace;
 }
 
+/* ====== SELECTOR DE Rareza ====== */
+.rareza-botones {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.rare-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background-color: #36393f;
+    border: 2px solid #40444b;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #b9bbbe;
+    font-size: 0.9em;
+}
+
+.rare-btn:hover {
+    border-color: #5865F2;
+    transform: scale(1.02);
+}
+
+.rare-btn.active {
+    border-width: 2px;
+}
+
+.rare-btn.active[data-rarity="rare"] {
+    border-color: #5865F2;
+    background-color: rgba(88, 101, 242, 0.15);
+    color: #5865F2;
+}
+
+.rare-btn.active[data-rarity="epic"] {
+    border-color: #9b59b6;
+    background-color: rgba(155, 89, 182, 0.15);
+    color: #9b59b6;
+}
+
+.rare-btn.active[data-rarity="legendary"] {
+    border-color: #e67e22;
+    background-color: rgba(230, 126, 34, 0.15);
+    color: #e67e22;
+}
+
+.rare-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.85em;
+    color: #fff;
+}
+
+.rare-icon.rare { background: linear-gradient(135deg, #5865F2, #4752C4); }
+.rare-icon.epic { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+.rare-icon.legendary { background: linear-gradient(135deg, #e67e22, #d35400); }
+
+/* ====== RECURSOS AVANZADOS ====== */
+.recursos-avanzados {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #40444b;
+}
+
+.recursos-avanzados h4 {
+    color: #e67e22;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* ====== RESULTADO MEJORADO ====== */
+.result-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #40444b;
+}
+
+.rarity-rare { color: #5865F2; font-size: 1.3em; font-weight: bold; }
+.rarity-epic { color: #9b59b6; font-size: 1.3em; font-weight: bold; }
+.rarity-legendary { color: #e67e22; font-size: 1.3em; font-weight: bold; }
+
+.result-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #2f3136;
+    border-radius: 10px;
+}
+
+.result-section h4 {
+    color: #7289da;
+    font-size: 0.9em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.result-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.result-row:last-child {
+    margin-bottom: 0;
+}
+
+.result-row img {
+    width: 45px;
+    height: 45px;
+    background-color: #36393f;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.result-row span {
+    font-weight: bold;
+    font-size: 1.1em;
+    min-width: 50px;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #36393f;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.resource-item img {
+    width: 30px;
+    height: 30px;
+}
+
+.resource-item.epic {
+    background-color: rgba(230, 126, 34, 0.15);
+    border: 1px solid rgba(230, 126, 34, 0.3);
+}
+
+.resource-item .label {
+    font-size: 0.7em;
+    color: #888;
+    min-width: auto;
+}
+
+.epic-resources {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #40444b;
+}
+
+.main-result {
+    background: linear-gradient(135deg, #2f3136 0%, #36393f 100%);
+    border: 1px solid #40444b;
+    min-height: 300px;
+}
+
+.main-result .resultado-content {
+    flex-direction: column;
+    align-items: stretch;
+}
+
 .fabricacion-resultados {
     background-color: #2f3136;
     border-radius: 12px;
