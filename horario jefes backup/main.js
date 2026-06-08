@@ -11,6 +11,15 @@ const translations = {
         navEventos: "Eventos",
         horariosTitulo: "Horario de Jefes",
         horariosSubtitulo: "Consulta los horarios de aparición sincronizados con el servidor SA31",
+        sincronizando: "⏳ Sincronizando...",
+        cargandoLocal: "⏳ Cargando hora local...",
+        leyendaVentana: "En ventana de spawn (±15 min)",
+        leyendaProximo: "Siguiente spawn",
+        leyendaNoDisponible: "No disponible",
+        zonaHoraria: "Horario sincronizado con el servidor:",
+        horaBrasil: "Hora de Brasil (UTC-3)",
+        columnaJefes: "JEFES SEMANALES",
+        columnaHorarios: "Horarios de Aparición (Hora del Servidor)",
         expedicionesTitulo: "Expedición de Clan",
         expedicionesSubtitulo: "Calcula los recursos necesarios y estatuas obtenidas",
         columnaSeleccionar: "Seleccionar",
@@ -49,24 +58,7 @@ const translations = {
         "Escorpión Serpentino Sanguinario": "Escorpión Serpentino Sanguinario",
         "Bestia Demoníaca Absorbedora de Almas": "Bestia Demoníaca Absorbedora de Almas",
         "Chakravarti Darkmaur": "Chakravarti Darkmaur",
-        "Deidad Demoníaca de Hielo MAJ": "Deidad Demoníaca de Hielo MAJ",
-        proxSpawns: "⏰ Próximos Spawns (≤ 30 min)",
-        todosLosJefes: "📋 Todos los Jefes",
-        placeholderBuscar: "Buscar por jefe, ubicación o mundo...",
-        todosLosMundos: "Todos los Mundos",
-        colMundo: "Mundo",
-        colCapa: "Capa",
-        colUbicacion: "Ubicación",
-        colJefe: "Jefe",
-        colHorario: "Horario",
-        colRespawn: "Respawn",
-        colAcciones: "Acciones",
-        copiar: "Copiar",
-        copiarTodos: "Copiar Todos",
-        sinJefes30min: "Ningún jefe con spawn en los próximos 30 minutos.",
-        infoCopiada: "Información copiada",
-        errorCopiar: "Error al copiar. Intente de nuevo.",
-        horaServidor: "Hora del Servidor"
+        "Deidad Demoníaca de Hielo MAJ": "Deidad Demoníaca de Hielo MAJ"
     },
     pt: {
         titulo: "Guia MIR4 - Servidor SA31",
@@ -79,6 +71,15 @@ const translations = {
         navEventos: "Eventos",
         horariosTitulo: "Horário de Jefes",
         horariosSubtitulo: "Consulte os horários de aparição sincronizados com o servidor SA31",
+        sincronizando: "⏳ Sincronizando...",
+        cargandoLocal: "⏳ Carregando hora local...",
+        leyendaVentana: "Na janela de spawn (±15 min)",
+        leyendaProximo: "Próximo spawn",
+        leyendaNoDisponible: "Não disponível",
+        zonaHoraria: "Horário sincronizado com o servidor:",
+        horaBrasil: "Hora do Brasil (UTC-3)",
+        columnaJefes: "CHEFES SEMANAIS",
+        columnaHorarios: "Horários de Aparição (Hora do Servidor)",
         expedicionesTitulo: "Expedição de Clan",
         expedicionesSubtitulo: "Calcule os recursos necessários e estátuas obtidas",
         columnaSeleccionar: "Selecionar",
@@ -117,24 +118,7 @@ const translations = {
         "Escorpión Serpentino Sanguinario": "Escorpião Serpente Sanguinário",
         "Bestia Demoníaca Absorbedora de Almas": "Besta Demoníaca Absorbedora de Almas",
         "Chakravarti Darkmaur": "Chakravarti Darkmaur",
-        "Deidad Demoníaca de Hielo MAJ": "Divindade Demônica de Gelo MAJ",
-        proxSpawns: "⏰ Próximos Spawns (≤ 30 min)",
-        todosLosJefes: "📋 Todos os Chefes",
-        placeholderBuscar: "Buscar por chefe, localização ou mundo...",
-        todosLosMundos: "Todos os Mundos",
-        colMundo: "Mundo",
-        colCapa: "Camada",
-        colUbicacion: "Localização",
-        colJefe: "Chefe",
-        colHorario: "Horário",
-        colRespawn: "Respawn",
-        colAcciones: "Ações",
-        copiar: "Copiar",
-        copiarTodos: "Copiar Todos",
-        sinJefes30min: "Nenhum chefe com spawn nos próximos 30 minutos.",
-        infoCopiada: "Informação copiada",
-        errorCopiar: "Erro ao copiar. Tente novamente.",
-        horaServidor: "Hora do Servidor"
+        "Deidad Demoníaca de Hielo MAJ": "Divindade Demônica de Gelo MAJ"
     },
     en: {
         titulo: "MIR4 Guide - Server SA31",
@@ -147,6 +131,15 @@ const translations = {
         navEventos: "Events",
         horariosTitulo: "Boss Schedule",
         horariosSubtitulo: "Check spawn times synchronized with SA31 server",
+        sincronizando: "⏳ Synchronizing...",
+        cargandoLocal: "⏳ Loading local time...",
+        leyendaVentana: "In spawn window (±15 min)",
+        leyendaProximo: "Next spawn",
+        leyendaNoDisponible: "Not available",
+        zonaHoraria: "Time synchronized with server:",
+        horaBrasil: "Brazil Time (UTC-3)",
+        columnaJefes: "WEEKLY BOSSES",
+        columnaHorarios: "Spawn Times (Server Time)",
         expedicionesTitulo: "Clan Expedition",
         expedicionesSubtitulo: "Calculate required resources and statues obtained",
         columnaSeleccionar: "Select",
@@ -185,24 +178,7 @@ const translations = {
         "Escorpión Serpentino Sanguinario": "Sanguinary Serpent Scorpion",
         "Bestia Demoníaca Absorbedora de Almas": "Soul-absorbing Demon Beast",
         "Chakravarti Darkmaur": "Chakravarti Darkmaur",
-        "Deidad Demoníaca de Hielo MAJ": "Ice Demon Deity MAJ",
-        proxSpawns: "⏰ Upcoming Spawns (≤ 30 min)",
-        todosLosJefes: "📋 All Bosses",
-        placeholderBuscar: "Search by boss, location or world...",
-        todosLosMundos: "All Worlds",
-        colMundo: "World",
-        colCapa: "Layer",
-        colUbicacion: "Location",
-        colJefe: "Boss",
-        colHorario: "Schedule",
-        colRespawn: "Respawn",
-        colAcciones: "Actions",
-        copiar: "Copy",
-        copiarTodos: "Copy All",
-        sinJefes30min: "No boss spawning in the next 30 minutes.",
-        infoCopiada: "Information copied",
-        errorCopiar: "Copy error. Please try again.",
-        horaServidor: "Server Time"
+        "Deidad Demoníaca de Hielo MAJ": "Ice Demon Deity MAJ"
     }
 };
 
@@ -223,13 +199,6 @@ function setLanguage(lang) {
         const key = el.getAttribute('data-translate');
         if (t[key]) {
             el.textContent = t[key];
-        }
-    });
-
-    document.querySelectorAll('[data-translate-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-translate-placeholder');
-        if (t[key]) {
-            el.setAttribute('placeholder', t[key]);
         }
     });
 
@@ -257,9 +226,19 @@ function setLanguage(lang) {
         }
     });
 
-    // Re-renderizar tabla/cards de bosses para actualizar textos traducidos
-    if (typeof renderCards === 'function') renderCards();
-    if (typeof renderTable === 'function') renderTable();
+    const relojServidor = document.getElementById('reloj-servidor');
+    if (relojServidor.querySelector('span')) {
+        relojServidor.querySelector('span').textContent = t.sincronizando;
+    }
+    const relojLocal = document.getElementById('reloj-local');
+    if (relojLocal.querySelector('span')) {
+        relojLocal.querySelector('span').textContent = t.cargandoLocal;
+    }
+
+    document.querySelector('.info-zona-horaria').innerHTML = t.zonaHoraria + ' <strong>' + t.horaBrasil + '</strong>';
+
+    document.querySelector('#horarios table thead tr th:first-child').textContent = t.columnaJefes;
+    document.querySelector('#horarios table thead tr th:last-child').textContent = t.columnaHorarios;
 
     document.getElementById('language-select').value = lang;
 }
@@ -288,8 +267,128 @@ navItems.forEach(item => {
 });
 
 // ====== RELOJES Y HORARIOS ======
-// La lógica de reloj, resaltado y filtros de jefes ahora vive en js/bosses.js
-// Esta sección se mantiene solo para compatibilidad (no debe ejecutar nada).
+const relojElemento = document.getElementById('reloj-servidor');
+const relojLocalElemento = document.getElementById('reloj-local');
+const horasSpawnCache = Array.from(document.querySelectorAll('td .hora-spawn'));
+
+const zonaHorariaServidor = 'America/Sao_Paulo';
+const margenAntesMinutos = 15;
+const margenDespuesMinutos = 5;
+
+function actualizarReloj() {
+    try {
+        const ahora = new Date();
+        const opciones = {
+            timeZone: zonaHorariaServidor,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+        relojElemento.textContent = horaServidor;
+    } catch (error) {
+        console.error('Error al actualizar reloj del servidor:', error);
+        relojElemento.textContent = 'Error al cargar hora';
+    }
+}
+
+function actualizarRelojLocal() {
+    try {
+        const ahora = new Date();
+        const horaLocal = ahora.toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+        relojLocalElemento.textContent = `${horaLocal} (hora local)`;
+    } catch (error) {
+        console.error('Error al actualizar reloj local:', error);
+        relojLocalElemento.textContent = 'Error al cargar hora local';
+    }
+}
+
+function resaltarProximaHora() {
+    try {
+        const ahora = new Date();
+        const opciones = {
+            timeZone: zonaHorariaServidor,
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        };
+        const horaServidor = ahora.toLocaleTimeString('es-ES', opciones);
+        const [horas, minutos] = horaServidor.split(':').map(Number);
+        const horaActualMinutos = horas * 60 + minutos;
+
+        let proximaHoraMinutos = null;
+        let spawnsDelDia = [];
+
+        horasSpawnCache.forEach(span => {
+            const horaTexto = span.getAttribute('data-hora');
+            const [h, m] = horaTexto.split(':').map(Number);
+            spawnsDelDia.push(h * 60 + m);
+        });
+
+        const spawnsUnicosOrdenados = [...new Set(spawnsDelDia)].sort((a, b) => a - b);
+
+        for (const spawnMinutos of spawnsUnicosOrdenados) {
+            if (spawnMinutos > horaActualMinutos) {
+                proximaHoraMinutos = spawnMinutos;
+                break;
+            }
+        }
+
+        if (proximaHoraMinutos === null && spawnsUnicosOrdenados.length > 0) {
+            proximaHoraMinutos = spawnsUnicosOrdenados[0];
+        }
+
+        horasSpawnCache.forEach(span => {
+            span.classList.remove('ventana-spawn', 'proximo-spawn');
+
+            const horaTexto = span.getAttribute('data-hora');
+            const [h, m] = horaTexto.split(':').map(Number);
+            const horaSpawnMinutos = h * 60 + m;
+
+            let enVentanaDeSpawn = false;
+
+            if (horaSpawnMinutos === 0) {
+                enVentanaDeSpawn = (horaActualMinutos >= 1425 || horaActualMinutos <= margenDespuesMinutos);
+            }
+            else if (horaActualMinutos >= (horaSpawnMinutos - margenAntesMinutos) &&
+                     horaActualMinutos <= (horaSpawnMinutos + margenDespuesMinutos)) {
+                enVentanaDeSpawn = true;
+            }
+
+            if (enVentanaDeSpawn) {
+                span.classList.add('ventana-spawn');
+            }
+            else if (proximaHoraMinutos !== null && horaSpawnMinutos === proximaHoraMinutos) {
+                span.classList.add('proximo-spawn');
+            }
+        });
+    } catch (error) {
+        console.error('Error al resaltar próxima hora:', error);
+    }
+}
+
+function actualizarTodo() {
+    actualizarReloj();
+    actualizarRelojLocal();
+    resaltarProximaHora();
+}
+
+actualizarTodo();
+setInterval(actualizarReloj, 1000);
+setInterval(actualizarRelojLocal, 1000);
+setInterval(resaltarProximaHora, 5000);
+
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+        actualizarTodo();
+    }
+});
 
 // ====== EXPEDITION CHECKBOXES ======
 const checkboxes = document.querySelectorAll('.expedicion-checkbox');

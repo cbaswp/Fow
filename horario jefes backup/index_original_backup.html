@@ -78,64 +78,292 @@
                     <h2 class="section-title" data-translate="horariosTitulo">⚔️ Horario de Jefes</h2>
                     <p class="section-subtitle" data-translate="horariosSubtitulo">Consulta los horarios de aparición sincronizados con el servidor SA31</p>
                 </div>
-
-                <div class="boss-timer-header">
-                    <div class="timer-clock">
-                        <div class="timer-label" data-translate="horaServidor">Hora del Servidor</div>
-                        <div class="timer-time" id="serverTime">00:00:00</div>
-                        <div class="timer-timezone" id="serverTimezone">SA (UTC-3)</div>
+                
+                <div class="card">
+                    <div id="reloj-servidor" role="timer" aria-live="polite" aria-atomic="true">
+                        <span style="opacity: 0.5;" data-translate="sincronizando">⏳ Sincronizando...</span>
                     </div>
-                    <select class="timezone-selector" id="serverSelector" aria-label="Selector de zona horaria">
-                        <option value="-3" selected>SA (UTC-3)</option>
-                        <option value="-4">NA (UTC-4)</option>
-                        <option value="2">EU (UTC+2)</option>
-                        <option value="6">INMENA (UTC+6)</option>
-                        <option value="8">ASIA (UTC+8)</option>
-                    </select>
+
+                    <div id="reloj-local">
+                        <span style="opacity: 0.5;" data-translate="cargandoLocal">⏳ Cargando hora local...</span>
+                    </div>
+
+                    <div class="leyenda-colores">
+                        <ul>
+                            <li>
+                                <span class="hora-spawn ventana-spawn"></span>
+                                <span data-translate="leyendaVentana">En ventana de spawn (±15 min)</span>
+                            </li>
+                            <li>
+                                <span class="hora-spawn proximo-spawn"></span>
+                                <span data-translate="leyendaProximo">Siguiente spawn</span>
+                            </li>
+                            <li>
+                                <span class="hora-spawn"></span>
+                                <span data-translate="leyendaNoDisponible">No disponible</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <p class="info-zona-horaria" data-translate="zonaHoraria">Horario sincronizado con el servidor: <strong>Hora de Brasil (UTC-3)</strong></p>
                 </div>
-
-                <section class="upcoming-spawns">
-                    <h2 data-translate="proxSpawns">⏰ Próximos Spawns (≤ 30 min)</h2>
-                    <div class="cards-container" id="cardsContainer"></div>
-                </section>
-
-                <section class="boss-table-section">
-                    <h2 data-translate="todosLosJefes">📋 Todos los Jefes</h2>
-                    <div class="table-controls">
-                        <input type="text" class="search-box" id="searchInput"
-                               data-translate-placeholder="placeholderBuscar"
-                               placeholder="Buscar por jefe, ubicación o mundo...">
-                        <select class="filter-select" id="worldFilter" aria-label="Filtro de mundo">
-                            <option value="" data-translate="todosLosMundos">Todos los Mundos</option>
-                            <option value="W1">W1</option>
-                            <option value="W2">W2</option>
-                            <option value="W3">W3</option>
-                            <option value="W4">W4</option>
-                            <option value="W5">W5</option>
-                            <option value="W6">W6</option>
-                            <option value="W7">W7</option>
-                            <option value="W8">W8</option>
-                        </select>
-                    </div>
-                    <div class="table-container">
-                        <table id="bossTable">
-                            <thead>
-                                <tr>
-                                    <th data-translate="colMundo">Mundo</th>
-                                    <th data-translate="colCapa">Capa</th>
-                                    <th data-translate="colUbicacion">Ubicación</th>
-                                    <th data-translate="colJefe">Jefe</th>
-                                    <th data-translate="colHorario">Horario</th>
-                                    <th data-translate="colRespawn">Respawn</th>
-                                    <th data-translate="colAcciones">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody"></tbody>
-                        </table>
-                    </div>
-                </section>
+                
+                <div class="card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>JEFES SEMANALES</th>
+                                <th>Horarios de Aparición (Hora del Servidor)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>[Mundo1]REY TORO DEMONIO </td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="00:00">00h</span>
+                                    <span class="hora-spawn" data-hora="03:00">03h</span>
+                                    <span class="hora-spawn" data-hora="06:00">06h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="12:00">12h</span>
+                                    <span class="hora-spawn" data-hora="15:00">15h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo1]GUARDIAN DE TEMPLO - MATA </td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="00:00">00h</span>
+                                    <span class="hora-spawn" data-hora="02:00">02h</span>
+                                    <span class="hora-spawn" data-hora="04:00">04h</span>
+                                    <span class="hora-spawn" data-hora="06:00">06h</span>
+                                    <span class="hora-spawn" data-hora="08:00">08h</span>
+                                    <span class="hora-spawn" data-hora="10:00">10h</span>
+                                    <span class="hora-spawn" data-hora="12:00">12h</span>
+                                    <span class="hora-spawn" data-hora="14:00">14h</span>
+                                    <span class="hora-spawn" data-hora="16:00">16h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                    <span class="hora-spawn" data-hora="22:00">22h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo1]RELÁMPAGO TORO CHUPA SANGRE </td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:00">01h</span>
+                                    <span class="hora-spawn" data-hora="03:00">03h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="07:00">07h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="11:00">11h</span>
+                                    <span class="hora-spawn" data-hora="13:00">13h</span>
+                                    <span class="hora-spawn" data-hora="15:00">15h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="19:00">19h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                    <span class="hora-spawn" data-hora="23:00">23h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 2] Factoría Seocheon</td>
+                                <td>Requiere cazar monstruos en el lugar</td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 2] Montaña de la Lúnula de Sangre</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="02:30">02:30</span>
+                                    <span class="hora-spawn" data-hora="05:30">05:30</span>
+                                    <span class="hora-spawn" data-hora="08:30">08:30</span>
+                                    <span class="hora-spawn" data-hora="11:30">11:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo3] Necrópolis de Nefariox</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="02:30">02:30</span>
+                                    <span class="hora-spawn" data-hora="08:30">08:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 3] Planicie de las Víboras Monstruosas</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:30">01:30</span>
+                                    <span class="hora-spawn" data-hora="03:30">03:30</span>
+                                    <span class="hora-spawn" data-hora="05:30">05:30</span>
+                                    <span class="hora-spawn" data-hora="07:30">07:30</span>
+                                    <span class="hora-spawn" data-hora="09:30">09:30</span>
+                                    <span class="hora-spawn" data-hora="11:30">11:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 3] Tumba de Rockcut </td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="03:30">03:30</span>
+                                    <span class="hora-spawn" data-hora="09:30">09:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 3] Tumba de Rockcut </td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="02:30">02:30</span>
+                                    <span class="hora-spawn" data-hora="05:30">05:30</span>
+                                    <span class="hora-spawn" data-hora="08:30">08:30</span>
+                                    <span class="hora-spawn" data-hora="11:30">11:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo4]KURILAIKA</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="00:00">00h</span>
+                                    <span class="hora-spawn" data-hora="03:00">03h</span>
+                                    <span class="hora-spawn" data-hora="06:00">06h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="12:00">12h</span>
+                                    <span class="hora-spawn" data-hora="15:00">15h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NEFARIO DIGNIDAD INQUEBRANTABLE (Mundo 4)</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="00:00">00h</span>
+                                    <span class="hora-spawn" data-hora="02:00">02h</span>
+                                    <span class="hora-spawn" data-hora="04:00">04h</span>
+                                    <span class="hora-spawn" data-hora="06:00">06h</span>
+                                    <span class="hora-spawn" data-hora="08:00">08h</span>
+                                    <span class="hora-spawn" data-hora="10:00">10h</span>
+                                    <span class="hora-spawn" data-hora="12:00">12h</span>
+                                    <span class="hora-spawn" data-hora="14:00">14h</span>
+                                    <span class="hora-spawn" data-hora="16:00">16h</span>
+                                    <span class="hora-spawn" data-hora="18:00">18h</span>
+                                    <span class="hora-spawn" data-hora="20:00">20h</span>
+                                    <span class="hora-spawn" data-hora="22:00">22h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 5] Campo de Hielo del Dragón Noveno</td>
+                                <td>Requiere cazar monstruos en el lugar</td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 5] Gran Muralla de Sabuk</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="03:30">03:30</span>
+                                    <span class="hora-spawn" data-hora="06:30">06:30</span>
+                                    <span class="hora-spawn" data-hora="09:30">09:30</span>
+                                    <span class="hora-spawn" data-hora="12:30">12:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 5] Templo Ilusorio</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:30">01:30</span>
+                                    <span class="hora-spawn" data-hora="04:30">04:30</span>
+                                    <span class="hora-spawn" data-hora="07:30">07:30</span>
+                                    <span class="hora-spawn" data-hora="10:30">10:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 6] Abismo de la Mina Demoníaca</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:30">01:30</span>
+                                    <span class="hora-spawn" data-hora="03:30">03:30</span>
+                                    <span class="hora-spawn" data-hora="05:30">05:30</span>
+                                    <span class="hora-spawn" data-hora="07:30">07:30</span>
+                                    <span class="hora-spawn" data-hora="09:30">09:30</span>
+                                    <span class="hora-spawn" data-hora="11:30">11:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 6] Ciudad de Bicheon </td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="02:30">02:30</span>
+                                    <span class="hora-spawn" data-hora="04:30">04:30</span>
+                                    <span class="hora-spawn" data-hora="06:30">06:30</span>
+                                    <span class="hora-spawn" data-hora="08:30">08:30</span>
+                                    <span class="hora-spawn" data-hora="10:30">10:30</span>
+                                    <span class="hora-spawn" data-hora="12:30">12:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 6] Ciudad de Bicheon </td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="04:30">04:30</span>
+                                    <span class="hora-spawn" data-hora="10:30">10:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 6] Bosques Fantasmas</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="05:30">05:30</span>
+                                    <span class="hora-spawn" data-hora="11:30">11:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 6] Laberinto de Bicheon</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="06:30">06:30</span>
+                                    <span class="hora-spawn" data-hora="12:30">12:30</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo7]YIUN</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="02:00">02h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="08:00">08h</span>
+                                    <span class="hora-spawn" data-hora="11:00">11h</span>
+                                    <span class="hora-spawn" data-hora="14:00">14h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="20:00">20h</span>
+                                    <span class="hora-spawn" data-hora="23:00">23h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo7]TAEHYUL</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:00">01h</span>
+                                    <span class="hora-spawn" data-hora="03:00">03h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="07:00">07h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="11:00">11h</span>
+                                    <span class="hora-spawn" data-hora="13:00">13h</span>
+                                    <span class="hora-spawn" data-hora="15:00">15h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="19:00">19h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                    <span class="hora-spawn" data-hora="23:00">23h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo8]YEO WIHUANG</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:00">01h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                    <span class="hora-spawn" data-hora="13:00">13h</span>
+                                    <span class="hora-spawn" data-hora="17:00">17h</span>
+                                    <span class="hora-spawn" data-hora="21:00">21h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>[Mundo 8] Círculo de Sello de los Gigantes Blancos</td>
+                                <td>
+                                    <span class="hora-spawn" data-hora="01:00">01h</span>
+                                    <span class="hora-spawn" data-hora="05:00">05h</span>
+                                    <span class="hora-spawn" data-hora="09:00">09h</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mundo del Vacío (Espejismo del Barco 4F)</td>
+                                <td>Instantáneo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-                        <!-- Sección: Expedición de Clan -->
+
+            <!-- Sección: Expedición de Clan -->
             <div id="expediciones" class="content-section">
                 <div class="section-header">
                     <h2 class="section-title">🏛️ Expedición de Clan</h2>
@@ -458,6 +686,5 @@
 
     <script src="js/main.js"></script>
     <script src="js/crafting.js"></script>
-    <script src="js/bosses.js"></script>
 </body>
 </html>
