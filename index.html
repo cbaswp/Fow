@@ -84,6 +84,9 @@
                         <div class="timer-label" data-translate="horaServidor">Hora del Servidor</div>
                         <div class="timer-time" id="serverTime">00:00:00</div>
                         <div class="timer-timezone" id="serverTimezone">SA (UTC-3)</div>
+                        <div class="local-time-divider"></div>
+                        <div class="timer-label local-time-label" data-translate="horaLocal">Hora Local</div>
+                        <div class="timer-time-local" id="localTime">00:00:00</div>
                     </div>
                     <select class="timezone-selector" id="serverSelector" aria-label="Selector de zona horaria">
                         <option value="-3" selected>SA (UTC-3)</option>
@@ -97,6 +100,11 @@
                 <section class="upcoming-spawns">
                     <h2 data-translate="proxSpawns">⏰ Próximos Spawns (≤ 30 min)</h2>
                     <div class="cards-container" id="cardsContainer"></div>
+                </section>
+
+                <section class="upcoming-spawns next-hour-spawns">
+                    <h2 data-translate="proxSpawnsHora">🕐 Próximos Spawns (31-60 min)</h2>
+                    <div class="cards-container" id="cardsContainerNextHour"></div>
                 </section>
 
                 <section class="boss-table-section">

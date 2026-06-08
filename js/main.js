@@ -64,9 +64,12 @@ const translations = {
         copiar: "Copiar",
         copiarTodos: "Copiar Todos",
         sinJefes30min: "Ningún jefe con spawn en los próximos 30 minutos.",
+        sinJefes31a60: "Ningún jefe con spawn entre 31 y 60 minutos.",
         infoCopiada: "Información copiada",
         errorCopiar: "Error al copiar. Intente de nuevo.",
-        horaServidor: "Hora del Servidor"
+        horaServidor: "Hora del Servidor",
+        horaLocal: "Hora Local",
+        proxSpawnsHora: "Próximos Spawns (31-60 min)"
     },
     pt: {
         titulo: "Guia MIR4 - Servidor SA31",
@@ -132,9 +135,12 @@ const translations = {
         copiar: "Copiar",
         copiarTodos: "Copiar Todos",
         sinJefes30min: "Nenhum chefe com spawn nos próximos 30 minutos.",
+        sinJefes31a60: "Nenhum chefe com spawn entre 31 e 60 minutos.",
         infoCopiada: "Informação copiada",
         errorCopiar: "Erro ao copiar. Tente novamente.",
-        horaServidor: "Hora do Servidor"
+        horaServidor: "Hora do Servidor",
+        horaLocal: "Hora Local",
+        proxSpawnsHora: "Próximos Spawns (31-60 min)"
     },
     en: {
         titulo: "MIR4 Guide - Server SA31",
@@ -200,9 +206,12 @@ const translations = {
         copiar: "Copy",
         copiarTodos: "Copy All",
         sinJefes30min: "No boss spawning in the next 30 minutes.",
+        sinJefes31a60: "No boss spawning between 31 and 60 minutes.",
         infoCopiada: "Information copied",
         errorCopiar: "Copy error. Please try again.",
-        horaServidor: "Server Time"
+        horaServidor: "Server Time",
+        horaLocal: "Local Time",
+        proxSpawnsHora: "Upcoming Spawns (31-60 min)"
     }
 };
 
@@ -259,6 +268,7 @@ function setLanguage(lang) {
 
     // Re-renderizar tabla/cards de bosses para actualizar textos traducidos
     if (typeof renderCards === 'function') renderCards();
+    if (typeof renderCardsNextHour === 'function') renderCardsNextHour();
     if (typeof renderTable === 'function') renderTable();
 
     document.getElementById('language-select').value = lang;

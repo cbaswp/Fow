@@ -1733,13 +1733,15 @@ const timezones = {
 let currentTimezone = '-3';
 
 // ====== ELEMENTOS DOM ======
-const serverTimeEl     = document.getElementById('serverTime');
-const serverTimezoneEl = document.getElementById('serverTimezone');
-const serverSelector   = document.getElementById('serverSelector');
-const cardsContainer   = document.getElementById('cardsContainer');
-const tableBody        = document.getElementById('tableBody');
-const searchInput      = document.getElementById('searchInput');
-const worldFilter      = document.getElementById('worldFilter');
+const serverTimeEl        = document.getElementById('serverTime');
+const serverTimezoneEl    = document.getElementById('serverTimezone');
+const localTimeEl         = document.getElementById('localTime');
+const serverSelector      = document.getElementById('serverSelector');
+const cardsContainer      = document.getElementById('cardsContainer');
+const cardsContainerNextHour = document.getElementById('cardsContainerNextHour');
+const tableBody           = document.getElementById('tableBody');
+const searchInput         = document.getElementById('searchInput');
+const worldFilter         = document.getElementById('worldFilter');
 
 const pad = (n) => n.toString().padStart(2, '0');
 
@@ -1755,10 +1757,15 @@ function getServerTime() {
 }
 
 function updateClock() {
-    if (!serverTimeEl) return;
-    const t = getServerTime();
-    serverTimeEl.textContent = pad(t.hour) + ':' + pad(t.minute) + ':' + pad(t.second);
-    if (serverTimezoneEl) serverTimezoneEl.textContent = timezones[currentTimezone].name;
+    if (serverTimeEl) {
+        const t = getServerTime();
+        serverTimeEl.textContent = pad(t.hour) + ':' + pad(t.minute) + ':' + pad(t.second);
+        if (serverTimezoneEl) serverTimezoneEl.textContent = timezones[currentTimezone].name;
+    }
+    if (localTimeEl) {
+        const now = new Date();
+        localTimeEl.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+    }
 }
 
 function getNextSpawnTimeMs(boss) {
@@ -1848,6 +1855,58 @@ function renderCards() {
     }
 }
 
+// ====== RENDERIZADO DE CARDS (PRÓXIMOS SPAWNS 31-60 min) ======
+function renderCardsNextHour() {
+    if (!cardsContainerNextHour) return;
+    const bossesWithTime = bossData
+        .map(b => Object.assign({}, b, {
+            timeRemainingMs: getTimeRemainingMs(b),
+            timeRemainingStr: getTimeRemainingFormatted(b)
+        }))
+        .filter(b => b.timeRemainingMs > 30 * 60 * 1000 && b.timeRemainingMs <= 60 * 60 * 1000)
+        .sort((a, b) => {
+            const worldA = parseInt(a.world.substring(1)) || 0;
+            const worldB = parseInt(b.world.substring(1)) || 0;
+            if (worldA !== worldB) return worldA - worldB;
+            return a.name.localeCompare(b.name, 'es');
+        });
+
+    let html = '';
+    if (bossesWithTime.length === 0) {
+        html = '<div class="no-bosses">' + escapeHtml(tBoss('sinJefes31a60')) + '</div>';
+    } else {
+        html += '<div class="copy-all-wrap">' +
+                '<button class="copy-all-btn" id="copyAllNextHourBtn" type="button">' +
+                '📋 ' + escapeHtml(tBoss('copiarTodos')) + ' (' + bossesWithTime.length + ')' +
+                '</button></div>';
+        bossesWithTime.forEach(boss => {
+            const infoText = boss.world + ' - ' + boss.name + ' - ' + boss.location + ' - ' + formatSpawnTime(boss);
+            html += '<div class="boss-card boss-card-next-hour">' +
+                        '<span class="world-badge-card">' + boss.world + '</span>' +
+                        '<div class="card-location">' + escapeHtml(boss.location) + '</div>' +
+                        '<div class="card-details">' + escapeHtml(boss.layer) + ' • ' + boss.world + '</div>' +
+                        '<div class="card-boss-name">' + escapeHtml(boss.name) + '</div>' +
+                        '<div class="card-timer">' + boss.timeRemainingStr + '</div>' +
+                        '<div class="card-spawn-time">' + escapeHtml(tBoss('colHorario')) + ': ' + formatSpawnTime(boss) + '</div>' +
+                        '<button class="copy-btn copy-btn-card" data-info="' + escapeHtml(infoText) + '" type="button">' +
+                        escapeHtml(tBoss('copiar')) +
+                        '</button>' +
+                    '</div>';
+        });
+    }
+    cardsContainerNextHour.innerHTML = html;
+
+    const copyAllBtn = document.getElementById('copyAllNextHourBtn');
+    if (copyAllBtn) {
+        copyAllBtn.addEventListener('click', () => {
+            const text = bossesWithTime
+                .map(b => b.world + ' - ' + b.name + ' - ' + b.location + ' - ' + formatSpawnTime(b) + ' (' + b.timeRemainingStr + ')')
+                .join('\n');
+            copyToClipboard(text, bossesWithTime.length);
+        });
+    }
+}
+
 // ====== RENDERIZADO DE TABLA ======
 function renderTable() {
     if (!tableBody) return;
@@ -1916,6 +1975,7 @@ function copyToClipboard(text, count) {
 function refreshAll() {
     updateClock();
     renderCards();
+    renderCardsNextHour();
     renderTable();
 }
 
